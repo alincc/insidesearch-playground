@@ -1,0 +1,11 @@
+<md-toolbar class="pl-toolbar">
+    <search-box (results)="updateResults($event)" (loading)="loading=$event"></search-box>     
+</md-toolbar>
+
+<md-content class="md-padding" layout="row" layout-wrap layout-align="center start">
+    <search-result
+        *ngFor="#result of results"
+        [result]="result">
+    </search-result>
+
+</md-content>
