@@ -1,4 +1,7 @@
-import {Component} from 'angular2/core';
+import {
+    Component,
+    OnInit,
+} from 'angular2/core';
 import {
   Router,
   RouterLink,
@@ -10,11 +13,7 @@ import {FORM_DIRECTIVES, Validators} from 'angular2/common';
 
 import {MATERIAL_DIRECTIVES} from 'ng2-material/all';
 
-export class Settings {
-  constructor(
-    public endpoint: string
-  ) {  }
-}
+import {Settings, LocalStorageService} from '../../services/local-storage.service/local-storage.service'
 
 @Component({
   selector: 'settings.component',
@@ -24,20 +23,29 @@ export class Settings {
   directives: [MATERIAL_DIRECTIVES, ROUTER_DIRECTIVES, RouterLink, FORM_DIRECTIVES],
   pipes: []
 })
-export class SettingsComponent {
-    settings = new Settings('');
+export class SettingsComponent implements OnInit{
+    settings: Settings;
     endpoint: string;
     endpoints = [
         '',
+        'http://escastest1.nb.no:8090/searchv2/search',
         'http://localhost:8765/v1/catalog/items'
         ];
     
     constructor(public router: Router,
-              public routeParams : RouteParams) {
+              public routeParams: RouteParams,
+              public localStorageService: LocalStorageService) {
     }
 
     onSubmit(): void {
-        console.log('save ' + this.settings.endpoint + ' to local storage');
+        this.localStorageService.saveSettings(this.settings);
     }
 
+    ngOnInit(): void {
+        let settings = this.localStorageService.loadSettings();
+        if (!settings.endpoint) {
+            settings.endpoint = this.endpoints[1];
+        }
+        this.settings = settings;
+    }
 }

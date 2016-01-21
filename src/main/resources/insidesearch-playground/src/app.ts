@@ -19,6 +19,8 @@ import {HTTP_PROVIDERS} from 'angular2/http';
 import {InsidesearchPlaygroundApp} from './app/insidesearch-playground';
 import {MATERIAL_DIRECTIVES, MATERIAL_PROVIDERS} from 'ng2-material/all';
 import {NbService, nbServiceInjectables} from './app/services/nb.service/nb.service';
+import {LocalStorageService} from './app/services/local-storage.service/local-storage.service'
+
 import 'rxjs/add/operator/map';
 
 import { AppViewListener } from 'angular2/src/core/linker/view_listener';
@@ -27,6 +29,7 @@ import { bind } from 'angular2/core';
 
 bootstrap(InsidesearchPlaygroundApp, [
     nbServiceInjectables,
+    LocalStorageService,
     HTTP_PROVIDERS,
     ROUTER_PROVIDERS,
     MATERIAL_PROVIDERS,
