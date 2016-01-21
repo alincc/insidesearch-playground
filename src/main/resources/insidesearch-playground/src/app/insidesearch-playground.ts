@@ -13,6 +13,7 @@ import {
 import {MATERIAL_DIRECTIVES} from 'ng2-material/all';
 import {SearchComponent} from './components/search.component/search.component';
 import {SearchResultComponent} from './components/search-result.component/search-result.component';
+import {SettingsComponent} from './components/settings.component/settings.component';
 
 @Component({
   selector: 'insidesearch-playground-app',
@@ -25,6 +26,7 @@ import {SearchResultComponent} from './components/search-result.component/search
 @RouteConfig([
   { path: '/', name: 'root', redirectTo: ['Search'] },
   { path: '/search', name: 'Search', component: SearchComponent },
+  { path: '/settings', name: 'Settings', component: SettingsComponent },
 ])
 export class InsidesearchPlaygroundApp {
 

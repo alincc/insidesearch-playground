@@ -4,7 +4,7 @@ import {SearchResult} from '../../services/nb.service/nb.service';
 import {MATERIAL_DIRECTIVES} from 'ng2-material/all';
 
 @Component({
-  inputs: ['result'],
+  inputs: ['result', 'last'],
   selector: 'search-result',
   templateUrl: 'app/components/search-result.component/search-result.component.html',
   styleUrls: ['app/components/search-result.component/search-result.component.css'],
@@ -14,6 +14,7 @@ import {MATERIAL_DIRECTIVES} from 'ng2-material/all';
 })
 export class SearchResultComponent {
     result: SearchResult;
+    last: boolean;
   
     constructor() {}
 

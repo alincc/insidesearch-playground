@@ -2,7 +2,8 @@ import {
     Component,
     OnInit,
     EventEmitter,
-    ElementRef
+    ElementRef,
+    Injectable,
 } from 'angular2/core';
 import {
   Router,
@@ -13,7 +14,9 @@ import {
 } from 'angular2/router';
 
 import { Observable } from 'rxjs/Rx';
-import {MATERIAL_DIRECTIVES} from 'ng2-material/all';
+import {MATERIAL_DIRECTIVES, MdDialog} from 'ng2-material/all';
+import {DOM} from "angular2/src/platform/dom/dom_adapter";
+import {MdDialogConfig, MdDialogBasic, MdDialogRef} from "ng2-material/components/dialog/dialog";
 import {NbService, SearchResult} from '../../services/nb.service/nb.service';
 
 @Component({
@@ -22,9 +25,10 @@ import {NbService, SearchResult} from '../../services/nb.service/nb.service';
   templateUrl: 'app/components/search-box.component/search-box.component.html',
   styleUrls: ['app/components/search-box.component/search-box.component.css'],
   providers: [],
-  directives: [MATERIAL_DIRECTIVES, ROUTER_DIRECTIVES],
+  directives: [MATERIAL_DIRECTIVES, ROUTER_DIRECTIVES, RouterLink],
   pipes: []
 })
+@Injectable()
 export class SearchBoxComponent implements OnInit{
   query: string;
   loading: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -32,7 +36,9 @@ export class SearchBoxComponent implements OnInit{
 
   constructor(public router: Router,
               public routeParams : RouteParams,
-              public nb: NbService) {
+              public nb: NbService,
+              public dialog: MdDialog, 
+              public element: ElementRef) {
   }
 
   submit(query: string): void {
@@ -59,10 +65,16 @@ export class SearchBoxComponent implements OnInit{
         }
       );
   }
+
+  showSettings(ev) {
+      console.log('settings');
+      this.router.navigate(['/Settings', {}]);
+  };
   
   ngOnInit(): void {
       this.query = this.routeParams.get('query');
       this.search();
+      console.log(DOM);
   }
 
 }

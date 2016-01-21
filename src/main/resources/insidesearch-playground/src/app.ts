@@ -21,11 +21,17 @@ import {MATERIAL_DIRECTIVES, MATERIAL_PROVIDERS} from 'ng2-material/all';
 import {NbService, nbServiceInjectables} from './app/services/nb.service/nb.service';
 import 'rxjs/add/operator/map';
 
+import { AppViewListener } from 'angular2/src/core/linker/view_listener';
+import { DebugElementViewListener } from 'angular2/platform/common_dom';
+import { bind } from 'angular2/core';
+
 bootstrap(InsidesearchPlaygroundApp, [
     nbServiceInjectables,
     HTTP_PROVIDERS,
     ROUTER_PROVIDERS,
+    MATERIAL_PROVIDERS,
     ROUTER_BINDINGS,
+    bind(AppViewListener).toClass(DebugElementViewListener),
     provide(ROUTER_PRIMARY_COMPONENT, {useValue: InsidesearchPlaygroundApp}),
     provide(APP_BASE_HREF,            {useValue: '/'}),
     provide(LocationStrategy,         {useClass: HashLocationStrategy})
