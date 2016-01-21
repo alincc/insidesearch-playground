@@ -25,21 +25,19 @@ export class Settings {
   pipes: []
 })
 export class SettingsComponent {
-    model = new Settings('');
+    settings = new Settings('');
     endpoint: string;
     endpoints = [
         '',
         'http://localhost:8765/v1/catalog/items'
-        ].map(function (endpoint) {
-            return {abbrev: endpoint};
-        });
+        ];
     
     constructor(public router: Router,
               public routeParams : RouteParams) {
     }
 
     onSubmit(): void {
-        console.log('save ' + this.model.endpoint + ' to local storage');
+        console.log('save ' + this.settings.endpoint + ' to local storage');
     }
 
 }
