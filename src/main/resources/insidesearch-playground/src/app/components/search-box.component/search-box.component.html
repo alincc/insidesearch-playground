@@ -1,0 +1,14 @@
+        <form class="md-toolbar-tools" layout="row">
+            <h3 flex="15">Lekeplass for søk</h3>
+
+            <md-input-container class="pg-input-container" md-theme="input" flex>
+                <label for="search">Søk</label>
+                <input autofocus md-input class="pg-searchbox" #newquery
+                    [(ngModel)]="query"
+                    (keydown.enter)="submit(newquery.value)"/>
+            </md-input-container>
+            <button md-fab class="md-mini md-primary" aria-label="Search" (click)="submit(newquery.value)">
+                <i md-icon>search</i>
+            </button>
+
+        </form>       

@@ -1,0 +1,19 @@
+import { OnChanges } from 'angular2/core';
+import { ElementRef } from "angular2/core";
+export declare class MdButton {
+    private _element;
+    isMouseDown: boolean;
+    isKeyboardFocused: boolean;
+    constructor(_element: ElementRef);
+    onMousedown(event: any): void;
+    onFocus(): void;
+    onBlur(): void;
+}
+export declare class MdAnchor extends MdButton implements OnChanges {
+    tabIndex: number;
+    disabled_: boolean;
+    disabled: boolean;
+    onClick(event: any): void;
+    ngOnChanges(_: any): void;
+    isAriaDisabled: string;
+}

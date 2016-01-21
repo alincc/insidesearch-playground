@@ -1,0 +1,12 @@
+<md-toolbar class="pg-toolbar">
+    <search-box (results)="updateResults($event)" (loading)="loading=$event"></search-box>     
+</md-toolbar>
+
+<md-content>
+    <md-list>
+        <search-result
+            *ngFor="#result of results"
+            [result]="result">
+        </search-result>
+    </md-list>
+</md-content>
