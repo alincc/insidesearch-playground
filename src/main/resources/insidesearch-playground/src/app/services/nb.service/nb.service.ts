@@ -13,7 +13,15 @@ import { Observable } from 'rxjs/Rx';
 import {LocalStorageService} from '../local-storage.service/local-storage.service'
 
 export interface Search {
-    search(query: string):  Observable<SearchResult[]>;
+    search(searchModel: SearchModel):  Observable<SearchResult[]>;
+}
+
+export class SearchModel {
+    
+    constructor(
+        public query: string,
+        public size: number
+    ) {}
 }
 
 export class SearchResult {
@@ -39,9 +47,9 @@ export class NbService implements Search{
     public localStorageService: LocalStorageService) {
   }
   
-  search(query: string): Observable<SearchResult[]> {
+  search(searchModel: SearchModel): Observable<SearchResult[]> {
     let params: string = [
-      `q=${query == null ? 'qwertyuiopå' : query}`
+      `q=${searchModel.query == null ? 'qwertyuiopå' : searchModel.query}`
     ].join('&');
     let queryUrl: string = `${this.localStorageService.loadSettings().endpoint}?${params}`;
     console.log(queryUrl);

@@ -17,12 +17,13 @@ import { Observable } from 'rxjs/Rx';
 import {MATERIAL_DIRECTIVES, MdDialog} from 'ng2-material/all';
 import {DOM} from "angular2/src/platform/dom/dom_adapter";
 import {MdDialogConfig, MdDialogBasic, MdDialogRef} from "ng2-material/components/dialog/dialog";
-import {NbService, SearchResult} from '../../services/nb.service/nb.service';
+import {NbService, SearchResult, SearchModel} from '../../services/nb.service/nb.service';
 import {SearchmeService} from '../../services/searchme.service/searchme.service';
 import {LocalStorageService} from '../../services/local-storage.service/local-storage.service'
 
 @Component({
-  outputs : [ 'loading' , 'results' ] ,
+  outputs : [ 'loading' , 'results'] ,
+  inputs : ['searchModel'],
   selector: 'search-box',
   templateUrl: 'app/components/search-box.component/search-box.component.html',
   styleUrls: ['app/components/search-box.component/search-box.component.css'],
@@ -32,7 +33,7 @@ import {LocalStorageService} from '../../services/local-storage.service/local-st
 })
 @Injectable()
 export class SearchBoxComponent implements OnInit{
-  query: string;
+  searchModel: SearchModel;
   loading: EventEmitter<boolean> = new EventEmitter<boolean>();
   results: EventEmitter<SearchResult[]> = new EventEmitter<SearchResult[]>();
 
@@ -45,9 +46,9 @@ export class SearchBoxComponent implements OnInit{
               public localStorageService: LocalStorageService) {
   }
 
-  submit(query: string): void {
+  submit(): void {
       //this.router.navigate(['/Search', {query: query}]);
-      this.query = query;
+      //this.searchModel.query = query;
       this.search();
   }
 
@@ -59,7 +60,7 @@ export class SearchBoxComponent implements OnInit{
       }
       
       this.loading.next(true)
-      searchService.search(this.query)
+      searchService.search(this.searchModel)
         .subscribe(
         (results: SearchResult[]) => { // on sucesss
           this.loading.next(false);
@@ -81,7 +82,7 @@ export class SearchBoxComponent implements OnInit{
   };
   
   ngOnInit(): void {
-      this.query = this.routeParams.get('query');
+      this.searchModel.query = this.routeParams.get('query');
       this.search();
       console.log(DOM);
   }

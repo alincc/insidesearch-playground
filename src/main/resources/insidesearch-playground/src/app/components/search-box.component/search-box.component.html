@@ -9,9 +9,9 @@
             <md-input-container class="pg-input-container" md-theme="input" flex>
                 <label for="search">Søk</label>
                 <input autofocus="true" md-input class="pg-searchbox" #newquery
-                    [value]="query"
-                    [(ngModel)]="query"
-                    (keydown.enter)="submit(newquery.value)"
+                    [value]="searchModel.query"
+                    [(ngModel)]="searchModel.query"
+                    (keydown.enter)="submit()"
                     id="search"/>
             </md-input-container>
             <button md-fab class="md-mini md-primary" aria-label="Search" (click)="submit(newquery.value)">

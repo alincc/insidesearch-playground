@@ -1,5 +1,5 @@
 <md-toolbar class="pg-toolbar">
-    <search-box (results)="updateResults($event)" (loading)="loading=$event"></search-box>     
+    <search-box [(searchModel)]="searchModel" (results)="updateResults($event)" (loading)="loading=$event"></search-box>     
 </md-toolbar>
 
     <div layout="row" layout-xs="column" layout-align="start start" layout-wrap>
@@ -11,7 +11,20 @@
                     </md-card-title-text>
                 </md-card-title>
                 <md-card-content>
-                    her skal de være
+                    <div layout-gt-sm="row">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Antall treff</label>
+                            <input md-input 
+                                [(value)]="searchModel.size"
+                                [(ngModel)]="searchModel.size"
+                                type="number">
+                        </md-input-container>
+                        <md-input-container md-theme="md-block">
+                            <select [(ngModel)]="searchModel.mediatype">
+                            </select>
+                        </md-input-container>
+                        
+                    </div>
                 </md-card-content>
             </md-card>
         </div>
