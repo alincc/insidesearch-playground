@@ -1,10 +1,11 @@
 h3 {
-    font-size: 16px;
-    font-weight: 400;
-    letter-spacing: 0.010em;
-    margin: 0 0 0px 0;
-    line-height: 1.2em;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+    white-space: inherit !important;
+}
+
+.center-cropped {
+  object-fit: cover; /* Do not scale the image */
+  object-position: center; /* Center the image within the element */
+  height: 65px;
+  width: 65px;
+  margin: auto;
 }

@@ -10,31 +10,40 @@ import {
 import { Http, Response } from 'angular2/http';
 import { Observable } from 'rxjs/Rx';
 
-let NB_API_URL: string = 'http://ronnym.nb.no:8765/v1/catalog/items';
+import {LocalStorageService} from '../local-storage.service/local-storage.service'
+
+export interface Search {
+    search(query: string):  Observable<SearchResult[]>;
+}
 
 export class SearchResult {
     id: string;
     title: string;
+    creator: string;
     thumbnail: string;
+    mediatype: string;
     
     constructor(obj?: any) {
         this.id = obj && obj.id || null;
         this.title = obj && obj.title || null;
+        this.creator = obj && obj.creator || null;
         this.thumbnail = obj && obj.thumbnail || null;
+        this.mediatype = obj && obj.mediatype || null;
     }
 }
 
 @Injectable()
-export class NbService {
+export class NbService implements Search{
+    
   constructor(public http: Http,
-              @Inject(NB_API_URL) private apiUrl: string) {
+    public localStorageService: LocalStorageService) {
   }
   
   search(query: string): Observable<SearchResult[]> {
     let params: string = [
-      `q=${query}`
+      `q=${query == null ? 'qwertyuiopå' : query}`
     ].join('&');
-    let queryUrl: string = `${this.apiUrl}?${params}`;
+    let queryUrl: string = `${this.localStorageService.loadSettings().endpoint}?${params}`;
     console.log(queryUrl);
     return this.http.get(queryUrl)
       .map((response: Response) => {
@@ -44,14 +53,11 @@ export class NbService {
           return new SearchResult({
             id: item.id,
             title: item.title,
+            creator: '',
             thumbnail: "http://www.nb.no/services/image/resolver/URN:NBN:no-nb_digimanus_120847_0001/full/64,0/0/native.jpg",
+            mediatype: item.mediatype,
           });
         });
       });
   }
 }
-
-export var nbServiceInjectables: Array<any> = [
-  bind(NbService).toClass(NbService),
-  bind(NB_API_URL).toValue(NB_API_URL)
-];

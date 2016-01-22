@@ -26,11 +26,7 @@ import {Settings, LocalStorageService} from '../../services/local-storage.servic
 export class SettingsComponent implements OnInit{
     settings: Settings;
     endpoint: string;
-    endpoints = [
-        '',
-        'http://escastest1.nb.no:8090/searchv2/search',
-        'http://localhost:8765/v1/catalog/items'
-        ];
+    endpoints = [];
     
     constructor(public router: Router,
               public routeParams: RouteParams,
@@ -42,10 +38,6 @@ export class SettingsComponent implements OnInit{
     }
 
     ngOnInit(): void {
-        let settings = this.localStorageService.loadSettings();
-        if (!settings.endpoint) {
-            settings.endpoint = this.endpoints[1];
-        }
-        this.settings = settings;
+        this.settings = this.localStorageService.loadSettings();
     }
 }

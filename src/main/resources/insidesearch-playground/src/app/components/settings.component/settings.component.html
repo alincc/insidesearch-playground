@@ -16,7 +16,7 @@
           <div layout-gt-sm="column">
           <md-input-container md-theme="md-block">
             <select [(ngModel)]="settings.endpoint">
-              <option *ngFor="#endpoint of endpoints" [value]="endpoint">
+              <option *ngFor="#endpoint of settings.endpoints" [value]="endpoint">
                 {{endpoint}}
               </option>
             </select>

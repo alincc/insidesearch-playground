@@ -1,8 +1,11 @@
-<md-list-item class="md-2-line">
-        <img [src]="result.thumbnail" class="pl-card-image" alt="cover"/>
+<md-list-item class="md-3-line">
+        <div layout="column" layout-margin>
+            <img *ngIf="result.thumbnail" [src]="result.thumbnail" class="center-cropped" alt="cover"/>
+        </div>
         <div class="md-list-item-text" layout="column">
-          <h3>{{ result.title }}</h3>
-          <p>test</p>
+          <h3>{{ result.mediatype }} - {{ result.title }}</h3>
+          <h4>{{ result.creator }}</h4>
+          <p>{{result.thumbnail}}&nbsp;</p>
         </div>
 </md-list-item>
 <md-divider *ngIf="!last"></md-divider>

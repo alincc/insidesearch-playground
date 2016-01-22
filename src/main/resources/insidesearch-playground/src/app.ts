@@ -18,7 +18,8 @@ import {HTTP_PROVIDERS} from 'angular2/http';
 
 import {InsidesearchPlaygroundApp} from './app/insidesearch-playground';
 import {MATERIAL_DIRECTIVES, MATERIAL_PROVIDERS} from 'ng2-material/all';
-import {NbService, nbServiceInjectables} from './app/services/nb.service/nb.service';
+import {NbService} from './app/services/nb.service/nb.service';
+import {SearchmeService} from './app/services/searchme.service/searchme.service';
 import {LocalStorageService} from './app/services/local-storage.service/local-storage.service'
 
 import 'rxjs/add/operator/map';
@@ -28,7 +29,8 @@ import { DebugElementViewListener } from 'angular2/platform/common_dom';
 import { bind } from 'angular2/core';
 
 bootstrap(InsidesearchPlaygroundApp, [
-    nbServiceInjectables,
+    NbService,
+    SearchmeService,
     LocalStorageService,
     HTTP_PROVIDERS,
     ROUTER_PROVIDERS,
