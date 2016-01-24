@@ -113,7 +113,7 @@
 						<id>exec-ng-build</id>
 						<phase>generate-sources</phase>
 						<configuration>
-							<executable>src/main/resources/insidesearch-playground/node_modules/angular-cli/bin/ng</executable>
+							<executable>node_modules/angular-cli/bin/ng</executable>
 							<arguments>
 								<argument>build</argument>
 							</arguments>
