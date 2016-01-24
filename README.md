@@ -4,7 +4,7 @@
 The generated project has dependencies that require Node 4 and angular-cli
 
 ##Usage
-
+Inside insidesearch-playground-webapp
 ```bash
 mvn spring-boot:run
 ```
