@@ -101,6 +101,11 @@
 							<goal>exec</goal>
 						</goals>
 						<configuration>
+							<executable>npm</executable>
+							<arguments>
+								<argument>install</argument>
+								<argument>angular-cli</argument>
+							</arguments>
 							<workingDirectory>${project.basedir}/src/main/resources/insidesearch-playground</workingDirectory>
 						</configuration>
 					</execution>
