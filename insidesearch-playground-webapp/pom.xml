@@ -49,13 +49,13 @@
 		<finalName>insidesearch-playground</finalName>
 		<resources>
 			<resource>
-				<directory>${project.basedir}/src/main/resources</directory>
+				<directory>src/main/resources</directory>
 				<includes>
 					<include>*.yml</include>
 				</includes>
 			</resource>
 			<resource>
-				<directory>${project.basedir}/src/main/resources/insidesearch-playground/dist</directory>
+				<directory>src/main/resources/insidesearch-playground/dist</directory>
 				<targetPath>insidesearch-playground/dist/</targetPath>
 			</resource>
 		</resources>
@@ -69,7 +69,7 @@
 				<artifactId>frontend-maven-plugin</artifactId>
 				<version>0.0.27</version>
 				<configuration>
-					<workingDirectory>${project.basedir}/src/main/resources/insidesearch-playground</workingDirectory>
+					<workingDirectory>src/main/resources/insidesearch-playground</workingDirectory>
 				</configuration>
 				<executions>
 					<execution>
@@ -106,18 +106,18 @@
 								<argument>install</argument>
 								<argument>angular-cli</argument>
 							</arguments>
-							<workingDirectory>${project.basedir}/src/main/resources/insidesearch-playground</workingDirectory>
+							<workingDirectory>src/main/resources/insidesearch-playground</workingDirectory>
 						</configuration>
 					</execution>
 					<execution>
 						<id>exec-ng-build</id>
 						<phase>generate-sources</phase>
 						<configuration>
-							<executable>${project.basedir}/src/main/resources/insidesearch-playground/node_modules/angular-cli/bin/ng</executable>
+							<executable>src/main/resources/insidesearch-playground/node_modules/angular-cli/bin/ng</executable>
 							<arguments>
 								<argument>build</argument>
 							</arguments>
-							<workingDirectory>${project.basedir}/src/main/resources/insidesearch-playground</workingDirectory>
+							<workingDirectory>src/main/resources/insidesearch-playground</workingDirectory>
 						</configuration>
 						<goals>
 							<goal>exec</goal>
