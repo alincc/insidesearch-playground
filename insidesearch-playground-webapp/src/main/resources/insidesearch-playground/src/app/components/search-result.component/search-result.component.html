@@ -1,0 +1,11 @@
+<md-list-item class="md-3-line">
+        <div layout="column" layout-margin>
+            <img *ngIf="result.thumbnail" [src]="result.thumbnail" class="center-cropped" alt="cover"/>
+        </div>
+        <div class="md-list-item-text" layout="column">
+          <h3>{{ result.mediatype }} - {{ result.title }}</h3>
+          <h4>{{ result.creator }}</h4>
+          <p>&nbsp;</p>
+        </div>
+</md-list-item>
+<md-divider *ngIf="!last"></md-divider>

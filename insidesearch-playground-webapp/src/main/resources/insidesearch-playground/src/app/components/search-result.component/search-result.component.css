@@ -1,0 +1,11 @@
+h3 {
+    white-space: inherit !important;
+}
+
+.center-cropped {
+  object-fit: cover; /* Do not scale the image */
+  object-position: center; /* Center the image within the element */
+  height: 65px;
+  width: 65px;
+  margin: auto;
+}
