@@ -3,14 +3,18 @@
     background-color: cornflowerblue;
 }
 
-.pg-row {
+._pg-row {
     height: 40px;
 }
 
-md-card-title {
+_md-card-title {
     height: 0px;
 }
 
-.pg-mediatypes {
+._pg-mediatypes {
     width: 100%;
+}
+
+md-input-container  {
+    margin: 0px;
 }
