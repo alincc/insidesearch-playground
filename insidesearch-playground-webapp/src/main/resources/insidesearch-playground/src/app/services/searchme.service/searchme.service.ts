@@ -3,10 +3,11 @@ import {Injectable} from 'angular2/core';
 import { Http, Response } from 'angular2/http';
 import { Observable } from 'rxjs/Rx';
 
-import {Search, SearchModel, SearchResult} from '../nb.service/nb.service';
+import {Search, SearchModel, SearchResult, Item} from '../nb.service/nb.service';
 import {LocalStorageService} from '../local-storage.service/local-storage.service' 
 
 let NB_NAMESPACE = 'http://www.nb.no/xml/search/1.0/';
+let OPENSEARCH_NAMESPACE = 'http://a9.com/-/spec/opensearch/1.1/'
 
 @Injectable()
 export class SearchmeService implements Search {
@@ -15,7 +16,7 @@ export class SearchmeService implements Search {
         public http: Http,
         public localStorageService: LocalStorageService) {}
 
-    search(searchModel: SearchModel): Observable<SearchResult[]> {
+    search(searchModel: SearchModel): Observable<SearchResult> {
         console.log(searchModel.boostFields);
         
         var boost = [];
@@ -43,8 +44,9 @@ export class SearchmeService implements Search {
         console.log(queryUrl);
         return this.http.get(queryUrl)
         .map((response: Response) => {
-            let searchResult = [];
+            let items = [];
             var xmlDoc = <any>new DOMParser().parseFromString(response.text(), 'text/xml');
+            let totalElements = xmlDoc.getElementsByTagNameNS(OPENSEARCH_NAMESPACE, 'totalResults')[0].childNodes[0].nodeValue;
             var entries = xmlDoc.getElementsByTagName('entry');
             for (var i = 0; i < entries.length; i++) {
                 var entry = entries[i];
@@ -55,7 +57,7 @@ export class SearchmeService implements Search {
                 var thumbnail = this.findThumbnailLink(isJp2, urn, mediatypes);
                 var creator = this.findCreator(entry);
                 
-                searchResult.push(new SearchResult({
+                items.push(new Item({
                     id: entry.getElementsByTagName('id')[0].childNodes[0].nodeValue,
                     title: entry.getElementsByTagName('title')[0].childNodes[0].nodeValue,
                     creator: creator,
@@ -65,7 +67,11 @@ export class SearchmeService implements Search {
                 }));
                 
             }
-            return searchResult;      
+            return new SearchResult({
+                id: '',
+                items: items,
+                totalElements: totalElements
+            });      
         });
     }
     

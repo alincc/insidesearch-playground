@@ -7,7 +7,7 @@ import {FORM_DIRECTIVES} from 'angular2/common';
 
 import {SearchBoxComponent} from '../search-box.component/search-box.component';
 import {SearchResultComponent} from '../search-result.component/search-result.component';
-import {SearchModel, SearchResult} from '../../services/nb.service/nb.service';
+import {SearchModel, SearchResult, Item} from '../../services/nb.service/nb.service';
 
 declare var componentHandler;
 
@@ -24,8 +24,8 @@ declare var componentHandler;
 export class SearchComponent implements OnInit {
 
     searchModel = new SearchModel('', 100, 'Alle', true, true, false);
-    results: SearchResult[];
-    toCompareAgainstResult: SearchResult[];
+    results: SearchResult;
+    toCompareAgainstResult: Item[];
     
     mediatypes: any[] = [
         {label: 'Alle', value:'Alle'},
@@ -61,10 +61,10 @@ export class SearchComponent implements OnInit {
     constructor() {
     }
 
-    updateResults(results: SearchResult[]): void {
+    updateResults(results: SearchResult): void {
         this.results = results;
         if (this.toCompareAgainstResult && this.toCompareAgainstResult.length > 0) {
-            this.results.forEach(item => {
+            this.results.items.forEach(item => {
                 this.toCompareAgainstResult.forEach(compare => {
                     if (item.id == compare.id) {
                         item.trending = compare.rank - item.rank;
@@ -78,7 +78,7 @@ export class SearchComponent implements OnInit {
     }
     
     toCompareAgainst(): void {
-        this.toCompareAgainstResult = this.results.slice(); 
+        this.toCompareAgainstResult = this.results.items.slice(); 
     }
 
     ngOnInit(): void {

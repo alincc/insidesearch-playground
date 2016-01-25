@@ -70,6 +70,9 @@
                             <div class="md-headline">
                                 Resultater
                             </div>
+                            <div *ngIf="results">
+                                Antall treff {{results.totalElements}}
+                            </div>
                             <div>
                                <button 
                                     md-fab class="md-mini md-primary" 
@@ -77,7 +80,7 @@
                                     (click)="toCompareAgainst()">
                                    <i class="material-icons">compare_arrows</i>
                                </button>
-                               Antall treff: 
+                               Vis antall treff: 
                                <select [(ngModel)]="searchModel.size"
                                     [value]="searchModel.size">
                                     <option *ngFor="#size of sizes" [value]="size">
@@ -91,10 +94,10 @@
                     </md-card-title-text>
                 </md-card-title>
                 <md-card-content>
-                    <md-list>
+                    <md-list *ngIf="results">
                         <search-result
-                            *ngFor="#result of results; #last = last"
-                            [result]="result"
+                            *ngFor="#item of results.items; #last = last"
+                            [result]="item"
                             [last]="last">
                         </search-result>
                     </md-list>

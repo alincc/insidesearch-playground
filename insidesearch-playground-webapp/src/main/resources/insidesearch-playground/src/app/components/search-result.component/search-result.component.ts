@@ -1,6 +1,6 @@
 import {Component} from 'angular2/core';
 
-import {SearchResult} from '../../services/nb.service/nb.service';
+import {Item} from '../../services/nb.service/nb.service';
 import {MATERIAL_DIRECTIVES} from 'ng2-material/all';
 
 @Component({
@@ -13,7 +13,7 @@ import {MATERIAL_DIRECTIVES} from 'ng2-material/all';
   pipes: []
 })
 export class SearchResultComponent {
-    result: SearchResult;
+    result: Item;
     last: boolean;
   
     constructor() {}

@@ -13,7 +13,7 @@ import { Observable } from 'rxjs/Rx';
 import {LocalStorageService} from '../local-storage.service/local-storage.service'
 
 export interface Search {
-    search(searchModel: SearchModel):  Observable<SearchResult[]>;
+    search(searchModel: SearchModel):  Observable<SearchResult>;
 }
 
     
@@ -46,6 +46,18 @@ export class SearchModel {
 
 export class SearchResult {
     id: string;
+    items: Item[];
+    totalElements: number;
+    
+    constructor(obj?: any) {
+        this.id = obj && obj.id || null;
+        this.items = obj && obj.items || null;
+        this.totalElements = obj && obj.totalElements || null;
+    }
+}
+
+export class Item {
+    id: string;
     title: string;
     creator: string;
     thumbnail: string;
@@ -66,6 +78,7 @@ export class SearchResult {
     }
 }
 
+
 @Injectable()
 export class NbService implements Search{
     
@@ -73,7 +86,7 @@ export class NbService implements Search{
     public localStorageService: LocalStorageService) {
   }
   
-  search(searchModel: SearchModel): Observable<SearchResult[]> {
+  search(searchModel: SearchModel): Observable<SearchResult> {
     let params: string = [
       `q=${searchModel.query == null ? 'qwertyuiopå' : searchModel.query}`
     ].join('&');
@@ -82,6 +95,8 @@ export class NbService implements Search{
     return this.http.get(queryUrl)
       .map((response: Response) => {
         console.log(response.json());      
+        return new SearchResult();
+        /*
         return (<any>response.json())._embedded.items.map(item => {
           console.log("raw item", item); // uncomment if you want to debug
           return new SearchResult({
@@ -92,6 +107,7 @@ export class NbService implements Search{
             mediatype: item.mediatype,
           });
         });
+        */
       });
   }
 }
