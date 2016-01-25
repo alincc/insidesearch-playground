@@ -2,3 +2,11 @@
     height: 68px;
     background-color: cornflowerblue;
 }
+
+.pg-row {
+    height: 40px;
+}
+
+md-card-title {
+    height: 0px;
+}

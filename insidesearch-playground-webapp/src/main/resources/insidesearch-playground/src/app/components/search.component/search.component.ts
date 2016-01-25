@@ -11,6 +11,8 @@ import {SearchModel, Boost, SearchResult} from '../../services/nb.service/nb.ser
 
 declare var componentHandler;
 
+
+
 @Component({
   selector: 'search.component',
   templateUrl: 'app/components/search.component/search.component.html',
@@ -20,14 +22,15 @@ declare var componentHandler;
   pipes: []
 })
 export class SearchComponent implements OnInit {
-    searchModel = new SearchModel('', 100, 'Alle', true, true, false,
-        new Boost(4));
+
+    searchModel = new SearchModel('', 100, 'Alle', true, true, false);
     results: SearchResult[];
     mediatypes: string[] = [
     'Alle',
     'Aviser',
     'Bøker',
     ];
+    
 
     constructor() {
     }
@@ -35,6 +38,7 @@ export class SearchComponent implements OnInit {
     updateResults(results: SearchResult[]): void {
         this.results = results;
         //console.log("results:", this.results); // uncomment to take a look
+        componentHandler.upgradeAllRegistered();
     }
 
     ngOnInit(): void {

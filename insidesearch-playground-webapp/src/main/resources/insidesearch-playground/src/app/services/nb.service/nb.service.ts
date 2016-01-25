@@ -16,7 +16,23 @@ export interface Search {
     search(searchModel: SearchModel):  Observable<SearchResult[]>;
 }
 
+    
 export class SearchModel {
+    public boostFields: any[] = [
+        {label: 'title', defaultValue: 10, value: 10},
+        {label: 'alternative_title', defaultValue: 4, value: 4},
+        {label: 'name', defaultValue: 1, value: 1},
+        {label: 'description', defaultValue: 1, value: 1},
+        {label: 'hosttitle', defaultValue: 1, value: 1},
+        {label: 'otherid', defaultValue: 1, value: 1},
+        {label: 'subject', defaultValue: 1, value: 1},
+        {label: 'isbn', defaultValue: 1, value: 1},
+        {label: 'series', defaultValue: 1, value: 1},
+        {label: 'note', defaultValue: 1, value: 1},
+        {label: 'ismn', defaultValue: 1, value: 1},
+        {label: 'keydate', defaultValue: 1, value: 1},
+        {label: 'freetext', defaultValue: 1, value: 1},
+    ]
     
     constructor(
         public query: string,
@@ -24,15 +40,15 @@ export class SearchModel {
         public mediatype: string,
         public digital: boolean,
         public freetext: boolean,
-        public group: boolean,
-        public boost: Boost
+        public group: boolean
     ) {}
 }
 
 export class Boost {
     
     constructor(
-        public title: number
+        public title: number,
+        public alternativeTitle: number
     ) {}
 }
 

@@ -16,11 +16,13 @@ export class SearchmeService implements Search {
         public localStorageService: LocalStorageService) {}
 
     search(searchModel: SearchModel): Observable<SearchResult[]> {
+        console.log(searchModel.boostFields);
         
-        let boostParams: string = [
-            searchModel.boost.title,
-            2,3,4,5,6,7,8,9,10,11,12,13
-        ].join(',')
+        var boost = [];
+        searchModel.boostFields.forEach(field => {
+            boost.push(field.value);
+        });
+        let boostParams = boost.join(',');
 
         let params: string[] = [
             `q=${searchModel.query}`,
@@ -37,8 +39,6 @@ export class SearchmeService implements Search {
             params.push('filter=mediatype:'+searchModel.mediatype);
         }
         
-        
-        
         let queryUrl: string = `${this.localStorageService.loadSettings().endpoint}?${params.join('&')}`;
         console.log(queryUrl);
         return this.http.get(queryUrl)
@@ -48,7 +48,7 @@ export class SearchmeService implements Search {
             var entries = xmlDoc.getElementsByTagName('entry');
             for (var i = 0; i < entries.length; i++) {
                 var entry = entries[i];
-                console.log(entry);
+                //console.log(entry);
                 var mediatypes = entry.getElementsByTagNameNS(NB_NAMESPACE, 'mediatype')[0].childNodes[0].nodeValue.replace(" ", "").split(';');
                 var urn = this.findFirstUrn(entry);
                 var isJp2 = this.isJp2(entry);
@@ -69,7 +69,6 @@ export class SearchmeService implements Search {
     }
     
     private findThumbnailLink(isJp2: boolean, urn: string, mediatypes: string[]): string {
-        console.log('isJp2=' + isJp2 + ', mediatype=' + mediatypes);
         if (isJp2 && (mediatypes.indexOf('Bøker') != -1 || urn.indexOf('digibok') != -1)) {
             return 'http://www.nb.no/services/image/resolver/'+urn+'_C1/full/64,0/0/native.jpg';
         } else if (isJp2 && (mediatypes.indexOf('Bilder') != -1)) {
