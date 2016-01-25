@@ -51,7 +51,7 @@ export class SearchResult {
     thumbnail: string;
     mediatype: string;
     rank: number;
-    rankChange: number;
+    trending: number;
     trendingNew: boolean;
     
     constructor(obj?: any) {
@@ -61,7 +61,7 @@ export class SearchResult {
         this.thumbnail = obj && obj.thumbnail || null;
         this.mediatype = obj && obj.mediatype || null;
         this.rank = obj && obj.rank || null;
-        this.rankChange = obj && obj.rankChange || null;
+        this.trending = obj && obj.trending || null;
         this.trendingNew = obj && obj.trendingNew || true;
     }
 }

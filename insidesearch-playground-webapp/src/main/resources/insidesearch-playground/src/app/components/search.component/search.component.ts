@@ -27,10 +27,29 @@ export class SearchComponent implements OnInit {
     results: SearchResult[];
     toCompareAgainstResult: SearchResult[];
     
-    mediatypes: string[] = [
-    'Alle',
-    'Aviser',
-    'Bøker',
+    mediatypes: any[] = [
+        {label: 'Alle', value:'Alle'},
+        {label: 'Aviser', value:'Aviser'},
+        {label: 'Bøker', value:'Bøker'},
+        {label: 'Foto', value:'Bilder'},
+        {label: 'Film', value:'Film'},
+        {label: 'Fjernsyn', value:'Fjernsyn'},
+        {label: 'Radio', value:'Radio'},
+        {label: 'Musikk', value:'Musikk'},
+        {label: 'Programrapporter', value:'Programrapporter'},
+        {label: 'Lydopptak', value:'Lydopptak'},
+        {label: 'Musikkmanuskripter', value:'Musikkmanuskripter'},
+        {label: 'Privatarkiv', value:'Privatarkivmateriale'},
+        {label: 'Kart', value:'Kart'},
+        {label: 'Noter', value:'Noter'},
+        {label: 'Tidsskrift', value:'Tidsskrift'},
+        {label: 'Gjenstander', value:'Gjenstander'},
+        {label: 'Artikler', value:'Artikler'},
+        {label: 'Plakater', value:'Plakater'},
+        {label: 'Nettsider', value:'Nettsider'},
+        {label: 'Punktskrift', value:'Punktskrift'},
+        {label: 'Annet', value:'Annet'},
+        {label: 'Ukjent', value:'Ukjent'},
     ];
     sizes: string[] = [
     '10',
@@ -48,7 +67,7 @@ export class SearchComponent implements OnInit {
             this.results.forEach(item => {
                 this.toCompareAgainstResult.forEach(compare => {
                     if (item.id == compare.id) {
-                        item.rankChange = compare.rank - item.rank;
+                        item.trending = compare.rank - item.rank;
                         item.trendingNew = false;
                     }
                 })

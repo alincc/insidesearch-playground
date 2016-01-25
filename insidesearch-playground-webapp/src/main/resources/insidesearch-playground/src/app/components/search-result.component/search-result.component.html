@@ -6,15 +6,15 @@
           <h3>{{ result.rank }} - {{ result.mediatype }} - {{ result.title }}</h3>
           <h4>{{ result.creator }}</h4>
           <p>
-              <i *ngIf="result.rankChange > 0" class="material-icons">trending_up</i>
-              <span *ngIf="result.rankChange > 0">+</span>
-              <i *ngIf="result.rankChange == 0" class="material-icons">trending_flat</i>
-              <i *ngIf="result.rankChange < 0" class="material-icons">trending_down</i>
+              <i *ngIf="result.trending > 0" class="material-icons">trending_up</i>
+              <span *ngIf="result.trending > 0">+</span>
+              <i *ngIf="result.trending == 0" class="material-icons">trending_flat</i>
+              <i *ngIf="result.trending < 0" class="material-icons">trending_down</i>
               <span *ngIf="result.trendingNew">
                 <i class="material-icons">whatshot</i>
                 Ny    
               </span>
-              {{ result.rankChange }}
+              {{ result.trending }}
           </p>
         </div>
 </md-list-item>

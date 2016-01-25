@@ -25,7 +25,7 @@ export class SearchmeService implements Search {
         let boostParams = boost.join(',');
 
         let params: string[] = [
-            `q=${searchModel.query}`,
+            `q=${searchModel.query == null ? '' : searchModel.query}`,
             `ft=${searchModel.freetext}`,
             `group=${searchModel.group}`,
             `boost=${boostParams}`,
@@ -70,10 +70,21 @@ export class SearchmeService implements Search {
     }
     
     private findThumbnailLink(isJp2: boolean, urn: string, mediatypes: string[]): string {
-        if (isJp2 && (mediatypes.indexOf('Bøker') != -1 || urn.indexOf('digibok') != -1)) {
+        if (isJp2 && (mediatypes.indexOf('Bøker') != -1 ||
+            urn.indexOf('digibok') != -1 ||
+            mediatypes.indexOf('Kart') != -1 ||
+            mediatypes.indexOf('Noter') != -1)) {
             return 'http://www.nb.no/services/image/resolver/'+urn+'_C1/full/64,0/0/native.jpg';
         } else if (isJp2 && (mediatypes.indexOf('Bilder') != -1)) {
             return 'http://www.nb.no/services/image/resolver/'+urn+'/full/64,0/0/native.jpg';
+        } else if (isJp2 && (mediatypes.indexOf('Aviser') != -1)) {
+            return 'http://www.nb.no/services/image/resolver/'+urn+'-1_001_null/full/64,0/0/native.jpg';
+        } else if (isJp2 && (mediatypes.indexOf('Programrapporter') != -1 ||
+            mediatypes.indexOf('Musikkmanuskripter') != -1 ||
+            mediatypes.indexOf('Privatarkivmateriale') != -1 ||
+            mediatypes.indexOf('Tidsskrift') != -1
+        )) {
+            return 'http://www.nb.no/services/image/resolver/'+urn+'_0001/full/64,0/0/native.jpg';
         }
         return null;
     }
