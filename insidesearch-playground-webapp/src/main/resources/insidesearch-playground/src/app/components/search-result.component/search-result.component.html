@@ -5,7 +5,17 @@
         <div class="md-list-item-text" layout="column">
           <h3>{{ result.rank }} - {{ result.mediatype }} - {{ result.title }}</h3>
           <h4>{{ result.creator }}</h4>
-          <p>Rank change: {{ result.rankChange }}&nbsp;</p>
+          <p>
+              <i *ngIf="result.rankChange > 0" class="material-icons">trending_up</i>
+              <span *ngIf="result.rankChange > 0">+</span>
+              <i *ngIf="result.rankChange == 0" class="material-icons">trending_flat</i>
+              <i *ngIf="result.rankChange < 0" class="material-icons">trending_down</i>
+              <span *ngIf="result.trendingNew">
+                <i class="material-icons">whatshot</i>
+                Ny    
+              </span>
+              {{ result.rankChange }}
+          </p>
         </div>
 </md-list-item>
 <md-divider *ngIf="!last"></md-divider>

@@ -44,11 +44,12 @@ export class SearchComponent implements OnInit {
 
     updateResults(results: SearchResult[]): void {
         this.results = results;
-        if (this.toCompareAgainstResult.length > 0) {
+        if (this.toCompareAgainstResult && this.toCompareAgainstResult.length > 0) {
             this.results.forEach(item => {
                 this.toCompareAgainstResult.forEach(compare => {
                     if (item.id == compare.id) {
-                        item.rankChange = item.rank - compare.rank;
+                        item.rankChange = compare.rank - item.rank;
+                        item.trendingNew = false;
                     }
                 })
             })
