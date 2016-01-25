@@ -44,14 +44,6 @@ export class SearchModel {
     ) {}
 }
 
-export class Boost {
-    
-    constructor(
-        public title: number,
-        public alternativeTitle: number
-    ) {}
-}
-
 export class SearchResult {
     id: string;
     title: string;

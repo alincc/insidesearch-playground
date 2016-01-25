@@ -7,7 +7,7 @@ import {FORM_DIRECTIVES} from 'angular2/common';
 
 import {SearchBoxComponent} from '../search-box.component/search-box.component';
 import {SearchResultComponent} from '../search-result.component/search-result.component';
-import {SearchModel, Boost, SearchResult} from '../../services/nb.service/nb.service';
+import {SearchModel, SearchResult} from '../../services/nb.service/nb.service';
 
 declare var componentHandler;
 
@@ -29,6 +29,11 @@ export class SearchComponent implements OnInit {
     'Alle',
     'Aviser',
     'Bøker',
+    ];
+    sizes: string[] = [
+    '10',
+    '50',
+    '100',
     ];
     
 

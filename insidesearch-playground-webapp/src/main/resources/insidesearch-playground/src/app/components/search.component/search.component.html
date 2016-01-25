@@ -29,24 +29,15 @@
                         </md-input-container>
                     </div>
                     <div layout-gt-sm="row" class="pg-row">
-                        <md-input-container md-theme="md-block">
+                        <md-input-container md-theme="md-block" flex="30">
                             Mediatype
                         </md-input-container>
-                        <md-input-container md-theme="md-block">
-                            <select [(ngModel)]="searchModel.mediatype">
+                        <md-input-container md-theme="md-block" flex>
+                            <select [(ngModel)]="searchModel.mediatype" class="pg-mediatypes">
                                 <option *ngFor="#mediatype of mediatypes" [value]="mediatype">
                                     {{mediatype}}
                                 </option>
                             </select>
-                        </md-input-container>
-                    </div>
-                    <div layout-gt-sm="column" class="pg-row">
-                        <md-input-container class="md-block" flex-gt-sm>
-                            <label>Antall treff</label>
-                            <input md-input 
-                                [(value)]="searchModel.size"
-                                [(ngModel)]="searchModel.size"
-                                type="number">
                         </md-input-container>
                     </div>
                     <div layout-gt-sm="row" class="pg-row" *ngFor="#boostField of searchModel.boostFields">
@@ -75,7 +66,22 @@
             <md-card>
                 <md-card-title>
                     <md-card-title-text>
-                        <span class="md-headline">Resultater</span>
+                        <div layout="row" layout-align="space-between center">
+                            <div class="md-headline">
+                            Resultater
+                            </div>
+                            <div>
+                               Antall treff: 
+                               <select [(ngModel)]="searchModel.size"
+                                    [value]="searchModel.size">
+                                    <option *ngFor="#size of sizes" [value]="size">
+                                        {{size}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        
                     </md-card-title-text>
                 </md-card-title>
                 <md-card-content>
