@@ -1,4 +1,4 @@
-import {Component} from 'angular2/core';
+import {Component, OnInit} from 'angular2/core';
 import {
   ROUTER_DIRECTIVES,
 } from 'angular2/router';
@@ -7,7 +7,9 @@ import {FORM_DIRECTIVES} from 'angular2/common';
 
 import {SearchBoxComponent} from '../search-box.component/search-box.component';
 import {SearchResultComponent} from '../search-result.component/search-result.component';
-import {SearchModel, SearchResult} from '../../services/nb.service/nb.service';
+import {SearchModel, Boost, SearchResult} from '../../services/nb.service/nb.service';
+
+declare var componentHandler;
 
 @Component({
   selector: 'search.component',
@@ -17,20 +19,26 @@ import {SearchModel, SearchResult} from '../../services/nb.service/nb.service';
   directives: [SearchBoxComponent, SearchResultComponent, MATERIAL_DIRECTIVES, ROUTER_DIRECTIVES, FORM_DIRECTIVES],
   pipes: []
 })
-export class SearchComponent {
-    searchModel = new SearchModel('', 100);
+export class SearchComponent implements OnInit {
+    searchModel = new SearchModel('', 100, 'Alle', true, true, false,
+        new Boost(4));
     results: SearchResult[];
-    public mediatypes = MEDIATYPES;
+    mediatypes: string[] = [
+    'Alle',
+    'Aviser',
+    'Bøker',
+    ];
+
+    constructor() {
+    }
 
     updateResults(results: SearchResult[]): void {
         this.results = results;
         //console.log("results:", this.results); // uncomment to take a look
     }
 
+    ngOnInit(): void {
+        componentHandler.upgradeAllRegistered();
+    }
 }
 
-var MEDIATYPES: string[] = [
-   'Alle',
-   'Aviser',
-   'Bøker',
-];

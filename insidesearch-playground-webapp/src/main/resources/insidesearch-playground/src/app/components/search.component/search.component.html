@@ -12,6 +12,37 @@
                 </md-card-title>
                 <md-card-content>
                     <div layout-gt-sm="row">
+                        <md-input-container md-theme="md-block">
+                            <md-switch class="md-primary" md-no-ink aria-label="Digital" [(checked)]="searchModel.digital">
+                                Digital
+                            </md-switch>
+                        </md-input-container>
+                        <md-input-container md-theme="md-block">
+                            <md-switch class="md-primary" md-no-ink aria-label="Fritekst" [(checked)]="searchModel.freetext">
+                                Fritekst
+                            </md-switch>
+                        </md-input-container>
+                    </div>
+                    <div layout-gt-sm="row">
+                        <md-input-container md-theme="md-block">
+                            <md-switch class="md-primary" md-no-ink aria-label="Grupper" [(checked)]="searchModel.group">
+                                Grupper
+                            </md-switch>
+                        </md-input-container>
+                    </div>
+                    <div layout-gt-sm="row">
+                        <md-input-container md-theme="md-block">
+                            Mediatype
+                        </md-input-container>
+                        <md-input-container md-theme="md-block">
+                            <select [(ngModel)]="searchModel.mediatype">
+                                <option *ngFor="#mediatype of mediatypes" [value]="mediatype">
+                                    {{mediatype}}
+                                </option>
+                            </select>
+                        </md-input-container>
+                    </div>
+                    <div layout-gt-sm="column">
                         <md-input-container class="md-block" flex-gt-sm>
                             <label>Antall treff</label>
                             <input md-input 
@@ -19,11 +50,25 @@
                                 [(ngModel)]="searchModel.size"
                                 type="number">
                         </md-input-container>
+                    </div>
+                    <div layout-gt-sm="row">
                         <md-input-container md-theme="md-block">
-                            <select [(ngModel)]="searchModel.mediatype">
-                            </select>
+                            title
                         </md-input-container>
-                        
+                        <md-input-container md-theme="md-block" flex="80">
+                            <input id="title" class="mdl-slider mdl-js-slider"
+                                [(value)]="searchModel.boost.title"
+                                [(ngModel)]="searchModel.boost.title"
+                                type="range" min="0" max="15">
+                        </md-input-container>
+                        <md-input-container md-theme="md-block">
+                            <input md-input 
+                                [(value)]="searchModel.boost.title"
+                                [(ngModel)]="searchModel.boost.title"
+                                min=0
+                                max=15
+                                type="number">
+                        </md-input-container>
                     </div>
                 </md-card-content>
             </md-card>

@@ -16,11 +16,30 @@ export class SearchmeService implements Search {
         public localStorageService: LocalStorageService) {}
 
     search(searchModel: SearchModel): Observable<SearchResult[]> {
-        let params: string = [
-            `q=${searchModel.query == null ? '' : searchModel.query}`,
+        
+        let boostParams: string = [
+            searchModel.boost.title,
+            2,3,4,5,6,7,8,9,10,11,12,13
+        ].join(',')
+
+        let params: string[] = [
+            `q=${searchModel.query}`,
+            `ft=${searchModel.freetext}`,
+            `group=${searchModel.group}`,
+            `boost=${boostParams}`,
             `itemsPerPage=${searchModel.size}`
-        ].join('&');
-        let queryUrl: string = `${this.localStorageService.loadSettings().endpoint}?${params}`;
+        ]
+        
+        if (searchModel.digital) {
+            params.push('filter=digital:Ja');
+        }
+        if (searchModel.mediatype != 'Alle') {
+            params.push('filter=mediatype:'+searchModel.mediatype);
+        }
+        
+        
+        
+        let queryUrl: string = `${this.localStorageService.loadSettings().endpoint}?${params.join('&')}`;
         console.log(queryUrl);
         return this.http.get(queryUrl)
         .map((response: Response) => {

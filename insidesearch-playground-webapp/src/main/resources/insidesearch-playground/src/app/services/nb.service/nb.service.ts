@@ -20,7 +20,19 @@ export class SearchModel {
     
     constructor(
         public query: string,
-        public size: number
+        public size: number,
+        public mediatype: string,
+        public digital: boolean,
+        public freetext: boolean,
+        public group: boolean,
+        public boost: Boost
+    ) {}
+}
+
+export class Boost {
+    
+    constructor(
+        public title: number
     ) {}
 }
 
