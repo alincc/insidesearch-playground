@@ -3,9 +3,9 @@
             <img *ngIf="result.thumbnail" [src]="result.thumbnail" class="center-cropped" alt="cover"/>
         </div>
         <div class="md-list-item-text" layout="column">
-          <h3>{{ result.mediatype }} - {{ result.title }}</h3>
+          <h3>{{ result.rank }} - {{ result.mediatype }} - {{ result.title }}</h3>
           <h4>{{ result.creator }}</h4>
-          <p>&nbsp;</p>
+          <p>Rank change: {{ result.rankChange }}&nbsp;</p>
         </div>
 </md-list-item>
 <md-divider *ngIf="!last"></md-divider>

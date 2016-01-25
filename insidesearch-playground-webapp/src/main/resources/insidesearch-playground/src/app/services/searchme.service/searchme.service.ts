@@ -61,6 +61,7 @@ export class SearchmeService implements Search {
                     creator: creator,
                     thumbnail: thumbnail,
                     mediatype: mediatypes.join(','),
+                    rank: i+1,
                 }));
                 
             }

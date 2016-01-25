@@ -50,6 +50,8 @@ export class SearchResult {
     creator: string;
     thumbnail: string;
     mediatype: string;
+    rank: number;
+    rankChange: number;
     
     constructor(obj?: any) {
         this.id = obj && obj.id || null;
@@ -57,6 +59,8 @@ export class SearchResult {
         this.creator = obj && obj.creator || null;
         this.thumbnail = obj && obj.thumbnail || null;
         this.mediatype = obj && obj.mediatype || null;
+        this.rank = obj && obj.rank || null;
+        this.rankChange = obj && obj.rankChange || null;
     }
 }
 

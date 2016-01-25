@@ -68,9 +68,15 @@
                     <md-card-title-text>
                         <div layout="row" layout-align="space-between center">
                             <div class="md-headline">
-                            Resultater
+                                Resultater
                             </div>
                             <div>
+                               <button 
+                                    md-fab class="md-mini md-primary" 
+                                    aria-label="Bruk som sammenligning"
+                                    (click)="toCompareAgainst()">
+                                   <i class="material-icons">compare</i>
+                               </button>
                                Antall treff: 
                                <select [(ngModel)]="searchModel.size"
                                     [value]="searchModel.size">

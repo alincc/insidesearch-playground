@@ -25,6 +25,8 @@ export class SearchComponent implements OnInit {
 
     searchModel = new SearchModel('', 100, 'Alle', true, true, false);
     results: SearchResult[];
+    toCompareAgainstResult: SearchResult[];
+    
     mediatypes: string[] = [
     'Alle',
     'Aviser',
@@ -42,8 +44,21 @@ export class SearchComponent implements OnInit {
 
     updateResults(results: SearchResult[]): void {
         this.results = results;
+        if (this.toCompareAgainstResult.length > 0) {
+            this.results.forEach(item => {
+                this.toCompareAgainstResult.forEach(compare => {
+                    if (item.id == compare.id) {
+                        item.rankChange = item.rank - compare.rank;
+                    }
+                })
+            })
+        }
         //console.log("results:", this.results); // uncomment to take a look
         componentHandler.upgradeAllRegistered();
+    }
+    
+    toCompareAgainst(): void {
+        this.toCompareAgainstResult = this.results.slice(); 
     }
 
     ngOnInit(): void {
