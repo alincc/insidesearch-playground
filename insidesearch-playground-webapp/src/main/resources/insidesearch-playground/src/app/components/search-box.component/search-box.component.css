@@ -1,3 +1,8 @@
 .pg-input-container {
     height: 10px;
 }
+
+.pg-toolbar-label {
+    margin-left: 40px;
+    margin-right: 10px;
+}

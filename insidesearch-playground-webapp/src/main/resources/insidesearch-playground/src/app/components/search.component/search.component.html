@@ -6,7 +6,20 @@
             <md-card flex>
                 <md-card-title>
                     <md-card-title-text>
-                        <span class="md-headline">Instillinger for søk</span>
+                        <span class="md-headline">
+                            Instillinger for søk
+                            <span  class="dropdown"> 
+                            <button md-button class="md-icon-button" aria-label="More"
+                                (click)="toggleMenu()">
+                                <i md-icon>more_horiz</i>
+                            </button>
+                            <div *ngIf="showMenu" class="pl-dropdown-content">
+                                <a href="#"><i md-icon>favorite</i>Legg til i favoritter</a>
+                                <a href="#"><i md-icon>save</i>Lagre endringer</a>
+                                <a href="#"><i md-icon>restore</i>Tilbakestill</a>
+                            </div>
+                            </span>
+                        </span>
                     </md-card-title-text>
                 </md-card-title>
                 <md-card-content>
@@ -28,31 +41,35 @@
                         </md-input-container>
                     </div>
                     <div layout="column" layout-gt-md="row" layout-align="space-between center" class="pg-row">
-                        <md-input-container md-theme="md-block" flex="30">
-                            Mediatype
-                        </md-input-container>
-                        <md-input-container md-theme="md-block" flex>
-                            <select [(ngModel)]="searchModel.mediatype" class="pg-mediatypes">
-                                <option *ngFor="#mediatype of mediatypes" [value]="mediatype.value">
-                                    {{mediatype.label}}
-                                </option>
-                            </select>
-                        </md-input-container>
+                        <div flex="25">
+                            <md-input-container md-theme="md-block">
+                                Mediatype
+                            </md-input-container>
+                        </div>
+                        <div flex="65">
+                            <md-input-container md-theme="md-block" flex>
+                                <select [(ngModel)]="searchModel.mediatype" class="pg-mediatypes">
+                                    <option *ngFor="#mediatype of mediatypes" [value]="mediatype.value">
+                                        {{mediatype.label}}
+                                    </option>
+                                </select>
+                            </md-input-container>
+                        </div>
                     </div>
                     <div layout="column" layout-gt-md="row" layout-align="space-between center" class="pg-row" *ngFor="#boostField of searchModel.boostFields">
-                        <div layout="row" flex="20">
+                        <div layout="row" flex="25">
                             <md-input-container md-theme="md-block">
                                 {{boostField.label}}
                             </md-input-container>
                         </div>
-                        <div layout="row" flex="80">
+                        <div layout="row" flex="75">
                             <md-input-container md-theme="md-block" flex="auto">
                                 <input class="mdl-slider mdl-js-slider"
                                     [(value)]="boostField.value"
                                     [(ngModel)]="boostField.value"
                                     type="range" min="0" max="15">
                             </md-input-container>
-                            <md-input-container md-theme="md-block" flex="10">
+                            <md-input-container md-theme="md-block" flex="15">
                                 <input md-input 
                                     [(value)]="boostField.value"
                                     [(ngModel)]="boostField.value"

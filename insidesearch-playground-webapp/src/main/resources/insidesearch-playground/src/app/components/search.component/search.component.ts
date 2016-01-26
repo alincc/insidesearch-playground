@@ -26,6 +26,7 @@ export class SearchComponent implements OnInit {
     searchModel = new SearchModel('', 100, 'Alle', true, true, false);
     results: SearchResult;
     toCompareAgainstResult: Item[];
+    showMenu: boolean = false;
     
     mediatypes: any[] = [
         {label: 'Alle', value:'Alle'},
@@ -79,6 +80,11 @@ export class SearchComponent implements OnInit {
     
     toCompareAgainst(): void {
         this.toCompareAgainstResult = this.results.items.slice(); 
+    }
+
+    toggleMenu(): void {
+        this.showMenu = this.showMenu ? false : true; 
+        console.log(this.showMenu);
     }
 
     ngOnInit(): void {

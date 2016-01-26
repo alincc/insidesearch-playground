@@ -1,4 +1,24 @@
-
-<md-content  style="overflow: inherit;"gfdg>
-    <router-outlet></router-outlet>
-</md-content>
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer">
+  <div class="mdl-layout__drawer">
+    <span class="mdl-layout-title">Lek med søk</span>
+    <nav class="mdl-navigation">
+      <a class="mdl-navigation__link" [routerLink]="['Search']" aria-label="Lek med rangering">
+          <i md-icon>trending_up</i>Lek med rangering
+      </a>
+      <a class="mdl-navigation__link" [routerLink]="['MyFavorites']" aria-label="Mine favoritter">
+          <i md-icon>favorite</i>Mine favoritter
+      </a>
+      <a class="mdl-navigation__link" [routerLink]="['Settings']" aria-label="Instillinger">
+          <i md-icon>settings</i>Innstillinger
+      </a>
+    </nav>
+  </div>
+  <main class="mdl-layout__content">
+    <div class="page-content">
+        <md-content  style="overflow: inherit;"gfdg>
+            <router-outlet></router-outlet>
+        </md-content>
+    </div>
+  </main>
+</div>
+            
