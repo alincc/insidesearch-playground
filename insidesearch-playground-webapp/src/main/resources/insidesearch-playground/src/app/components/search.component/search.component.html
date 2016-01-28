@@ -92,47 +92,11 @@
             </md-card>
         </div>
         <div flex-gt-sm="60" flex>
-            <md-card>
-                <md-card-title>
-                    <md-card-title-text>
-                        <div layout="row" layout-align="space-between center">
-                            <div class="md-headline">
-                                Resultater
-                            </div>
-                            <div *ngIf="results">
-                                Antall treff {{results.totalElements}}
-                            </div>
-                            <div>
-                               <button 
-                                    md-fab class="md-mini md-primary" 
-                                    aria-label="Bruk som sammenligning"
-                                    (click)="toCompareAgainst()">
-                                   <i class="material-icons">compare_arrows</i>
-                               </button>
-                               Vis antall treff: 
-                               <select [(ngModel)]="searchModel.size"
-                                    [value]="searchModel.size">
-                                    <option *ngFor="#size of sizes" [value]="size">
-                                        {{size}}
-                                    </option>
-                                </select>
-                            </div>
-                        </div>
-
-                        
-                    </md-card-title-text>
-                </md-card-title>
-                <md-card-content>
-                    <md-list *ngIf="results">
-                        <search-result
-                            *ngFor="#item of results.items; #last = last"
-                            [result]="item"
-                            [last]="last">
-                        </search-result>
-                    </md-list>
-                </md-card-content>
-            </md-card>
-
+            <search-results 
+                [results]="results"
+                [compare]="compare"
+                [searchModel]="searchModel">
+            </search-results>
         </div>
     </md-content>
 

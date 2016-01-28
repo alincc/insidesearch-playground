@@ -6,7 +6,7 @@ import {MATERIAL_DIRECTIVES} from 'ng2-material/all';
 import {FORM_DIRECTIVES} from 'angular2/common';
 
 import {SearchBoxComponent} from '../search-box.component/search-box.component';
-import {SearchResultComponent} from '../search-result.component/search-result.component';
+import {SearchResultsComponent} from '../search-results.component/search-results.component';
 import {SearchModel, SearchResult, Item} from '../../services/nb.service/nb.service';
 
 declare var componentHandler;
@@ -17,14 +17,14 @@ declare var dialogPolyfill;
   templateUrl: 'app/components/search.component/search.component.html',
   styleUrls: ['app/components/search.component/search.component.css'],
   providers: [],
-  directives: [SearchBoxComponent, SearchResultComponent, MATERIAL_DIRECTIVES, ROUTER_DIRECTIVES, FORM_DIRECTIVES],
+  directives: [SearchBoxComponent, SearchResultsComponent, MATERIAL_DIRECTIVES, ROUTER_DIRECTIVES, FORM_DIRECTIVES],
   pipes: []
 })
 export class SearchComponent implements OnInit {
 
     searchModel = new SearchModel('', 100, 'Alle', true, true, false);
     results: SearchResult;
-    toCompareAgainstResult: Item[];
+    compare: Item[] = [];
     
     mediatypes: any[] = [
         {label: 'Alle', value:'Alle'},
@@ -50,21 +50,16 @@ export class SearchComponent implements OnInit {
         {label: 'Annet', value:'Annet'},
         {label: 'Ukjent', value:'Ukjent'},
     ];
-    sizes: string[] = [
-    '10',
-    '50',
-    '100',
-    ];
-    
 
     constructor() {
     }
 
     updateResults(results: SearchResult): void {
+        console.log('update ' + this.compare.length);
         this.results = results;
-        if (this.toCompareAgainstResult && this.toCompareAgainstResult.length > 0) {
+        if (this.compare && this.compare.length > 0) {
             this.results.items.forEach(item => {
-                this.toCompareAgainstResult.forEach(compare => {
+                this.compare.forEach(compare => {
                     if (item.id == compare.id) {
                         item.trending = compare.rank - item.rank;
                         item.trendingNew = false;
@@ -72,14 +67,9 @@ export class SearchComponent implements OnInit {
                 })
             })
         }
-        //console.log("results:", this.results); // uncomment to take a look
         componentHandler.upgradeAllRegistered();
     }
     
-    toCompareAgainst(): void {
-        this.toCompareAgainstResult = this.results.items.slice(); 
-    }
-
     showAddToFavoritesDialog(): void {
         console.log('tester');    
         var dialog:any = document.querySelector('dialog');
