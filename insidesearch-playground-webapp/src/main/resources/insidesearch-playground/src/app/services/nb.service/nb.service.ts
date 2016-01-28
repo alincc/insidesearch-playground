@@ -40,7 +40,8 @@ export class SearchModel {
         public mediatype: string,
         public digital: boolean,
         public freetext: boolean,
-        public group: boolean
+        public group: boolean,
+        public explain: boolean
     ) {}
 }
 
@@ -62,6 +63,7 @@ export class Item {
     creator: string;
     thumbnail: string;
     mediatype: string;
+    explain: string;
     rank: number;
     trending: number;
     trendingNew: boolean;
@@ -72,6 +74,7 @@ export class Item {
         this.creator = obj && obj.creator || null;
         this.thumbnail = obj && obj.thumbnail || null;
         this.mediatype = obj && obj.mediatype || null;
+        this.explain = obj && obj.explain || null;
         this.rank = obj && obj.rank || null;
         this.trending = obj && obj.trending || null;
         this.trendingNew = obj && obj.trendingNew || true;

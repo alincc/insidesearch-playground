@@ -30,7 +30,8 @@ export class SearchmeService implements Search {
             `ft=${searchModel.freetext}`,
             `group=${searchModel.group}`,
             `boost=${boostParams}`,
-            `itemsPerPage=${searchModel.size}`
+            `itemsPerPage=${searchModel.size}`,
+            `e=${searchModel.explain}`
         ]
         
         if (searchModel.digital) {
@@ -56,6 +57,7 @@ export class SearchmeService implements Search {
                 var isJp2 = this.isJp2(entry);
                 var thumbnail = this.findThumbnailLink(isJp2, urn, mediatypes);
                 var creator = this.findCreator(entry);
+                var explain = this.getExplain(entry);
                 
                 items.push(new Item({
                     id: entry.getElementsByTagName('id')[0].childNodes[0].nodeValue,
@@ -63,6 +65,7 @@ export class SearchmeService implements Search {
                     creator: creator,
                     thumbnail: thumbnail,
                     mediatype: mediatypes.join(','),
+                    explain: explain,
                     rank: i+1,
                 }));
                 
@@ -117,5 +120,13 @@ export class SearchmeService implements Search {
             return contentClasses[0].childNodes[0].nodeValue.replace(/\s/g, '').split(';').indexOf('jp2') != -1 ? true : false;
         }
         return false;
+    }
+    
+    private getExplain(entry: any): string {
+        var explain = entry.getElementsByTagNameNS(NB_NAMESPACE, 'explain');
+        if (explain.length > 0) {
+            return explain[0].textContent;
+        }
+        return null;
     }
 }

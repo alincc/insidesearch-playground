@@ -22,7 +22,7 @@ declare var dialogPolyfill;
 })
 export class SearchComponent implements OnInit {
 
-    searchModel = new SearchModel('', 100, 'Alle', true, true, false);
+    searchModel = new SearchModel('', 100, 'Alle', true, true, false, false);
     results: SearchResult;
     compare: Item[] = [];
     
