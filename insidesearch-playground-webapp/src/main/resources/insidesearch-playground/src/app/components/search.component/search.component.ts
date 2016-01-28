@@ -10,8 +10,7 @@ import {SearchResultComponent} from '../search-result.component/search-result.co
 import {SearchModel, SearchResult, Item} from '../../services/nb.service/nb.service';
 
 declare var componentHandler;
-
-
+declare var dialogPolyfill;
 
 @Component({
   selector: 'search.component',
@@ -26,7 +25,6 @@ export class SearchComponent implements OnInit {
     searchModel = new SearchModel('', 100, 'Alle', true, true, false);
     results: SearchResult;
     toCompareAgainstResult: Item[];
-    showMenu: boolean = false;
     
     mediatypes: any[] = [
         {label: 'Alle', value:'Alle'},
@@ -82,13 +80,21 @@ export class SearchComponent implements OnInit {
         this.toCompareAgainstResult = this.results.items.slice(); 
     }
 
-    toggleMenu(): void {
-        this.showMenu = this.showMenu ? false : true; 
-        console.log(this.showMenu);
+    showAddToFavoritesDialog(): void {
+        console.log('tester');    
+        var dialog:any = document.querySelector('dialog');
+        dialog.showModal();
+        
     }
-
+    
     ngOnInit(): void {
         componentHandler.upgradeAllRegistered();
+
+        var dialog:any = document.querySelector('dialog');
+        var showDialogButton = document.querySelector('#show-dialog');
+        if (! dialog.showModal) {
+        dialogPolyfill.registerDialog(dialog);
+        }
     }
 }
 

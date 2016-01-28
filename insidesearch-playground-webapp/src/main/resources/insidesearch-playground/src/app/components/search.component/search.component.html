@@ -8,18 +8,27 @@
                     <md-card-title-text>
                         <span class="md-headline">
                             Instillinger for søk
-                            <span  class="dropdown"> 
-                            <button md-button class="md-icon-button" aria-label="More"
-                                (click)="toggleMenu()">
-                                <i md-icon>more_horiz</i>
+                            <button id="menu-speed" class="mdl-button mdl-js-button mdl-button--icon">
+                                <i class="material-icons">more_horiz</i>
                             </button>
-                            <div *ngIf="showMenu" class="pl-dropdown-content">
-                                <a href="#"><i md-icon>favorite</i>Legg til i favoritter</a>
-                                <a href="#"><i md-icon>save</i>Lagre endringer</a>
-                                <a href="#"><i md-icon>restore</i>Tilbakestill</a>
-                            </div>
-                            </span>
-                        </span>
+                            <ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect" for="menu-speed">
+                                <li class="mdl-menu__item" (click)="showAddToFavoritesDialog()"><i md-icon>favorite</i>Legg til i favoritter</li>
+                                <li class="mdl-menu__item"><i md-icon>save</i>Lagre endringer</li>
+                                <li class="mdl-menu__item"><i md-icon>restore</i>Tilbakestill</li>
+                            </ul>
+<dialog class="mdl-dialog">
+    <p class="mdl-dialog__title">Allow data collection?</p>
+    <div class="mdl-dialog__content">
+      <p>
+        Allowing us to collect data will let us get you the information you want faster.
+      <p>
+    </div>
+    <div class="mdl-dialog__actions">
+      <button type="button" class="mdl-button">Agree</button>
+      <button type="button" class="mdl-button close">Disagree</button>
+    </div>
+  </dialog>
+                        </span>                            
                     </md-card-title-text>
                 </md-card-title>
                 <md-card-content>
@@ -126,3 +135,4 @@
 
         </div>
     </md-content>
+
