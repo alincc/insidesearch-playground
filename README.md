@@ -13,7 +13,7 @@ mvn spring-boot:run
 Or if you want live reload server for development
 
 ```bash
-cd src/main/resources/insidesearch-playground
+cd insidesearch-playground-webapp/src/main/resources/insidesearch-playground
 npm install
 ng build
 ng serve
