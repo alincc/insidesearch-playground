@@ -2,7 +2,8 @@ import {Component, OnInit} from 'angular2/core';
 import {MATERIAL_DIRECTIVES} from 'ng2-material/all';
 import {CORE_DIRECTIVES} from 'angular2/common';
 import {
-  RouteParams,
+    Router,
+    RouteParams,
 } from 'angular2/router';
 
 import {SearchModel} from '../../services/nb.service/nb.service';
@@ -50,6 +51,7 @@ export class SearchSettingsComponent implements OnInit {
     
     constructor(
         public localStorageService:LocalStorageService,
+        public router: Router,
         private routeParams:RouteParams) {}
 
     showAddToFavoritesDialog(): void {
@@ -64,18 +66,30 @@ export class SearchSettingsComponent implements OnInit {
     }
     
     addToFavorites(): void {
+        this.saveFavorite();
+        this.closeAddToFavoritesDialog();
+    }
+
+    saveFavorite(): void {
         var favorite:Favorite = new Favorite({
             name: this.favorite.name, 
             searchModel: this.searchModel
         });
         this.localStorageService.addToFavorites(favorite);
+        this.router.navigate( ['Search', { myFavorite: favorite.name }] );
     }
 
     ngOnInit(): void {
         let myFavorite = this.routeParams.get('myFavorite');
         if (myFavorite != null) {
             this.favorite = this.localStorageService.getFavorite(myFavorite);
-            this.searchModel = this.favorite.searchModel;
+            this.searchModel.query = this.favorite.searchModel.query;
+            this.searchModel.boostFields = this.favorite.searchModel.boostFields;
+            this.searchModel.size = this.favorite.searchModel.size;
+            this.searchModel.mediatype = this.favorite.searchModel.mediatype;
+            this.searchModel.digital = this.favorite.searchModel.digital;
+            this.searchModel.freetext = this.favorite.searchModel.freetext;
+            this.searchModel.group = this.favorite.searchModel.group;
         }
 
         var dialog:any = document.querySelector('dialog');

@@ -9,25 +9,28 @@
                             </button>
                             <ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect" for="menu-speed">
                                 <li class="mdl-menu__item" (click)="showAddToFavoritesDialog()"><i md-icon>favorite_border</i>Legg til i favoritter</li>
-                                <li class="mdl-menu__item"><i md-icon>save</i>Lagre endringer</li>
+                                <li class="mdl-menu__item" 
+                                    *ngIf="favorite.name != null"
+                                    (click)="saveFavorite()"><i md-icon>save</i>Lagre endringer</li>
                                 <li class="mdl-menu__item"><i md-icon>restore</i>Tilbakestill</li>
                             </ul>
-<dialog class="mdl-dialog">
-    <p class="mdl-dialog__title">Legg til i favoritter</p>
-    <div class="mdl-dialog__content">
-        <form>
-          <md-input-container class="md-block">
-            <label for="testInput">Navn</label>
-            <input type="text" id="favorite" md-input required [(ngModel)]="favorite.name"  md-autofocus>
-          </md-input-container>
-        </form>
-    </div>
-    <div class="mdl-dialog__actions">
-      <button md-raised-button class="md-raised md-primary" (click)="addToFavorites()">Lagre</button>
-      <button md-raised-button class="md-raised md-primary" (click)="closeAddToFavoritesDialog()">Avbryt</button>
-    </div>
-  </dialog>
-                        </span>                            
+                            <dialog class="mdl-dialog">
+                                <p class="mdl-dialog__title">Legg til i favoritter</p>
+                                <div class="mdl-dialog__content">
+                                    <form>
+                                    <md-input-container class="md-block">
+                                        <label for="testInput">Navn</label>
+                                        <input type="text" id="favorite" md-input required [(ngModel)]="favorite.name"  md-autofocus>
+                                    </md-input-container>
+                                    </form>
+                                </div>
+                                <div class="mdl-dialog__actions">
+                                <button md-raised-button class="md-raised md-primary" (click)="addToFavorites()">Lagre</button>
+                                <button md-raised-button class="md-raised md-primary" (click)="closeAddToFavoritesDialog()">Avbryt</button>
+                                </div>
+                            </dialog>
+                        </span> 
+                         <span class="md-subhead">{{favorite.name}}</span>
                     </md-card-title-text>
                 </md-card-title>
                 <md-card-content>
