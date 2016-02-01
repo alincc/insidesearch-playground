@@ -1,4 +1,4 @@
-import {Component} from 'angular2/core';
+import {Component, OnInit} from 'angular2/core';
 import {
     RouterOutlet,
   APP_BASE_HREF,
@@ -16,6 +16,9 @@ import {SearchComponent} from './components/search.component/search.component';
 import {SearchResultComponent} from './components/search-result.component/search-result.component';
 import {SettingsComponent} from './components/settings.component/settings.component';
 import {MyFavoritesComponent} from './components/my-favorites.component/my-favorites.component';
+import {LocalStorageService, Favorite} from './services/local-storage.service/local-storage.service';
+
+declare var componentHandler;
 
 @Component({
   selector: 'insidesearch-playground-app',
@@ -31,9 +34,20 @@ import {MyFavoritesComponent} from './components/my-favorites.component/my-favor
   { path: '/favorites', name: 'MyFavorites', component: MyFavoritesComponent },
   { path: '/settings', name: 'Settings', component: SettingsComponent },
 ])
-export class InsidesearchPlaygroundApp {
-
-    constructor(public router: Router) {
+export class InsidesearchPlaygroundApp implements OnInit {
+    myFavorites: Favorite[] = [];
+    
+    constructor(public router: Router, 
+        public localStorageService: LocalStorageService) {
     }
-  
+ 
+    onSelectFavorite(favorite: Favorite) {
+        console.log("Load favorite " + favorite.name);
+        this.router.navigate( ['Search', { myFavorite: favorite.name }] );       
+    }
+ 
+    ngOnInit(): void {
+       this.myFavorites = this.localStorageService.getAllFavorites();
+       componentHandler.upgradeAllRegistered();
+    } 
 }

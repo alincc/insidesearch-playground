@@ -1,10 +1,15 @@
 import {Component, OnInit} from 'angular2/core';
 import {MATERIAL_DIRECTIVES} from 'ng2-material/all';
 import {CORE_DIRECTIVES} from 'angular2/common';
+import {
+  RouteParams,
+} from 'angular2/router';
 
 import {SearchModel} from '../../services/nb.service/nb.service';
+import {LocalStorageService, Favorite} from '../../services/local-storage.service/local-storage.service';
 
 declare var dialogPolyfill;
+declare var componentHandler;
 
 @Component({
   inputs: ['searchModel'],
@@ -41,22 +46,44 @@ export class SearchSettingsComponent implements OnInit {
         {label: 'Annet', value:'Annet'},
         {label: 'Ukjent', value:'Ukjent'},
     ];    
+    favorite: Favorite = new Favorite();
     
-    constructor() {}
+    constructor(
+        public localStorageService:LocalStorageService,
+        private routeParams:RouteParams) {}
 
     showAddToFavoritesDialog(): void {
-        console.log('tester');    
         var dialog:any = document.querySelector('dialog');
         dialog.showModal();
         
     }
 
-    ngOnInit(): void {
+    closeAddToFavoritesDialog(): void {
         var dialog:any = document.querySelector('dialog');
-        var showDialogButton = document.querySelector('#show-dialog');
+        dialog.close();
+    }
+    
+    addToFavorites(): void {
+        var favorite:Favorite = new Favorite({
+            name: this.favorite.name, 
+            searchModel: this.searchModel
+        });
+        this.localStorageService.addToFavorites(favorite);
+    }
+
+    ngOnInit(): void {
+        let myFavorite = this.routeParams.get('myFavorite');
+        if (myFavorite != null) {
+            this.favorite = this.localStorageService.getFavorite(myFavorite);
+            this.searchModel = this.favorite.searchModel;
+        }
+
+        var dialog:any = document.querySelector('dialog');
         if (! dialog.showModal) {
             dialogPolyfill.registerDialog(dialog);
         }
+        
+        componentHandler.upgradeAllRegistered();
     }
 
 }
