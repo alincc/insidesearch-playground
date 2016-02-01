@@ -103,9 +103,13 @@ export class LocalStorageService {
         favorites = JSON.parse(localStorage.getItem(LocalStorageService.MY_FAVORTITES));
         favorites.forEach((f, index, array) => {
             if (f.name == name) {
+                console.log('sletter ' + name);
                 array.splice(index, 1);
             }   
         });
+        
+        localStorage.setItem(LocalStorageService.MY_FAVORTITES, JSON.stringify(favorites));
+        
         this.favoritesEvent.next(true);
     }
 }

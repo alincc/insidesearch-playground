@@ -5,8 +5,19 @@
         </h3>
     </div>       
 </md-toolbar>
-<md-content class="md-padding" layout-xs="column" layout="row">
-    <p>
-        my-favorites-component Works!
-    </p>
-</md-content>
+<div>
+  <md-content>
+    <md-list>
+      <md-list-item class="md-2-line" *ngFor="#favorite of myFavorites; #index = index">
+        <div class="md-list-item-text" layout="column">
+          <h3>{{ favorite.name }}</h3>
+          <p>
+              <button md-raised-button class="md-raised md-primary" (click)="onSelectFavorite(favorite)">Åpne</button>
+              <button md-raised-button class="md-raised md-primary" (click)="removeFromFavorites(favorite.name)">Slett</button>
+              
+          </p>
+        </div>
+      </md-list-item>
+    </md-list>
+  </md-content>
+</div>

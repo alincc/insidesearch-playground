@@ -1,5 +1,7 @@
 import {Component, OnInit} from 'angular2/core';
-
+import {
+  Router
+} from 'angular2/router';
 import {LocalStorageService, Favorite} from '../../services/local-storage.service/local-storage.service';
 
 @Component({
@@ -13,7 +15,8 @@ import {LocalStorageService, Favorite} from '../../services/local-storage.servic
 export class MyFavoritesComponent implements OnInit {
     myFavorites: Favorite[] = [];
     
-    constructor(public localStorageService: LocalStorageService) {
+    constructor(public router: Router,
+        public localStorageService: LocalStorageService) {
         localStorageService.favoritesEvent.subscribe((data) => {
             this.loadFavorites();
         });
@@ -21,6 +24,15 @@ export class MyFavoritesComponent implements OnInit {
 
     loadFavorites(): void {
         this.myFavorites = this.localStorageService.getAllFavorites();
+    }
+    
+    removeFromFavorites(name: string): void {
+        console.log(name);
+        this.localStorageService.removeFromFavorites(name);
+    }
+
+    onSelectFavorite(favorite: Favorite) {
+        this.router.navigate( ['Search', { myFavorite: favorite.name }] );       
     }
 
     ngOnInit(): void {
