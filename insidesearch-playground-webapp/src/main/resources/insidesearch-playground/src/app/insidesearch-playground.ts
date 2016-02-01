@@ -39,15 +39,22 @@ export class InsidesearchPlaygroundApp implements OnInit {
     
     constructor(public router: Router, 
         public localStorageService: LocalStorageService) {
+            
+        localStorageService.favoritesEvent.subscribe((data) => {
+            this.loadFavorites();
+        });
+    }
+ 
+    loadFavorites(): void {
+        this.myFavorites = this.localStorageService.getAllFavorites();
     }
  
     onSelectFavorite(favorite: Favorite) {
-        console.log("Load favorite " + favorite.name);
         this.router.navigate( ['Search', { myFavorite: favorite.name }] );       
     }
  
     ngOnInit(): void {
-       this.myFavorites = this.localStorageService.getAllFavorites();
+       this.loadFavorites();
        componentHandler.upgradeAllRegistered();
     } 
 }

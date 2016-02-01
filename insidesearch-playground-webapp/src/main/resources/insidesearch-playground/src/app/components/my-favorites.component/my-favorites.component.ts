@@ -1,5 +1,6 @@
-import {Component} from 'angular2/core';
+import {Component, OnInit} from 'angular2/core';
 
+import {LocalStorageService, Favorite} from '../../services/local-storage.service/local-storage.service';
 
 @Component({
   selector: 'my-favorites-component',
@@ -9,8 +10,21 @@ import {Component} from 'angular2/core';
   directives: [],
   pipes: []
 })
-export class MyFavoritesComponent {
+export class MyFavoritesComponent implements OnInit {
+    myFavorites: Favorite[] = [];
+    
+    constructor(public localStorageService: LocalStorageService) {
+        localStorageService.favoritesEvent.subscribe((data) => {
+            this.loadFavorites();
+        });
+    }
 
-  constructor() {}
+    loadFavorites(): void {
+        this.myFavorites = this.localStorageService.getAllFavorites();
+    }
+
+    ngOnInit(): void {
+       this.loadFavorites();
+    } 
 
 }

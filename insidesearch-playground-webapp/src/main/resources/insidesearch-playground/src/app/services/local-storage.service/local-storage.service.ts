@@ -1,4 +1,4 @@
-import {Injectable} from 'angular2/core';
+import {Injectable, EventEmitter} from 'angular2/core';
 
 import {SearchModel} from '../nb.service/nb.service'
 
@@ -30,6 +30,8 @@ export class Favorite {
 export class LocalStorageService {
     static MY_FAVORTITES: string = 'my.favorites';
     static SETTINGS_ENDPOINT: string = 'settings.endpoint';
+    
+    favoritesEvent: EventEmitter<boolean> = new EventEmitter<boolean>();
     
     constructor() {}
 
@@ -73,6 +75,7 @@ export class LocalStorageService {
     }
 
     addToFavorites(favorite: Favorite): void {
+        
         var favorites = [];
         favorites = JSON.parse(localStorage.getItem(LocalStorageService.MY_FAVORTITES));
         if (favorites == null) {
@@ -90,7 +93,9 @@ export class LocalStorageService {
             favorites.push(favorite);
         }
         
-        localStorage.setItem(LocalStorageService.MY_FAVORTITES, JSON.stringify(favorites));        
+        localStorage.setItem(LocalStorageService.MY_FAVORTITES, JSON.stringify(favorites));
+        
+        this.favoritesEvent.next(true);
     }
     
     removeFromFavorites(name: string): void {
@@ -101,5 +106,6 @@ export class LocalStorageService {
                 array.splice(index, 1);
             }   
         });
+        this.favoritesEvent.next(true);
     }
 }
