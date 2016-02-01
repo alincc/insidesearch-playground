@@ -5,6 +5,7 @@ import {CORE_DIRECTIVES} from 'angular2/common';
 import {SearchResultComponent} from '../search-result.component/search-result.component';
 import {SearchModel, SearchResult, Item} from '../../services/nb.service/nb.service';
 
+
 @Component({
   inputs: ['results', 'searchModel', 'compare'],
   selector: 'search-results',

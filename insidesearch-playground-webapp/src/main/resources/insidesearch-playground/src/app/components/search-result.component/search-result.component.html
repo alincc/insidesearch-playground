@@ -19,6 +19,7 @@
         </div>
 </md-list-item>
 <md-list-item>
-    <pre *ngIf="result.explain">{{ result.explain }}</pre>    
+    <toggle [content]="result.explain" header="Vis forklaring">
+    </toggle>
 </md-list-item>
 <md-divider *ngIf="!last"></md-divider>

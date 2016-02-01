@@ -1,0 +1,8 @@
+<div class="toggle-header" (click)="toggle()">
+    <i *ngIf="visible" class="material-icons">expand_less</i>
+    <i *ngIf="!visible" class="material-icons">expand_more</i>
+    {{ header }}
+</div>
+<div [hidden]="!visible">
+    <pre>{{ content }}</pre>
+</div>

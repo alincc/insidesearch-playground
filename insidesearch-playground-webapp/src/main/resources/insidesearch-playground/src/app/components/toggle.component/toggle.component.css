@@ -1,0 +1,5 @@
+div.toggle-header {
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+}

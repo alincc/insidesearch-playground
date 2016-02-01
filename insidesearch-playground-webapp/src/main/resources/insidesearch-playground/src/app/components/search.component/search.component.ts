@@ -23,7 +23,7 @@ declare var componentHandler;
 })
 export class SearchComponent implements OnInit {
 
-    searchModel = new SearchModel('', 100, 'Alle', true, true, false, false);
+    searchModel = new SearchModel('', 100, 'Alle', true, true, false, true);
     results: SearchResult;
     compare: Item[] = [];
 
