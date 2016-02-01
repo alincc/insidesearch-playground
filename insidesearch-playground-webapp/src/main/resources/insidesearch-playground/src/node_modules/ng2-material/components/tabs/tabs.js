@@ -11,19 +11,17 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 var core_1 = require('angular2/core');
-var lang_1 = require("angular2/src/facade/lang");
 var ink_1 = require("../../core/util/ink");
 var core_2 = require("angular2/core");
 var common_1 = require("angular2/common");
 var core_3 = require("angular2/core");
 var core_4 = require("angular2/core");
 var MdTab = (function () {
-    function MdTab(viewContainer, disabled, templateRef) {
+    function MdTab(viewContainer, templateRef) {
         this.viewContainer = viewContainer;
         this.templateRef = templateRef;
         this.disabled = false;
         this._active = false;
-        this.disabled = lang_1.isPresent(disabled);
     }
     Object.defineProperty(MdTab.prototype, "active", {
         get: function () {
@@ -60,21 +58,19 @@ var MdTab = (function () {
     MdTab = __decorate([
         core_1.Directive({
             selector: '[md-tab]'
-        }),
-        __param(1, core_1.Attribute('disabled')), 
-        __metadata('design:paramtypes', [core_1.ViewContainerRef, String, core_1.TemplateRef])
+        }), 
+        __metadata('design:paramtypes', [core_1.ViewContainerRef, core_1.TemplateRef])
     ], MdTab);
     return MdTab;
 })();
 exports.MdTab = MdTab;
 var MdTabs = (function () {
-    function MdTabs(panes, _element, noScroll) {
+    function MdTabs(panes, _element) {
         var _this = this;
         this.panes = panes;
         this._element = _element;
         this.mdNoScroll = false;
         this._selected = 0;
-        this.mdNoScroll = lang_1.isPresent(noScroll);
         this.panes.changes.subscribe(function (_) {
             _this.panes.toArray().forEach(function (p, index) {
                 p.active = index === _this._selected;
@@ -137,9 +133,8 @@ var MdTabs = (function () {
             properties: ['selected'],
             encapsulation: core_2.ViewEncapsulation.None
         }),
-        __param(0, core_3.Query(MdTab)),
-        __param(2, core_1.Attribute('mdNoScroll')), 
-        __metadata('design:paramtypes', [core_1.QueryList, core_4.ElementRef, String])
+        __param(0, core_3.Query(MdTab)), 
+        __metadata('design:paramtypes', [core_1.QueryList, core_4.ElementRef])
     ], MdTabs);
     return MdTabs;
 })();

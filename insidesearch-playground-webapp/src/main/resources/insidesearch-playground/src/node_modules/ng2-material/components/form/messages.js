@@ -14,11 +14,8 @@ var core_1 = require('angular2/core');
 var common_1 = require('angular2/common');
 var lang_1 = require('angular2/src/facade/lang');
 var MdMessage = (function () {
-    function MdMessage(pattern) {
+    function MdMessage() {
         this.okay = true;
-        if (lang_1.isPresent(pattern)) {
-            this.errorKey = pattern;
-        }
     }
     __decorate([
         core_1.Input('md-message'), 
@@ -30,23 +27,32 @@ var MdMessage = (function () {
             host: {
                 '[style.display]': 'okay ? "none" : "inherit"'
             }
-        }),
-        __param(0, core_1.Attribute('md-message')), 
-        __metadata('design:paramtypes', [Object])
+        }), 
+        __metadata('design:paramtypes', [])
     ], MdMessage);
     return MdMessage;
 })();
 exports.MdMessage = MdMessage;
 var MdMessages = (function () {
-    function MdMessages(messages, form, pattern) {
+    function MdMessages(messages, form) {
         this.messages = messages;
         this.form = form;
-        this.valid = true;
         this._unsubscribe = null;
-        if (lang_1.isPresent(pattern)) {
-            this.property = pattern;
-        }
     }
+    Object.defineProperty(MdMessages.prototype, "valid", {
+        get: function () {
+            if (this.property instanceof common_1.NgControlName) {
+                var ctrl_1 = this.property;
+                return !!ctrl_1.valid;
+            }
+            var prop = this.property;
+            var group = this.form.control;
+            var ctrl = group.controls[prop];
+            return ctrl && ctrl.valid;
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(MdMessages.prototype, "isTouched", {
         get: function () {
             if (this.property instanceof common_1.NgControlName) {
@@ -85,7 +91,7 @@ var MdMessages = (function () {
     MdMessages.prototype.ngOnDestroy = function () {
         this._unsubscribe.unsubscribe();
     };
-    MdMessages.prototype._valueChanged = function (newValue) {
+    MdMessages.prototype._valueChanged = function () {
         var errors = null;
         if (this.property instanceof common_1.NgControlName) {
             var ctrl = this.property;
@@ -97,7 +103,6 @@ var MdMessages = (function () {
             var ctrl = group.controls[prop];
             errors = ctrl.errors;
         }
-        this.valid = !errors;
         if (errors) {
             this.messages.toArray().forEach(function (m) {
                 m.okay = !m.errorKey ? !errors : !lang_1.isPresent(errors[m.errorKey]);
@@ -121,9 +126,8 @@ var MdMessages = (function () {
         __param(0, core_1.Query(MdMessage)),
         __param(1, core_1.Optional()),
         __param(1, core_1.SkipSelf()),
-        __param(1, core_1.Host()),
-        __param(2, core_1.Attribute('md-messages')), 
-        __metadata('design:paramtypes', [core_1.QueryList, common_1.NgFormModel, Object])
+        __param(1, core_1.Host()), 
+        __metadata('design:paramtypes', [core_1.QueryList, common_1.NgFormModel])
     ], MdMessages);
     return MdMessages;
 })();

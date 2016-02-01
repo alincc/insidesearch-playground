@@ -12,9 +12,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __param = (this && this.__param) || function (paramIndex, decorator) {
-    return function (target, key) { decorator(target, key, paramIndex); }
-};
 var core_1 = require('angular2/core');
 var lang_1 = require('angular2/src/facade/lang');
 var progress_linear_1 = require('../progress_linear/progress_linear');
@@ -64,8 +61,8 @@ var Defaults = (function () {
 })();
 var MdProgressCircular = (function (_super) {
     __extends(MdProgressCircular, _super);
-    function MdProgressCircular(mode) {
-        _super.call(this, mode);
+    function MdProgressCircular() {
+        _super.apply(this, arguments);
         this.defaultHalfTransition = Defaults.DEFAULT_HALF_TRANSITION;
     }
     Object.defineProperty(MdProgressCircular.prototype, "diameter", {
@@ -117,6 +114,10 @@ var MdProgressCircular = (function (_super) {
         core_1.Input('diameter'), 
         __metadata('design:type', String)
     ], MdProgressCircular.prototype, "diameter_", void 0);
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', String)
+    ], MdProgressCircular.prototype, "mode", void 0);
     MdProgressCircular = __decorate([
         core_1.Component({
             selector: 'md-progress-circular',
@@ -134,9 +135,8 @@ var MdProgressCircular = (function (_super) {
             template: "\n    <div class=\"md-scale-wrapper\"\n     [style.-webkit-transform]=\"diameterTransformation\"\n     [style.transform]=\"diameterTransformation\">\n      <div class=\"md-spinner-wrapper\">\n        <div class=\"md-inner\">\n          <div class=\"md-gap\"\n          [style.-webkit-transition]=\"gapTransition\"\n          [style.transition]=\"gapTransition\"></div>\n          <div class=\"md-left\">\n            <div class=\"md-half-circle\"\n              [style.-webkit-transform]=\"leftHalfTransform\"\n              [style.transform]=\"leftHalfTransform\"\n              [style.-webkit-transition]=\"defaultHalfTransition\"\n              [style.transition]=\"defaultHalfTransition\"></div>\n          </div>\n          <div class=\"md-right\">\n            <div class=\"md-half-circle\"\n              [style.-webkit-transform]=\"rightHalfTransform\"\n              [style.transform]=\"rightHalfTransform\"\n              [style.-webkit-transition]=\"defaultHalfTransition\"\n              [style.transition]=\"defaultHalfTransition\"></div>\n          </div>\n        </div>\n      </div>\n    </div>",
             directives: [],
             encapsulation: core_1.ViewEncapsulation.None
-        }),
-        __param(0, core_1.Attribute('mode')), 
-        __metadata('design:paramtypes', [String])
+        }), 
+        __metadata('design:paramtypes', [])
     ], MdProgressCircular);
     return MdProgressCircular;
 })(progress_linear_1.MdProgressLinear);

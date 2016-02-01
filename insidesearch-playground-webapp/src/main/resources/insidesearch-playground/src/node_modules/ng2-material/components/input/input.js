@@ -7,9 +7,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __param = (this && this.__param) || function (paramIndex, decorator) {
-    return function (target, key) { decorator(target, key, paramIndex); }
-};
 var core_1 = require('angular2/core');
 var common_1 = require('angular2/common');
 var async_1 = require('angular2/src/facade/async');
@@ -18,12 +15,9 @@ var dom_adapter_1 = require("angular2/src/platform/dom/dom_adapter");
 var async_2 = require("angular2/src/facade/async");
 var lang_1 = require("angular2/src/facade/lang");
 var MdInput = (function () {
-    function MdInput(value, id) {
+    function MdInput() {
         this.mdChange = new async_1.EventEmitter();
         this.mdFocusChange = new async_1.EventEmitter();
-        if (!lang_1.isBlank(value)) {
-            this.value = value;
-        }
     }
     Object.defineProperty(MdInput.prototype, "value", {
         get: function () {
@@ -66,16 +60,14 @@ var MdInput = (function () {
                 '(blur)': 'setHasFocus(false)'
             },
             providers: [common_1.FORM_PROVIDERS]
-        }),
-        __param(0, core_1.Attribute('value')),
-        __param(1, core_1.Attribute('id')), 
-        __metadata('design:paramtypes', [String, String])
+        }), 
+        __metadata('design:paramtypes', [])
     ], MdInput);
     return MdInput;
 })();
 exports.MdInput = MdInput;
 var MdInputContainer = (function () {
-    function MdInputContainer(id, _element) {
+    function MdInputContainer(_element) {
         this._element = _element;
         this._input = null;
         this.inputHasValue = false;
@@ -114,9 +106,8 @@ var MdInputContainer = (function () {
         }),
         core_1.View({
             template: "<ng-content></ng-content><div class=\"md-errors-spacer\"></div>"
-        }),
-        __param(0, core_1.Attribute('id')), 
-        __metadata('design:paramtypes', [String, core_1.ElementRef])
+        }), 
+        __metadata('design:paramtypes', [core_1.ElementRef])
     ], MdInputContainer);
     return MdInputContainer;
 })();

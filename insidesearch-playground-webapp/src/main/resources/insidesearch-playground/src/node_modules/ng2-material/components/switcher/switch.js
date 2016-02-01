@@ -12,15 +12,12 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __param = (this && this.__param) || function (paramIndex, decorator) {
-    return function (target, key) { decorator(target, key, paramIndex); }
-};
 var core_1 = require('angular2/core');
 var checkbox_1 = require('../checkbox/checkbox');
 var MdSwitch = (function (_super) {
     __extends(MdSwitch, _super);
-    function MdSwitch(tabindex) {
-        _super.call(this, tabindex);
+    function MdSwitch() {
+        _super.apply(this, arguments);
     }
     MdSwitch = __decorate([
         core_1.Component({
@@ -38,9 +35,8 @@ var MdSwitch = (function (_super) {
             template: "\n    <div class=\"md-switch-container\">\n      <div class=\"md-switch-bar\"></div>\n      <div class=\"md-switch-thumb-container\">\n        <div class=\"md-switch-thumb\"></div>\n      </div>\n    </div>\n    <div class=\"md-switch-label\">\n      <ng-content></ng-content>\n    </div>",
             directives: [],
             encapsulation: core_1.ViewEncapsulation.None
-        }),
-        __param(0, core_1.Attribute('tabindex')), 
-        __metadata('design:paramtypes', [String])
+        }), 
+        __metadata('design:paramtypes', [])
     ], MdSwitch);
     return MdSwitch;
 })(checkbox_1.MdCheckbox);

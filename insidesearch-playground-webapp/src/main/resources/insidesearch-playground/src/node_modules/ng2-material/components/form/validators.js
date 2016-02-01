@@ -7,9 +7,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __param = (this && this.__param) || function (paramIndex, decorator) {
-    return function (target, key) { decorator(target, key, paramIndex); }
-};
 var lang_1 = require("angular2/src/facade/lang");
 var common_1 = require("angular2/common");
 var core_1 = require("angular2/core");
@@ -20,10 +17,7 @@ var PATTERN_VALIDATOR = lang_1.CONST_EXPR(new core_1.Provider(common_1.NG_VALIDA
     multi: true
 }));
 var MdPatternValidator = (function () {
-    function MdPatternValidator(pattern) {
-        if (lang_2.isPresent(pattern)) {
-            this.mdPattern = pattern;
-        }
+    function MdPatternValidator() {
     }
     MdPatternValidator.inline = function (pattern) {
         return function validate(control) {
@@ -39,16 +33,15 @@ var MdPatternValidator = (function () {
         return MdPatternValidator.inline(this.mdPattern)(control);
     };
     __decorate([
-        core_1.Input('mdPattern'), 
+        core_1.Input(), 
         __metadata('design:type', String)
     ], MdPatternValidator.prototype, "mdPattern", void 0);
     MdPatternValidator = __decorate([
         core_1.Directive({
             selector: '[mdPattern]',
             providers: [PATTERN_VALIDATOR]
-        }),
-        __param(0, core_1.Attribute('mdPattern')), 
-        __metadata('design:paramtypes', [Object])
+        }), 
+        __metadata('design:paramtypes', [])
     ], MdPatternValidator);
     return MdPatternValidator;
 })();
@@ -58,10 +51,7 @@ var MAXLENGTH_VALIDATOR = lang_1.CONST_EXPR(new core_1.Provider(common_1.NG_VALI
     multi: true
 }));
 var MdMaxLengthValidator = (function () {
-    function MdMaxLengthValidator(attr) {
-        if (lang_2.isPresent(attr)) {
-            this.mdMaxLength = attr;
-        }
+    function MdMaxLengthValidator() {
     }
     MdMaxLengthValidator.inline = function (length) {
         return function validate(control) {
@@ -77,13 +67,12 @@ var MdMaxLengthValidator = (function () {
         return MdMaxLengthValidator.inline(this.mdMaxLength)(control);
     };
     __decorate([
-        core_1.Input('mdMaxLength'), 
+        core_1.Input(), 
         __metadata('design:type', String)
     ], MdMaxLengthValidator.prototype, "mdMaxLength", void 0);
     MdMaxLengthValidator = __decorate([
-        core_1.Directive({ selector: '[mdMaxLength]', providers: [MAXLENGTH_VALIDATOR] }),
-        __param(0, core_1.Attribute('mdMaxLength')), 
-        __metadata('design:paramtypes', [Object])
+        core_1.Directive({ selector: '[mdMaxLength]', providers: [MAXLENGTH_VALIDATOR] }), 
+        __metadata('design:paramtypes', [])
     ], MdMaxLengthValidator);
     return MdMaxLengthValidator;
 })();
@@ -93,10 +82,7 @@ var MAXVALUE_VALIDATOR = lang_1.CONST_EXPR(new core_1.Provider(common_1.NG_VALID
     multi: true
 }));
 var MdMaxValueValidator = (function () {
-    function MdMaxValueValidator(attr) {
-        if (lang_2.isPresent(attr)) {
-            this.mdMax = attr;
-        }
+    function MdMaxValueValidator() {
     }
     MdMaxValueValidator.inline = function (length) {
         return function validate(control) {
@@ -112,13 +98,12 @@ var MdMaxValueValidator = (function () {
         return MdMaxValueValidator.inline(this.mdMax)(control);
     };
     __decorate([
-        core_1.Input('mdMax'), 
+        core_1.Input(), 
         __metadata('design:type', String)
     ], MdMaxValueValidator.prototype, "mdMax", void 0);
     MdMaxValueValidator = __decorate([
-        core_1.Directive({ selector: '[mdMax]', providers: [MAXVALUE_VALIDATOR] }),
-        __param(0, core_1.Attribute('mdMax')), 
-        __metadata('design:paramtypes', [Object])
+        core_1.Directive({ selector: '[mdMax]', providers: [MAXVALUE_VALIDATOR] }), 
+        __metadata('design:paramtypes', [])
     ], MdMaxValueValidator);
     return MdMaxValueValidator;
 })();
@@ -128,10 +113,7 @@ var MINVALUE_VALIDATOR = lang_1.CONST_EXPR(new core_1.Provider(common_1.NG_VALID
     multi: true
 }));
 var MdMinValueValidator = (function () {
-    function MdMinValueValidator(attr) {
-        if (lang_2.isPresent(attr)) {
-            this.mdMin = attr;
-        }
+    function MdMinValueValidator() {
     }
     MdMinValueValidator.inline = function (length) {
         return function validate(control) {
@@ -147,13 +129,12 @@ var MdMinValueValidator = (function () {
         return MdMaxValueValidator.inline(this.mdMin)(control);
     };
     __decorate([
-        core_1.Input('mdMin'), 
+        core_1.Input(), 
         __metadata('design:type', String)
     ], MdMinValueValidator.prototype, "mdMin", void 0);
     MdMinValueValidator = __decorate([
-        core_1.Directive({ selector: '[mdMin]', providers: [MINVALUE_VALIDATOR] }),
-        __param(0, core_1.Attribute('mdMin')), 
-        __metadata('design:paramtypes', [Object])
+        core_1.Directive({ selector: '[mdMin]', providers: [MINVALUE_VALIDATOR] }), 
+        __metadata('design:paramtypes', [])
     ], MdMinValueValidator);
     return MdMinValueValidator;
 })();

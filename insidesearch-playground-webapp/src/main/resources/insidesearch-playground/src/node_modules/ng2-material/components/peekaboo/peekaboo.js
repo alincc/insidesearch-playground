@@ -7,17 +7,12 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __param = (this && this.__param) || function (paramIndex, decorator) {
-    return function (target, key) { decorator(target, key, paramIndex); }
-};
 var core_1 = require("angular2/core");
 var media_1 = require('../../core/util/media');
 var core_2 = require("angular2/core");
 var lang_1 = require("angular2/src/facade/lang");
 var lang_2 = require("angular2/src/facade/lang");
-var core_3 = require("angular2/core");
 var lang_3 = require("angular2/src/facade/lang");
-var lang_4 = require("angular2/src/facade/lang");
 var PeekabooAction = (function () {
     function PeekabooAction() {
     }
@@ -39,7 +34,7 @@ var PeekabooAction = (function () {
 })();
 exports.PeekabooAction = PeekabooAction;
 var MdPeekaboo = (function () {
-    function MdPeekaboo(action, media) {
+    function MdPeekaboo(media) {
         var _this = this;
         this.media = media;
         this.break = 100;
@@ -52,9 +47,6 @@ var MdPeekaboo = (function () {
         this._breakpoint = null;
         this._mediaListeners = [];
         this._windowScroll = this.evaluate.bind(this);
-        if (lang_2.isPresent(action)) {
-            this.breakAction = action;
-        }
         window.addEventListener('scroll', this._windowScroll);
         MdPeekaboo.SIZES.forEach(function (size) {
             _this._watchMediaQuery(size);
@@ -65,7 +57,7 @@ var MdPeekaboo = (function () {
         this.evaluate();
     }
     MdPeekaboo.MakeNumber = function (value) {
-        return lang_4.isString(value) ? lang_3.NumberWrapper.parseInt(value, 10) : value;
+        return lang_3.isString(value) ? lang_2.NumberWrapper.parseInt(value, 10) : value;
     };
     Object.defineProperty(MdPeekaboo.prototype, "active", {
         get: function () {
@@ -237,9 +229,8 @@ var MdPeekaboo = (function () {
                 '[class.md-peekaboo-active]': 'active',
                 '[attr.breakAction]': 'breakAction'
             }
-        }),
-        __param(0, core_3.Attribute('breakAction')), 
-        __metadata('design:paramtypes', [String, media_1.Media])
+        }), 
+        __metadata('design:paramtypes', [media_1.Media])
     ], MdPeekaboo);
     return MdPeekaboo;
 })();

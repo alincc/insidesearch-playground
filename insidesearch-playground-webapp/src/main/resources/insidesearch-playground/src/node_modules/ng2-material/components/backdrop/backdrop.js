@@ -15,20 +15,29 @@ var core_4 = require("angular2/core");
 var core_5 = require("angular2/core");
 var core_6 = require("angular2/core");
 var core_7 = require("angular2/core");
+var dom_adapter_1 = require("angular2/src/platform/dom/dom_adapter");
 var MdBackdrop = (function () {
     function MdBackdrop(element) {
         this.element = element;
         this.clickClose = false;
+        this.hideScroll = true;
         this.onHiding = new core_7.EventEmitter();
         this.onHidden = new core_7.EventEmitter();
         this.onShowing = new core_7.EventEmitter();
         this.onShown = new core_7.EventEmitter();
+        this.transitionClass = 'md-active';
+        this.transitionAddClass = true;
         this._visible = false;
         this._transitioning = false;
+        this._previousOverflow = null;
+        this._body = dom_adapter_1.DOM.query('body');
     }
     Object.defineProperty(MdBackdrop.prototype, "visible", {
         get: function () {
             return this._visible;
+        },
+        set: function (value) {
+            this.toggle(value);
         },
         enumerable: true,
         configurable: true
@@ -38,36 +47,50 @@ var MdBackdrop = (function () {
             this.hide();
         }
     };
-    MdBackdrop.prototype.show = function () {
-        var _this = this;
-        if (this._visible) {
-            return Promise.resolve();
-        }
-        this._visible = true;
-        this._transitioning = true;
-        this.onShowing.emit(this);
-        return animate_1.Animate.enter(this.element.nativeElement, 'md-active').then(function () {
-            _this._transitioning = false;
-            _this.onShown.emit(_this);
-        });
-    };
     MdBackdrop.prototype.hide = function () {
+        return this.toggle(false);
+    };
+    MdBackdrop.prototype.show = function () {
+        return this.toggle(true);
+    };
+    MdBackdrop.prototype.toggle = function (visible) {
         var _this = this;
-        if (!this._visible) {
+        if (visible === void 0) { visible = !this.visible; }
+        if (visible === this._visible) {
             return Promise.resolve();
         }
-        this._visible = false;
+        var beginEvent = visible ? this.onShowing : this.onHiding;
+        var endEvent = visible ? this.onShown : this.onHidden;
+        this._visible = visible;
         this._transitioning = true;
-        this.onHiding.emit(this);
-        return animate_1.Animate.leave(this.element.nativeElement, 'md-active').then(function () {
+        beginEvent.emit(this);
+        var action = visible ?
+            (this.transitionAddClass ? animate_1.Animate.enter : animate_1.Animate.leave) :
+            (this.transitionAddClass ? animate_1.Animate.leave : animate_1.Animate.enter);
+        if (visible && this.hideScroll && this.element && !this._previousOverflow) {
+            var style = dom_adapter_1.DOM.getStyle(this._body, 'overflow');
+            if (style !== 'hidden') {
+                this._previousOverflow = style;
+                dom_adapter_1.DOM.setStyle(this._body, 'overflow', 'hidden');
+            }
+        }
+        else if (!visible && this.hideScroll && this.element && this._previousOverflow !== null) {
+            dom_adapter_1.DOM.setStyle(this._body, 'overflow', this._previousOverflow);
+            this._previousOverflow = null;
+        }
+        return action(this.element.nativeElement, this.transitionClass).then(function () {
             _this._transitioning = false;
-            _this.onHidden.emit(_this);
+            endEvent.emit(_this);
         });
     };
     __decorate([
         core_5.Input(), 
         __metadata('design:type', Boolean)
     ], MdBackdrop.prototype, "clickClose", void 0);
+    __decorate([
+        core_5.Input(), 
+        __metadata('design:type', Boolean)
+    ], MdBackdrop.prototype, "hideScroll", void 0);
     __decorate([
         core_6.Output(), 
         __metadata('design:type', core_7.EventEmitter)
@@ -84,10 +107,19 @@ var MdBackdrop = (function () {
         core_6.Output(), 
         __metadata('design:type', core_7.EventEmitter)
     ], MdBackdrop.prototype, "onShown", void 0);
+    __decorate([
+        core_5.Input(), 
+        __metadata('design:type', String)
+    ], MdBackdrop.prototype, "transitionClass", void 0);
+    __decorate([
+        core_5.Input(), 
+        __metadata('design:type', Object)
+    ], MdBackdrop.prototype, "transitionAddClass", void 0);
     MdBackdrop = __decorate([
         core_4.Component({
             selector: 'md-backdrop',
             host: {
+                'class': 'md-backdrop',
                 '(click)': 'onClick()',
             },
         }),

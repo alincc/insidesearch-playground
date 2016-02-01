@@ -7,9 +7,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __param = (this && this.__param) || function (paramIndex, decorator) {
-    return function (target, key) { decorator(target, key, paramIndex); }
-};
 var core_1 = require('angular2/core');
 var lang_1 = require('angular2/src/facade/lang');
 var lang_2 = require('angular2/src/facade/lang');
@@ -46,10 +43,10 @@ var ProgressMode = (function () {
 })();
 exports.ProgressMode = ProgressMode;
 var MdProgressLinear = (function () {
-    function MdProgressLinear(mode) {
+    function MdProgressLinear() {
+        this.mode = ProgressMode.DETERMINATE;
         this.primaryBarTransform = '';
         this.secondaryBarTransform = '';
-        this.mode = lang_2.isPresent(mode) ? mode : ProgressMode.DETERMINATE;
     }
     MdProgressLinear.clamp = function (v) {
         return math_1.Math.max(0, math_1.Math.min(100, v));
@@ -110,9 +107,8 @@ var MdProgressLinear = (function () {
             template: "\n    <div class=\"md-progress-linear-container md-ready\">\n      <div class=\"md-progress-linear-dashed\"></div>\n      <div class=\"md-progress-linear-bar md-progress-linear-bar1\"\n          [style.-webkit-transform]=\"secondaryBarTransform\"\n          [style.transform]=\"secondaryBarTransform\"></div>\n      <div class=\"md-progress-linear-bar md-progress-linear-bar2\"\n          [style.-webkit-transform]=\"primaryBarTransform\"\n          [style.transform]=\"primaryBarTransform\"></div>\n    </div>",
             directives: [],
             encapsulation: core_1.ViewEncapsulation.None
-        }),
-        __param(0, core_1.Attribute('mode')), 
-        __metadata('design:paramtypes', [String])
+        }), 
+        __metadata('design:paramtypes', [])
     ], MdProgressLinear);
     return MdProgressLinear;
 })();

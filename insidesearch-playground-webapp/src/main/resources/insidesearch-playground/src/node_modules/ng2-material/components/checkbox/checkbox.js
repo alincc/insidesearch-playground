@@ -7,21 +7,27 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __param = (this && this.__param) || function (paramIndex, decorator) {
-    return function (target, key) { decorator(target, key, paramIndex); }
-};
 var core_1 = require('angular2/core');
 var lang_1 = require('angular2/src/facade/lang');
 var key_codes_1 = require('../../core/key_codes');
 var core_2 = require('angular2/core');
 var util_1 = require("../../core/util/util");
 var MdCheckbox = (function () {
-    function MdCheckbox(tabindex) {
+    function MdCheckbox() {
         this.checkedChange = new core_2.EventEmitter();
         this.checked = false;
-        this.tabindex = util_1.parseTabIndexAttribute(tabindex);
         this.disabled_ = false;
     }
+    Object.defineProperty(MdCheckbox.prototype, "tabindex", {
+        get: function () {
+            return this._tabindex;
+        },
+        set: function (value) {
+            this._tabindex = util_1.parseTabIndexAttribute(value);
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(MdCheckbox.prototype, "disabled", {
         get: function () {
             return this.disabled_;
@@ -59,9 +65,9 @@ var MdCheckbox = (function () {
         __metadata('design:type', Boolean)
     ], MdCheckbox.prototype, "disabled_", void 0);
     __decorate([
-        core_2.Input(), 
+        core_2.Input('tabindex'), 
         __metadata('design:type', Number)
-    ], MdCheckbox.prototype, "tabindex", void 0);
+    ], MdCheckbox.prototype, "_tabindex", void 0);
     MdCheckbox = __decorate([
         core_1.Component({
             selector: 'md-checkbox',
@@ -79,9 +85,8 @@ var MdCheckbox = (function () {
             template: "\n    <div class=\"md-checkbox-container\">\n      <div class=\"md-checkbox-icon\"></div>\n    </div>\n    <div class=\"md-checkbox-label\"><ng-content></ng-content></div>",
             directives: [],
             encapsulation: core_1.ViewEncapsulation.None
-        }),
-        __param(0, core_1.Attribute('tabindex')), 
-        __metadata('design:paramtypes', [String])
+        }), 
+        __metadata('design:paramtypes', [])
     ], MdCheckbox);
     return MdCheckbox;
 })();
