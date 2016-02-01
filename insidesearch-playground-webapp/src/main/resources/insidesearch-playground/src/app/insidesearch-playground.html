@@ -8,6 +8,13 @@
       <a class="mdl-navigation__link" [routerLink]="['MyFavorites']" aria-label="Mine favoritter">
           <i md-icon>favorite</i>Mine favoritter
       </a>
+
+      <a class="mdl-navigation__link" aria-label="Favoritt" 
+        *ngFor="#favorite of myFavorites"
+        (click)="onSelectFavorite(favorite)">
+            {{favorite.name}}
+      </a>
+
       <a class="mdl-navigation__link" [routerLink]="['Settings']" aria-label="Instillinger">
           <i md-icon>settings</i>Innstillinger
       </a>
