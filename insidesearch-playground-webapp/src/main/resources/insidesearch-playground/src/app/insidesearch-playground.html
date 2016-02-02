@@ -3,20 +3,20 @@
     <span class="mdl-layout-title">Lek med søk</span>
     <nav class="mdl-navigation">
       <a class="mdl-navigation__link" [routerLink]="['Search']" aria-label="Lek med rangering">
-          <i md-icon>trending_up</i>Lek med rangering
+          <i class="pl-md-icon" md-icon>trending_up</i>Lek med rangering
       </a>
       <a class="mdl-navigation__link" [routerLink]="['MyFavorites']" aria-label="Mine favoritter">
-          <i md-icon>favorite</i>Mine favoritter
+          <i class="pl-md-icon" md-icon>favorite</i>Mine favoritter
       </a>
 
-      <a class="pl-sub-navigation-link mdl-navigation__link" aria-label="Favoritt" 
-        *ngFor="#favorite of myFavorites"
-        (click)="onSelectFavorite(favorite)">
-            <i class="material-icons">receipt</i>{{favorite.name}}
-      </a>
+        <a class="pl-sub-navigation-link mdl-navigation__link" aria-label="Favoritt" 
+            *ngFor="#favorite of myFavorites"
+            (click)="onSelectFavorite(favorite)">
+                <i class="pl-md-icon" md-icon>receipt</i>{{favorite.name}}
+        </a>
 
       <a class="mdl-navigation__link" [routerLink]="['Settings']" aria-label="Instillinger">
-          <i md-icon>settings</i>Innstillinger
+          <i class="pl-md-icon" md-icon>settings</i>Innstillinger
       </a>
     </nav>
   </div>

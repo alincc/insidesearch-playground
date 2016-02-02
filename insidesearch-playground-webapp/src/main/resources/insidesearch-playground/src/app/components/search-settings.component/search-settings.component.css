@@ -17,6 +17,7 @@ md-input-container  {
 .mdl-dialog__content {
     padding: 20px 24px 5px 24px;
     color: rgba(0,0,0, 0.54); 
+    font-size: 16px;
 }
 
 .md-subhead {

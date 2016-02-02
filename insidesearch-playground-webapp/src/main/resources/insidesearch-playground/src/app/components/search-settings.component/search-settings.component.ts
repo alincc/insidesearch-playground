@@ -50,8 +50,8 @@ export class SearchSettingsComponent implements OnInit {
     favorite: Favorite = new Favorite();
     
     constructor(
-        public localStorageService:LocalStorageService,
-        public router: Router,
+        private localStorageService:LocalStorageService,
+        private router: Router,
         private routeParams:RouteParams) {}
 
     showAddToFavoritesDialog(): void {
@@ -79,10 +79,14 @@ export class SearchSettingsComponent implements OnInit {
         this.router.navigate( ['Search', { myFavorite: favorite.name }] );
     }
 
-    ngOnInit(): void {
-        let myFavorite = this.routeParams.get('myFavorite');
-        if (myFavorite != null) {
-            this.favorite = this.localStorageService.getFavorite(myFavorite);
+    resetFavorite(): void {
+        if (this.favorite.name.length > 0) {
+            this.loadFavorite(this.favorite.name);
+        }
+    }
+    
+    loadFavorite(name: string): void {
+            this.favorite = this.localStorageService.getFavorite(name);
             this.searchModel.query = this.favorite.searchModel.query;
             this.searchModel.boostFields = this.favorite.searchModel.boostFields;
             this.searchModel.size = this.favorite.searchModel.size;
@@ -90,6 +94,12 @@ export class SearchSettingsComponent implements OnInit {
             this.searchModel.digital = this.favorite.searchModel.digital;
             this.searchModel.freetext = this.favorite.searchModel.freetext;
             this.searchModel.group = this.favorite.searchModel.group;
+    }
+
+    ngOnInit(): void {
+        let myFavorite = this.routeParams.get('myFavorite');
+        if (myFavorite != null) {
+            this.loadFavorite(myFavorite)
         }
 
         var dialog:any = document.querySelector('dialog');

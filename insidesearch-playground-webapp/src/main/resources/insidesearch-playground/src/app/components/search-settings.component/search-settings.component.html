@@ -12,7 +12,8 @@
                                 <li class="mdl-menu__item" 
                                     *ngIf="favorite.name != null"
                                     (click)="saveFavorite()"><i md-icon>save</i>Lagre endringer</li>
-                                <li class="mdl-menu__item"><i md-icon>restore</i>Tilbakestill</li>
+                                <li class="mdl-menu__item"
+                                    (click)="resetFavorite()"><i md-icon>restore</i>Tilbakestill</li>
                             </ul>
                             <dialog class="mdl-dialog">
                                 <p class="mdl-dialog__title">Legg til i favoritter</p>

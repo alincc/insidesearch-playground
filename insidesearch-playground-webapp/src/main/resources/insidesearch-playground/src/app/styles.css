@@ -14,3 +14,8 @@
 .mdl-layout__drawer {
     background-color: #ededed;
 }
+
+.pl-md-icon {
+    vertical-align: bottom;
+    margin-right: 5px;
+}
