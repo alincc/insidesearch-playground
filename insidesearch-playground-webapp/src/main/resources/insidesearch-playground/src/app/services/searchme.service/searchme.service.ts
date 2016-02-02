@@ -58,13 +58,7 @@ export class SearchmeService implements Search {
     private mapResponse(response: Response): SearchResult {
         let items = [];
         var xmlDoc = <any>new DOMParser().parseFromString(response.text(), 'text/xml');
-        var links = xmlDoc.getElementsByTagName('link');
-        for (var i = 0; i < links.length; i++) {
-            var link = links[i];
-            if (link.getAttribute("rel") === 'next') {
-                var next = link.getAttribute("href");
-            }
-        }
+        var next = this.findLinkByRel(xmlDoc, 'next');
         let totalElements = xmlDoc.getElementsByTagNameNS(OPENSEARCH_NAMESPACE, 'totalResults')[0].childNodes[0].nodeValue;
         var entries = xmlDoc.getElementsByTagName('entry');
         for (var i = 0; i < entries.length; i++) {
@@ -76,10 +70,12 @@ export class SearchmeService implements Search {
             var thumbnail = this.findThumbnailLink(isJp2, urn, mediatypes);
             var creator = this.findCreator(entry);
             var explain = this.getExplain(entry);
+            var id = this.findFirstNodeByTagName(entry, 'id');
+            var title = this.findFirstNodeByTagName(entry, 'title');
 
             items.push(new Item({
-                id: entry.getElementsByTagName('id')[0].childNodes[0].nodeValue,
-                title: entry.getElementsByTagName('title')[0].childNodes[0].nodeValue,
+                id: id,
+                title: title,
                 creator: creator,
                 thumbnail: thumbnail,
                 mediatype: mediatypes.join(','),
@@ -112,6 +108,30 @@ export class SearchmeService implements Search {
             mediatypes.indexOf('Tidsskrift') != -1
         )) {
             return 'http://www.nb.no/services/image/resolver/' + urn + '_0001/full/64,0/0/native.jpg';
+        }
+        return null;
+    }
+
+    private findFirstNodeByTagName(entry: any, tagName: string) {
+        var elements = entry.getElementsByTagName(tagName);
+        if (elements.length > 0) {
+            var childNode = elements[0].childNodes[0];
+            if (childNode != null && childNode != 'undefined') {
+                return childNode.nodeValue;
+            }
+        }
+        return null;
+    }
+
+    private findLinkByRel(xmlDoc: any, rel: string) {
+        var links = xmlDoc.getElementsByTagName('link');
+        if (links != null) {
+            for (var i = 0; i < links.length; i++) {
+                var link = links[i];
+                if (link != null && link.getAttribute("rel") === rel) {
+                    return link.getAttribute("href");
+                }
+            }
         }
         return null;
     }
