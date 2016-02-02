@@ -1,9 +1,12 @@
-import {Component, OnInit} from 'angular2/core';
+import {Component, OnInit, ElementRef} from 'angular2/core';
 import {
   Router
 } from 'angular2/router';
 import {LocalStorageService, Favorite} from '../../services/local-storage.service/local-storage.service';
-import {MATERIAL_DIRECTIVES} from 'ng2-material/all';
+import {MATERIAL_DIRECTIVES, MdDialog} from 'ng2-material/all';
+import {MdDialogConfig, MdDialogBasic, MdDialogRef} from "ng2-material/components/dialog/dialog";
+
+import {ForDirective} from '../../directives/for.directive/for.directive';
 
 declare var componentHandler;
 
@@ -12,14 +15,16 @@ declare var componentHandler;
   templateUrl: 'app/components/my-favorites.component/my-favorites.component.html',
   styleUrls: ['app/components/my-favorites.component/my-favorites.component.css'],
   providers: [],
-  directives: [MATERIAL_DIRECTIVES],
+  directives: [MATERIAL_DIRECTIVES, ForDirective],
   pipes: []
 })
 export class MyFavoritesComponent implements OnInit {
     myFavorites: Favorite[] = [];
     
     constructor(public router: Router,
-        public localStorageService: LocalStorageService) {
+        public localStorageService: LocalStorageService,
+        public dialog: MdDialog, 
+        public element: ElementRef) {
         localStorageService.favoritesEvent.subscribe((data) => {
             this.loadFavorites();
         });
@@ -30,9 +35,26 @@ export class MyFavoritesComponent implements OnInit {
         componentHandler.upgradeAllRegistered();
     }
     
-    removeFromFavorites(favorite: Favorite): void {
-        console.log(name);
-        this.localStorageService.removeFromFavorites(favorite.id);
+    removeFromFavorites(ev, favorite: Favorite): void {
+        console.log(favorite.name);
+        let config = new MdDialogConfig()
+        .title('Slett favoritt')
+        .clickOutsideToClose(false)
+        .textContent('Ønsker du å slette "'+favorite.name+'"?')
+        .ariaLabel('Slett favoritt')
+        .ok('Slett')
+        .cancel('Avbryt')
+        .targetEvent(ev);
+        this.dialog.open(MdDialogBasic, this.element, config)
+        .then((ref: MdDialogRef) => {
+            ref.whenClosed.then((result) => {
+                if (result) {
+                    this.localStorageService.removeFromFavorites(favorite.id);
+                }
+            })
+        });        
+        
+        
     }
 
     onSelectFavorite(favorite: Favorite) {

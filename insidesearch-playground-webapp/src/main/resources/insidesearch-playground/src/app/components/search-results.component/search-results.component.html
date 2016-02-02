@@ -10,18 +10,25 @@
                 </div>
                 <div>
                     <button 
+                        id="compare"
                         md-fab class="md-mini md-primary" 
                         aria-label="Bruk som sammenligning"
                         (click)="toCompare()">
                         <i class="material-icons">compare_arrows</i>
                     </button>
+                    <span for="compare" class="mdl-tooltip">Bruk trefflisten for sammenligning</span>
                     Vis antall treff:
-                    <select [(ngModel)]="searchModel.size"
-                        [value]="searchModel.size">
-                        <option *ngFor="#size of sizes" [value]="size">
-                            {{size}}
-                        </option>
-                    </select>
+                    <button id="size" md-button class="pl-size-button md-primary md-hue-1">
+                        {{searchModel.size}}<i class="pl-md-icon" md-icon>expand_more</i>
+                    </button>
+                    <ul class="mdl-menu mdl-js-menu" for="size">
+                        <li class="mdl-menu__item" 
+                            *ngFor="#size of sizes" 
+                            [value]="size"
+                            (click)="changeSize(size)">{{size}}</li>
+                    </ul>
+
+
                 </div>
             </div>
         </md-card-title-text>

@@ -7,6 +7,7 @@ import {SessionStorageService} from '../../services/session-storage.service/sess
 import {NbService, SearchModel, SearchResult, Item} from '../../services/nb.service/nb.service';
 import {SearchmeService} from '../../services/searchme.service/searchme.service';
 import {LocalStorageService} from '../../services/local-storage.service/local-storage.service'
+import {ForDirective} from '../../directives/for.directive/for.directive';
 
 @Component({
     inputs: ['results', 'searchModel', 'compare'],
@@ -14,7 +15,7 @@ import {LocalStorageService} from '../../services/local-storage.service/local-st
     templateUrl: 'app/components/search-results.component/search-results.component.html',
     styleUrls: ['app/components/search-results.component/search-results.component.css'],
     providers: [],
-    directives: [SearchResultComponent, MATERIAL_DIRECTIVES, CORE_DIRECTIVES],
+    directives: [SearchResultComponent, MATERIAL_DIRECTIVES, CORE_DIRECTIVES, ForDirective],
     pipes: []
 })
 export class SearchResultsComponent {
@@ -57,5 +58,9 @@ export class SearchResultsComponent {
                 })
                 this.results.next = results.next;
             });
+    }
+    
+    changeSize(size:number): void {
+        this.searchModel.size = size;
     }
 }
