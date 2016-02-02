@@ -19,10 +19,13 @@
                                 <p class="mdl-dialog__title">Legg til i favoritter</p>
                                 <div class="mdl-dialog__content">
                                     <form>
-                                    <md-input-container class="md-block">
-                                        <label for="testInput">Navn</label>
-                                        <input type="text" id="favorite" md-input required [(ngModel)]="favorite.name"  md-autofocus>
-                                    </md-input-container>
+                                        <md-input-container class="pg-input-container" md-theme="input">
+                                            <label for="favorite">Navn</label>
+                                            <input type="text" id="favorite" md-input required
+                                                md-autofocus 
+                                                [(ngModel)]="favorite.name"
+                                                (keydown.enter)="addToFavorites()">
+                                        </md-input-container>
                                     </form>
                                 </div>
                                 <div class="mdl-dialog__actions">

@@ -50,7 +50,7 @@ export class InsidesearchPlaygroundApp implements OnInit {
     }
  
     onSelectFavorite(favorite: Favorite) {
-        this.router.navigate( ['Search', { myFavorite: favorite.name }] );       
+        this.router.navigate( ['Search', { myFavorite: favorite.id }] );       
     }
  
     ngOnInit(): void {

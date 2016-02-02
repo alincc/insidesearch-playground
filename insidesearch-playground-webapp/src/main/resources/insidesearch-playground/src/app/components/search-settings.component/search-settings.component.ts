@@ -66,27 +66,29 @@ export class SearchSettingsComponent implements OnInit {
     }
     
     addToFavorites(): void {
+        this.favorite.id = null;
         this.saveFavorite();
         this.closeAddToFavoritesDialog();
     }
 
     saveFavorite(): void {
         var favorite:Favorite = new Favorite({
+            id: this.favorite.id,
             name: this.favorite.name, 
             searchModel: this.searchModel
         });
         this.localStorageService.addToFavorites(favorite);
-        this.router.navigate( ['Search', { myFavorite: favorite.name }] );
+        this.router.navigate( ['Search', { myFavorite: favorite.id }] );
     }
 
     resetFavorite(): void {
-        if (this.favorite.name.length > 0) {
-            this.loadFavorite(this.favorite.name);
+        if (this.favorite.id.length > 0) {
+            this.loadFavorite(this.favorite.id);
         }
     }
     
-    loadFavorite(name: string): void {
-            this.favorite = this.localStorageService.getFavorite(name);
+    loadFavorite(id: string): void {
+            this.favorite = this.localStorageService.getFavorite(id);
             this.searchModel.query = this.favorite.searchModel.query;
             this.searchModel.boostFields = this.favorite.searchModel.boostFields;
             this.searchModel.size = this.favorite.searchModel.size;

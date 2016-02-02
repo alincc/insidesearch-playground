@@ -15,16 +15,30 @@ export class Settings {
 }
 
 export class Favorite {
+    id: string;
     name: string;
     searchModel: SearchModel;
     
     constructor(obj?: any) {
+        this.id = obj && obj.id || null;
         this.name = obj && obj.name || null;
         this.searchModel = obj && obj.searchModel || null;
     }
     
 }
 
+class UUID {
+    randomUUID(): string {
+        var d = new Date().getTime();
+        var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+            var r = (d + Math.random()*16)%16 | 0;
+            d = Math.floor(d/16);
+            return (c=='x' ? r : (r&0x3|0x8)).toString(16);
+        });
+        return uuid;
+    };    
+
+}
 
 @Injectable()
 export class LocalStorageService {
@@ -58,13 +72,13 @@ export class LocalStorageService {
         return favorites;
     }
 
-    getFavorite(name: string):Favorite {
+    getFavorite(id: string):Favorite {
         var favorite: Favorite = null;
         var favorites = [];
         favorites = JSON.parse(localStorage.getItem(LocalStorageService.MY_FAVORTITES));
         if (favorites != null) {
             favorites.some(f => {
-                if (f.name == name) {
+                if (f.id == id) {
                     favorite = f;
                     return true;
                 }
@@ -76,6 +90,10 @@ export class LocalStorageService {
 
     addToFavorites(favorite: Favorite): void {
         
+        if (favorite.id == null) {
+            favorite.id = new UUID().randomUUID();
+        }
+        
         var favorites = [];
         favorites = JSON.parse(localStorage.getItem(LocalStorageService.MY_FAVORTITES));
         if (favorites == null) {
@@ -83,7 +101,7 @@ export class LocalStorageService {
         }
         var existsInFavorites: boolean = false;
         favorites.forEach(f => {
-            if (f.name == favorite.name) {
+            if (f.id == favorite.id) {
                 f.searchModel = favorite.searchModel;
                 existsInFavorites = true;
             }   
@@ -98,12 +116,12 @@ export class LocalStorageService {
         this.favoritesEvent.next(true);
     }
     
-    removeFromFavorites(name: string): void {
+    removeFromFavorites(id: string): void {
         var favorites = [];
         favorites = JSON.parse(localStorage.getItem(LocalStorageService.MY_FAVORTITES));
         favorites.forEach((f, index, array) => {
-            if (f.name == name) {
-                console.log('sletter ' + name);
+            if (f.id == id) {
+                console.log('sletter ' + id);
                 array.splice(index, 1);
             }   
         });

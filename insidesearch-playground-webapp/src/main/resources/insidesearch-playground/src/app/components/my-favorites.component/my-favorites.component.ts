@@ -26,13 +26,13 @@ export class MyFavoritesComponent implements OnInit {
         this.myFavorites = this.localStorageService.getAllFavorites();
     }
     
-    removeFromFavorites(name: string): void {
+    removeFromFavorites(favorite: Favorite): void {
         console.log(name);
-        this.localStorageService.removeFromFavorites(name);
+        this.localStorageService.removeFromFavorites(favorite.id);
     }
 
     onSelectFavorite(favorite: Favorite) {
-        this.router.navigate( ['Search', { myFavorite: favorite.name }] );       
+        this.router.navigate( ['Search', { myFavorite: favorite.id }] );       
     }
 
     ngOnInit(): void {
