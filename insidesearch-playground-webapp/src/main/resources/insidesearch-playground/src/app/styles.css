@@ -5,3 +5,12 @@
 .pg-toolbar-label {
     margin-left: 20px;
 }
+
+.pl-sub-navigation-link {
+    cursor: pointer;
+    background-color: #f5f5f5;
+} 
+
+.mdl-layout__drawer {
+    background-color: #ededed;
+}

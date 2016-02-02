@@ -9,10 +9,10 @@
           <i md-icon>favorite</i>Mine favoritter
       </a>
 
-      <a class="mdl-navigation__link" aria-label="Favoritt" 
+      <a class="pl-sub-navigation-link mdl-navigation__link" aria-label="Favoritt" 
         *ngFor="#favorite of myFavorites"
         (click)="onSelectFavorite(favorite)">
-            {{favorite.name}}
+            <i class="material-icons">receipt</i>{{favorite.name}}
       </a>
 
       <a class="mdl-navigation__link" [routerLink]="['Settings']" aria-label="Instillinger">
