@@ -44,7 +44,7 @@ export class SearchComponent implements OnInit {
         }
         componentHandler.upgradeAllRegistered();
     }
-    
+
     ngOnInit(): void {
         componentHandler.upgradeAllRegistered();
     }

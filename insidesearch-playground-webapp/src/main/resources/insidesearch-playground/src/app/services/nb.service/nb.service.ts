@@ -1,11 +1,11 @@
 import {
-  Component,
-  Injectable,
-  bind,
-  OnInit,
-  ElementRef,
-  EventEmitter,
-  Inject
+Component,
+Injectable,
+bind,
+OnInit,
+ElementRef,
+EventEmitter,
+Inject
 } from 'angular2/core';
 import { Http, Response } from 'angular2/http';
 import { Observable } from 'rxjs/Rx';
@@ -13,10 +13,11 @@ import { Observable } from 'rxjs/Rx';
 import {LocalStorageService} from '../local-storage.service/local-storage.service'
 
 export interface Search {
-    search(searchModel: SearchModel):  Observable<SearchResult>;
+    search(searchModel: SearchModel): Observable<SearchResult>;
+    searchByUrl(queryUrl: string): Observable<SearchResult>
 }
 
-    
+
 export class SearchModel {
     query: string;
     size: number;
@@ -25,7 +26,8 @@ export class SearchModel {
     freetext: boolean;
     group: boolean;
     explain: boolean;
-    
+    next: string
+
     public boostFields: any[] = [
         {label: 'title', defaultValue: 10, value: 10},
         {label: 'alternative_title', defaultValue: 4, value: 4},
@@ -50,6 +52,7 @@ export class SearchModel {
         this.freetext = obj && obj.freetext || true;
         this.group = obj && obj.group || false;
         this.explain = obj && obj.explain || true;
+        this.next = obj && obj.next || null;
      }
 }
 
@@ -57,11 +60,13 @@ export class SearchResult {
     id: string;
     items: Item[];
     totalElements: number;
-    
+    next: string;
+
     constructor(obj?: any) {
         this.id = obj && obj.id || null;
         this.items = obj && obj.items || null;
         this.totalElements = obj && obj.totalElements || null;
+        this.next = obj && obj.next || null;
     }
 }
 
@@ -75,7 +80,7 @@ export class Item {
     rank: number;
     trending: number;
     trendingNew: boolean;
-    
+
     constructor(obj?: any) {
         this.id = obj && obj.id || null;
         this.title = obj && obj.title || null;
@@ -91,34 +96,40 @@ export class Item {
 
 
 @Injectable()
-export class NbService implements Search{
-    
-  constructor(public http: Http,
-    public localStorageService: LocalStorageService) {
-  }
-  
-  search(searchModel: SearchModel): Observable<SearchResult> {
-    let params: string = [
-      `q=${searchModel.query == null ? 'qwertyuiopå' : searchModel.query}`
-    ].join('&');
-    let queryUrl: string = `${this.localStorageService.loadSettings().endpoint}?${params}`;
-    console.log(queryUrl);
-    return this.http.get(queryUrl)
-      .map((response: Response) => {
-        console.log(response.json());      
-        return new SearchResult();
-        /*
-        return (<any>response.json())._embedded.items.map(item => {
-          console.log("raw item", item); // uncomment if you want to debug
-          return new SearchResult({
-            id: item.id,
-            title: item.title,
-            creator: '',
-            thumbnail: "http://www.nb.no/services/image/resolver/URN:NBN:no-nb_digimanus_120847_0001/full/64,0/0/native.jpg",
-            mediatype: item.mediatype,
-          });
-        });
-        */
-      });
-  }
+export class NbService implements Search {
+
+    constructor(public http: Http,
+        public localStorageService: LocalStorageService) {
+    }
+
+    search(searchModel: SearchModel): Observable<SearchResult> {
+        let params: string = [
+            `q=${searchModel.query == null ? 'qwertyuiopå' : searchModel.query}`
+        ].join('&');
+        let queryUrl: string = `${this.localStorageService.loadSettings().endpoint}?${params}`;
+        return this.http.get(queryUrl)
+            .map((response: Response) => {
+                console.log(response.json());
+                return new SearchResult();
+                /*
+                return (<any>response.json())._embedded.items.map(item => {
+                  console.log("raw item", item); // uncomment if you want to debug
+                  return new SearchResult({
+                    id: item.id,
+                    title: item.title,
+                    creator: '',
+                    thumbnail: "http://www.nb.no/services/image/resolver/URN:NBN:no-nb_digimanus_120847_0001/full/64,0/0/native.jpg",
+                    mediatype: item.mediatype,
+                  });
+                });
+                */
+            });
+    }
+
+    searchByUrl(queryUrl: string): Observable<SearchResult> {
+        return this.http.get(queryUrl)
+            .map((response: Response) => {
+                return new SearchResult();
+            })
+    }
 }
