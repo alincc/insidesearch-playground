@@ -9,13 +9,20 @@
   <md-content>
     <md-list>
       <md-list-item class="md-2-line" *ngFor="#favorite of myFavorites; #index = index">
+          
         <div class="md-list-item-text" layout="column">
-          <h3>{{ favorite.name }}</h3>
-          <p>
-              <button md-raised-button class="md-raised md-primary" (click)="onSelectFavorite(favorite)">Åpne</button>
-              <button md-raised-button class="md-raised md-primary" (click)="removeFromFavorites(favorite)">Slett</button>
-              
-          </p>
+          <h3>
+              <button id="open_{index}" md-button class="md-icon-button" aria-label="Åpne"
+                (click)="onSelectFavorite(favorite)">
+                <i class="pl-md-icon" md-icon>open_in_browser</i>
+              </button>
+              <span for="open_{index}" class="mdl-tooltip">HyperText Markup Language</span>
+              <button md-button class="md-icon-button" aria-label="Slett"
+                (click)="removeFromFavorites(favorite)">
+                <i class="pl-md-icon" md-icon>delete</i>
+              </button>
+              {{ favorite.name }}
+          </h3>
         </div>
       </md-list-item>
     </md-list>

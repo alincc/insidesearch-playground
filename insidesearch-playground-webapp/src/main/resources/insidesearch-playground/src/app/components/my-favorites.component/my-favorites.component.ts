@@ -3,13 +3,16 @@ import {
   Router
 } from 'angular2/router';
 import {LocalStorageService, Favorite} from '../../services/local-storage.service/local-storage.service';
+import {MATERIAL_DIRECTIVES} from 'ng2-material/all';
+
+declare var componentHandler;
 
 @Component({
   selector: 'my-favorites-component',
   templateUrl: 'app/components/my-favorites.component/my-favorites.component.html',
   styleUrls: ['app/components/my-favorites.component/my-favorites.component.css'],
   providers: [],
-  directives: [],
+  directives: [MATERIAL_DIRECTIVES],
   pipes: []
 })
 export class MyFavoritesComponent implements OnInit {
@@ -24,6 +27,7 @@ export class MyFavoritesComponent implements OnInit {
 
     loadFavorites(): void {
         this.myFavorites = this.localStorageService.getAllFavorites();
+        componentHandler.upgradeAllRegistered();
     }
     
     removeFromFavorites(favorite: Favorite): void {
@@ -37,6 +41,7 @@ export class MyFavoritesComponent implements OnInit {
 
     ngOnInit(): void {
        this.loadFavorites();
+       componentHandler.upgradeAllRegistered();
     } 
 
 }
