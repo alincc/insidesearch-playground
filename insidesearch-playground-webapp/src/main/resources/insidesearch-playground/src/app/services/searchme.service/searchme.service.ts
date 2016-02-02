@@ -76,10 +76,12 @@ export class SearchmeService implements Search {
             var thumbnail = this.findThumbnailLink(isJp2, urn, mediatypes);
             var creator = this.findCreator(entry);
             var explain = this.getExplain(entry);
+            var id = this.findFirstNodeByTagName(entry, 'id');
+            var title = this.findFirstNodeByTagName(entry, 'title');
 
             items.push(new Item({
-                id: entry.getElementsByTagName('id')[0].childNodes[0].nodeValue,
-                title: entry.getElementsByTagName('title')[0].childNodes[0].nodeValue,
+                id: id,
+                title: title,
                 creator: creator,
                 thumbnail: thumbnail,
                 mediatype: mediatypes.join(','),
@@ -112,6 +114,17 @@ export class SearchmeService implements Search {
             mediatypes.indexOf('Tidsskrift') != -1
         )) {
             return 'http://www.nb.no/services/image/resolver/' + urn + '_0001/full/64,0/0/native.jpg';
+        }
+        return null;
+    }
+    
+    private findFirstNodeByTagName(entry: any, tagName: string) {
+        var elements = entry.getElementsByTagName(tagName);
+        if (elements.length > 0) {
+            var childNode = elements[0].childNodes[0];
+            if (childNode != null && childNode != 'undefined') {
+                return childNode.nodeValue;
+            }
         }
         return null;
     }
