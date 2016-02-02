@@ -82,8 +82,18 @@ export class SearchSettingsComponent implements OnInit {
     }
 
     resetFavorite(): void {
-        if (this.favorite.id.length > 0) {
+        if (this.favorite.id != null) {
             this.loadFavorite(this.favorite.id);
+        } else {
+            let f:Favorite = new Favorite();
+            this.searchModel.query = f.searchModel.query;
+            this.searchModel.boostFields = f.searchModel.boostFields;
+            this.searchModel.size = f.searchModel.size;
+            this.searchModel.mediatype = f.searchModel.mediatype;
+            this.searchModel.digital = f.searchModel.digital;
+            this.searchModel.freetext = f.searchModel.freetext;
+            this.searchModel.group = f.searchModel.group;
+            
         }
     }
     

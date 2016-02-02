@@ -22,7 +22,7 @@ export class Favorite {
     constructor(obj?: any) {
         this.id = obj && obj.id || null;
         this.name = obj && obj.name || null;
-        this.searchModel = obj && obj.searchModel || null;
+        this.searchModel = obj && obj.searchModel || new SearchModel();
     }
     
 }

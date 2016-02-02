@@ -18,6 +18,14 @@ export interface Search {
 
     
 export class SearchModel {
+    query: string;
+    size: number;
+    mediatype: string;
+    digital: boolean;
+    freetext: boolean;
+    group: boolean;
+    explain: boolean;
+    
     public boostFields: any[] = [
         {label: 'title', defaultValue: 10, value: 10},
         {label: 'alternative_title', defaultValue: 4, value: 4},
@@ -34,15 +42,15 @@ export class SearchModel {
         {label: 'freetext', defaultValue: 1, value: 1},
     ]
     
-    constructor(
-        public query: string,
-        public size: number,
-        public mediatype: string,
-        public digital: boolean,
-        public freetext: boolean,
-        public group: boolean,
-        public explain: boolean
-    ) {}
+    constructor(obj?: any) {
+        this.query = obj && obj.query || '';
+        this.size = obj && obj.size || 100;
+        this.mediatype = obj && obj.mediatype || 'Alle';
+        this.digital = obj && obj.digital || true;
+        this.freetext = obj && obj.freetext || true;
+        this.group = obj && obj.group || false;
+        this.explain = obj && obj.explain || true;
+     }
 }
 
 export class SearchResult {

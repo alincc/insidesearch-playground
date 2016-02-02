@@ -8,7 +8,7 @@ import {FORM_DIRECTIVES} from 'angular2/common';
 import {SearchBoxComponent} from '../search-box.component/search-box.component';
 import {SearchResultsComponent} from '../search-results.component/search-results.component';
 import {SearchSettingsComponent} from '../search-settings.component/search-settings.component';
-
+import {SessionStorageService} from '../../services/session-storage.service/session-storage.service';
 import {SearchModel, SearchResult, Item} from '../../services/nb.service/nb.service';
 
 declare var componentHandler;
@@ -23,19 +23,18 @@ declare var componentHandler;
 })
 export class SearchComponent implements OnInit {
 
-    searchModel = new SearchModel('', 100, 'Alle', true, true, false, true);
+    searchModel = new SearchModel();
     results: SearchResult;
-    compare: Item[] = [];
 
-    constructor() {
+    constructor(private sessionStorageService: SessionStorageService) {
     }
 
     updateResults(results: SearchResult): void {
-        console.log('update ' + this.compare.length);
         this.results = results;
-        if (this.compare && this.compare.length > 0) {
+        var compare:SearchResult = this.sessionStorageService.getToCompare();
+        if (compare != null && compare.items.length > 0) {
             this.results.items.forEach(item => {
-                this.compare.forEach(compare => {
+                compare.items.forEach(compare => {
                     if (item.id == compare.id) {
                         item.trending = compare.rank - item.rank;
                         item.trendingNew = false;

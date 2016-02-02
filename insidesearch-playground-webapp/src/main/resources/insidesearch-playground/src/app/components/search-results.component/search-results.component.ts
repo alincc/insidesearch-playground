@@ -4,7 +4,7 @@ import {CORE_DIRECTIVES} from 'angular2/common';
 
 import {SearchResultComponent} from '../search-result.component/search-result.component';
 import {SearchModel, SearchResult, Item} from '../../services/nb.service/nb.service';
-
+import {SessionStorageService} from '../../services/session-storage.service/session-storage.service';
 
 @Component({
   inputs: ['results', 'searchModel', 'compare'],
@@ -26,13 +26,10 @@ export class SearchResultsComponent {
         '100',
     ];
     
-    constructor() {}
+    constructor(private sessionStorageService: SessionStorageService) {}
 
     toCompare(): void {
-        this.compare.length = 0;
-        this.results.items.forEach(item => {
-            this.compare.push(item);    
-        })
+        this.sessionStorageService.setToCompare(this.results);
     }
 
 }

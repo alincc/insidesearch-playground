@@ -21,6 +21,7 @@ import {MATERIAL_DIRECTIVES, MATERIAL_PROVIDERS} from 'ng2-material/all';
 import {NbService} from './app/services/nb.service/nb.service';
 import {SearchmeService} from './app/services/searchme.service/searchme.service';
 import {LocalStorageService} from './app/services/local-storage.service/local-storage.service'
+import {SessionStorageService} from './app/services/session-storage.service/session-storage.service';
 
 import 'rxjs/add/operator/map';
 
@@ -32,6 +33,7 @@ bootstrap(InsidesearchPlaygroundApp, [
     NbService,
     SearchmeService,
     LocalStorageService,
+    SessionStorageService,
     HTTP_PROVIDERS,
     ROUTER_PROVIDERS,
     MATERIAL_PROVIDERS,
