@@ -10,7 +10,7 @@ import {LocalStorageService} from '../../services/local-storage.service/local-st
 import {ForDirective} from '../../directives/for.directive/for.directive';
 
 @Component({
-    inputs: ['results', 'searchModel', 'compare'],
+    inputs: ['results', 'loading', 'searchModel', 'compare'],
     selector: 'search-results',
     templateUrl: 'app/components/search-results.component/search-results.component.html',
     styleUrls: ['app/components/search-results.component/search-results.component.css'],
@@ -20,6 +20,7 @@ import {ForDirective} from '../../directives/for.directive/for.directive';
 })
 export class SearchResultsComponent {
     results: SearchResult;
+    loading: boolean;
     searchModel: SearchModel;
 
     sizes: string[] = [

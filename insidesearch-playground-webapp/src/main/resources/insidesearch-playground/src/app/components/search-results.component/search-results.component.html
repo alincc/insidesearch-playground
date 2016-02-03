@@ -34,18 +34,24 @@
         </md-card-title-text>
     </md-card-title>
     <md-card-content>
-        <md-list *ngIf="results">
-            <search-result
-                *ngFor="#item of results.items; #last = last"
-                [result]="item"
-                [last]="last">
-            </search-result>
-        </md-list>
-        
-        <div layout="row" layout-sm="column" layout-align="center center" layout-wrap *ngIf="results && results.next">
-            <button md-fab class="md-primary" aria-label="More hits" (click)="updateResults()">
-                <i md-icon>add circle</i>
-            </button>
+        <div layout="coloum" *ngIf="!loading">
+            <md-list *ngIf="results">
+                <search-result
+                    *ngFor="#item of results.items; #last = last"
+                    [result]="item"
+                    [last]="last">
+                </search-result>
+            </md-list>
+            
+            <div layout="row" layout-sm="column" layout-align="center center" layout-wrap *ngIf="results && results.next">
+                <button md-fab class="md-primary" aria-label="More hits" (click)="updateResults()">
+                    <i md-icon>add circle</i>
+                </button>
+            </div>
         </div>
+        <div *ngIf="loading" layout="row" layout-sm="column" layout-align="space-around">
+            <md-progress-circular mode="indeterminate"></md-progress-circular>
+        </div>
+        
     </md-card-content>
 </md-card>
