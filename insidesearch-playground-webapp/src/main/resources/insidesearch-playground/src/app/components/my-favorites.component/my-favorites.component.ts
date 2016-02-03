@@ -21,17 +21,18 @@ declare var componentHandler;
 export class MyFavoritesComponent implements OnInit {
     myFavorites: Favorite[] = [];
     
-    constructor(public router: Router,
-        public localStorageService: LocalStorageService,
-        public dialog: MdDialog, 
-        public element: ElementRef) {
-        localStorageService.favoritesEvent.subscribe((data) => {
+    constructor(
+        private _router: Router,
+        private _localStorageService: LocalStorageService,
+        private _dialog: MdDialog, 
+        private _element: ElementRef) {
+        _localStorageService.favoritesEvent.subscribe((data) => {
             this.loadFavorites();
         });
     }
 
     loadFavorites(): void {
-        this.myFavorites = this.localStorageService.getAllFavorites();
+        this.myFavorites = this._localStorageService.getAllFavorites();
         componentHandler.upgradeAllRegistered();
     }
     
@@ -45,11 +46,12 @@ export class MyFavoritesComponent implements OnInit {
         .ok('Slett')
         .cancel('Avbryt')
         .targetEvent(ev);
-        this.dialog.open(MdDialogBasic, this.element, config)
+        this._dialog.open(MdDialogBasic, this._element, config)
         .then((ref: MdDialogRef) => {
             ref.whenClosed.then((result) => {
                 if (result) {
-                    this.localStorageService.removeFromFavorites(favorite.id);
+                    this._localStorageService.removeFromFavorites(favorite.id);
+                    this._showToast(favorite.name + ' er fjernet');
                 }
             })
         });        
@@ -58,12 +60,20 @@ export class MyFavoritesComponent implements OnInit {
     }
 
     onSelectFavorite(favorite: Favorite) {
-        this.router.navigate( ['Search', { myFavorite: favorite.id }] );       
+        this._router.navigate( ['Search', { myFavorite: favorite.id }] );       
     }
 
     ngOnInit(): void {
        this.loadFavorites();
        componentHandler.upgradeAllRegistered();
     } 
+
+    private _showToast(message:string): void {
+        var notification:any = document.querySelector('.mdl-js-snackbar');
+        notification.MaterialSnackbar.showSnackbar({
+            message: message,
+            timeout: 3000
+        });        
+    }
 
 }

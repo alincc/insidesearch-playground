@@ -73,7 +73,7 @@ export class SearchResultsComponent implements OnInit{
     }
     
     private _showToast(message:string): void {
-        var notification:any = document.querySelector('#snackbar');
+        var notification:any = document.querySelector('.mdl-js-snackbar');
         notification.MaterialSnackbar.showSnackbar({
             message: message,
             timeout: 3000

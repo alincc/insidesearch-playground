@@ -50,9 +50,9 @@ export class SearchSettingsComponent implements OnInit {
     favorite: Favorite = new Favorite();
     
     constructor(
-        private localStorageService:LocalStorageService,
-        private router: Router,
-        private routeParams:RouteParams) {}
+        private _localStorageService:LocalStorageService,
+        private _router: Router,
+        private _routeParams:RouteParams) {}
 
     showAddToFavoritesDialog(): void {
         var dialog:any = document.querySelector('dialog');
@@ -77,8 +77,9 @@ export class SearchSettingsComponent implements OnInit {
             name: this.favorite.name, 
             searchModel: this.searchModel
         });
-        this.localStorageService.addToFavorites(favorite);
-        this.router.navigate( ['Search', { myFavorite: favorite.id }] );
+        this._localStorageService.addToFavorites(favorite);
+        this._router.navigate( ['Search', { myFavorite: favorite.id }] );
+        this._showToast('Favoritt er lagret');
     }
 
     resetFavorite(): void {
@@ -93,12 +94,12 @@ export class SearchSettingsComponent implements OnInit {
             this.searchModel.digital = f.searchModel.digital;
             this.searchModel.freetext = f.searchModel.freetext;
             this.searchModel.group = f.searchModel.group;
-            
         }
+        this._showToast('Tilbakestilt');
     }
     
     loadFavorite(id: string): void {
-            this.favorite = this.localStorageService.getFavorite(id);
+            this.favorite = this._localStorageService.getFavorite(id);
             this.searchModel.query = this.favorite.searchModel.query;
             this.searchModel.boostFields = this.favorite.searchModel.boostFields;
             this.searchModel.size = this.favorite.searchModel.size;
@@ -109,7 +110,7 @@ export class SearchSettingsComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        let myFavorite = this.routeParams.get('myFavorite');
+        let myFavorite = this._routeParams.get('myFavorite');
         if (myFavorite != null) {
             this.loadFavorite(myFavorite)
         }
@@ -120,6 +121,14 @@ export class SearchSettingsComponent implements OnInit {
         }
         
         componentHandler.upgradeAllRegistered();
+    }
+
+    private _showToast(message:string): void {
+        var notification:any = document.querySelector('.mdl-js-snackbar');
+        notification.MaterialSnackbar.showSnackbar({
+            message: message,
+            timeout: 3000
+        });        
     }
 
 }

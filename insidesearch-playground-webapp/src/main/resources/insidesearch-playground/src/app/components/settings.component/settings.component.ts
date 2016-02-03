@@ -28,16 +28,26 @@ export class SettingsComponent implements OnInit{
     endpoint: string;
     endpoints = [];
     
-    constructor(public router: Router,
-              public routeParams: RouteParams,
-              public localStorageService: LocalStorageService) {
+    constructor(private _router: Router,
+              private _routeParams: RouteParams,
+              private _localStorageService: LocalStorageService) {
     }
 
     onSubmit(): void {
-        this.localStorageService.saveSettings(this.settings);
+        this._localStorageService.saveSettings(this.settings);
+        this._showToast('Instillingene er lagret');
     }
 
     ngOnInit(): void {
-        this.settings = this.localStorageService.loadSettings();
+        this.settings = this._localStorageService.loadSettings();
     }
+
+    private _showToast(message:string): void {
+        var notification:any = document.querySelector('.mdl-js-snackbar');
+        notification.MaterialSnackbar.showSnackbar({
+            message: message,
+            timeout: 3000
+        });        
+    }
+    
 }
