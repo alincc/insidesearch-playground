@@ -5,7 +5,7 @@
                 <div class="md-headline">
                     Resultater
                 </div>
-                <div *ngIf="results">
+                <div *ngIf="results && !loading">
                     Antall treff {{results.totalElements}}
                 </div>
                 <div>
