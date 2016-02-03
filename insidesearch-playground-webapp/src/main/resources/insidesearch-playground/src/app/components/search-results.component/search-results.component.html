@@ -9,23 +9,15 @@
                     Antall treff {{results.totalElements}}
                 </div>
                 <div>
-                    <button 
-                        id="compare"
-                        md-fab class="md-mini md-primary" 
-                        aria-label="Bruk som sammenligning"
-                        (click)="toCompare()">
+                    <button id="compare" md-fab class="md-mini md-primary" aria-label="Bruk som sammenligning" (click)="toCompare()">
                         <i class="material-icons">compare_arrows</i>
                     </button>
-                    <span for="compare" class="mdl-tooltip">Bruk trefflisten for sammenligning</span>
-                    Vis antall treff:
+                    <span for="compare" class="mdl-tooltip">Bruk trefflisten for sammenligning</span> Vis antall treff:
                     <button id="size" md-button class="pl-size-button md-primary md-hue-1">
                         {{searchModel.size}}<i class="pl-md-icon" md-icon>expand_more</i>
                     </button>
                     <ul class="mdl-menu mdl-js-menu" for="size">
-                        <li class="mdl-menu__item" 
-                            *ngFor="#size of sizes" 
-                            [value]="size"
-                            (click)="changeSize(size)">{{size}}</li>
+                        <li class="mdl-menu__item" *ngFor="#size of sizes" [value]="size" (click)="changeSize(size)">{{size}}</li>
                     </ul>
 
 
@@ -36,22 +28,20 @@
     <md-card-content>
         <div layout="coloum" *ngIf="!loading">
             <md-list *ngIf="results">
-                <search-result
-                    *ngFor="#item of results.items; #last = last"
-                    [result]="item"
-                    [last]="last">
+                <search-result *ngFor="#item of results.items; #last = last" [result]="item" [last]="last">
                 </search-result>
             </md-list>
-            
-            <div layout="row" layout-sm="column" layout-align="center center" layout-wrap *ngIf="results && results.next">
-                <button md-fab class="md-primary" aria-label="More hits" (click)="updateResults()">
-                    <i md-icon>add circle</i>
-                </button>
-            </div>
         </div>
+
+        <div layout="coloum" layout-sm="column" layout-align="center center" layout-wrap *ngIf="results && results.next">
+            <button md-fab class="md-primary" aria-label="More hits" (click)="updateResults()">
+                <i md-icon>add circle</i>
+            </button>
+        </div>
+
         <div *ngIf="loading" layout="row" layout-sm="column" layout-align="space-around">
             <md-progress-circular mode="indeterminate"></md-progress-circular>
         </div>
-        
+
     </md-card-content>
 </md-card>

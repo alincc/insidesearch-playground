@@ -42,6 +42,7 @@ export class SearchResultsComponent implements OnInit{
         this._sessionStorageService.setToCompare(this.results);
         this._showToast('Treffliste lagret');
     }
+
     updateResults(): void {
         var searchService = this._nb;
         if (this._localStorageService.loadSettings().endpoint.endsWith('search')) {
@@ -61,22 +62,39 @@ export class SearchResultsComponent implements OnInit{
                     rank++;
                 })
                 this.results.next = results.next;
+
+                this.compareNewResult();
             });
     }
-    
+
+    compareNewResult(): void {
+        var compare: SearchResult = this._sessionStorageService.getToCompare();
+        if (compare != null && compare.items.length > 0) {
+            this.results.items.forEach(item => {
+                compare.items.forEach(compare => {
+                    if (item.id == compare.id) {
+                        item.trending = compare.rank - item.rank;
+                        item.trendingNew = false;
+                    }
+                })
+            })
+        }
+        componentHandler.upgradeAllRegistered();
+    }
+
     changeSize(size:number): void {
         this.searchModel.size = size;
     }
-    
+
     ngOnInit(): void {
         componentHandler.upgradeAllRegistered();
     }
-    
+
     private _showToast(message:string): void {
         var notification:any = document.querySelector('.mdl-js-snackbar');
         notification.MaterialSnackbar.showSnackbar({
             message: message,
             timeout: 3000
-        });        
+        });
     }
 }
