@@ -1,4 +1,4 @@
-import {Component} from 'angular2/core';
+import {Component, OnInit} from 'angular2/core';
 import {MATERIAL_DIRECTIVES} from 'ng2-material/all';
 import {CORE_DIRECTIVES} from 'angular2/common';
 
@@ -9,6 +9,8 @@ import {SearchmeService} from '../../services/searchme.service/searchme.service'
 import {LocalStorageService} from '../../services/local-storage.service/local-storage.service'
 import {ForDirective} from '../../directives/for.directive/for.directive';
 
+declare var componentHandler;
+
 @Component({
     inputs: ['results', 'loading', 'searchModel', 'compare'],
     selector: 'search-results',
@@ -18,7 +20,7 @@ import {ForDirective} from '../../directives/for.directive/for.directive';
     directives: [SearchResultComponent, MATERIAL_DIRECTIVES, CORE_DIRECTIVES, ForDirective],
     pipes: []
 })
-export class SearchResultsComponent {
+export class SearchResultsComponent implements OnInit{
     results: SearchResult;
     loading: boolean;
     searchModel: SearchModel;
@@ -30,19 +32,20 @@ export class SearchResultsComponent {
     ];
 
     constructor(
-        private sessionStorageService: SessionStorageService,
-        public nb: NbService,
-        public searchme: SearchmeService,
-        public localStorageService: LocalStorageService) {
+        private _sessionStorageService: SessionStorageService,
+        private _nb: NbService,
+        private _searchme: SearchmeService,
+        private _localStorageService: LocalStorageService) {
     }
 
     toCompare(): void {
-        this.sessionStorageService.setToCompare(this.results);
+        this._sessionStorageService.setToCompare(this.results);
+        this._showToast('Treffliste lagret');
     }
     updateResults(): void {
-        var searchService = this.nb;
-        if (this.localStorageService.loadSettings().endpoint.endsWith('search')) {
-            searchService = this.searchme;
+        var searchService = this._nb;
+        if (this._localStorageService.loadSettings().endpoint.endsWith('search')) {
+            searchService = this._searchme;
         }
 
         searchService.searchByUrl(this.results.next)
@@ -63,5 +66,17 @@ export class SearchResultsComponent {
     
     changeSize(size:number): void {
         this.searchModel.size = size;
+    }
+    
+    ngOnInit(): void {
+        componentHandler.upgradeAllRegistered();
+    }
+    
+    private _showToast(message:string): void {
+        var notification:any = document.querySelector('#snackbar');
+        notification.MaterialSnackbar.showSnackbar({
+            message: message,
+            timeout: 3000
+        });        
     }
 }
