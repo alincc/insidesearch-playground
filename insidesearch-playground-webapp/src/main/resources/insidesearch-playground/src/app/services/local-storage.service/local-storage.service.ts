@@ -6,7 +6,7 @@ export class Settings {
     endpoints = [
         '',
         'http://escastest1.nb.no:8090/searchv2/search',
-        'http://localhost:8765/v1/catalog/items'
+        'http://tctest.nb.no/catalog/v1/items',
         ];
 
   constructor(

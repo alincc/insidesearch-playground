@@ -6,7 +6,7 @@ info:
 
 server:
   port: 7070
-
+  contextPath: /insidesearch-playground
 ---
 spring:
     profiles: cloud
