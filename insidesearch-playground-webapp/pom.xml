@@ -74,7 +74,7 @@
 						<id>exec-ng-build</id>
 						<phase>generate-resources</phase>
 						<configuration>
-							<executable>node_modules/angular-cli/bin/ng</executable>
+							<executable>ng</executable>
 							<arguments>
 								<argument>build</argument>
 							</arguments>
