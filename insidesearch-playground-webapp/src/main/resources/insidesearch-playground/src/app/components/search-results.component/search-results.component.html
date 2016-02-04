@@ -23,18 +23,21 @@
                     </button>
                     <ul class="mdl-menu mdl-js-menu" for="size">
                         <li class="mdl-menu__item" 
-                            *ngFor="#size of sizes" 
-                            [value]="size"
-                            (click)="changeSize(size)">{{size}}</li>
+                            [value]="10"
+                            (click)="changeSize(10)">10</li>
+                        <li class="mdl-menu__item" 
+                            [value]="50"
+                            (click)="changeSize(50)">50</li>
+                        <li class="mdl-menu__item" 
+                            [value]="50"
+                            (click)="changeSize(100)">100</li>
                     </ul>
-
-
                 </div>
             </div>
         </md-card-title-text>
     </md-card-title>
     <md-card-content>
-        <div layout="coloum" *ngIf="!loading">
+        <div *ngIf="!loading">
             <md-list *ngIf="results">
                 <search-result
                     *ngFor="#item of results.items; #last = last"
