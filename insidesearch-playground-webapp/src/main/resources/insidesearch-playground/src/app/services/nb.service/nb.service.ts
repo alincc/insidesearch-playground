@@ -106,7 +106,14 @@ export class NbService implements Search {
         let params: string = [
             `q=${searchModel.query == null ? 'qwertyuiopå' : searchModel.query}`
         ].join('&');
-        let queryUrl: string = `${this.localStorageService.loadSettings().endpoint}?${params}&explain=${searchModel.explain}`;
+        let boostParams = searchModel.boostFields.map(f => {
+            return f.label + ','+f.value;    
+        }).join('&boost=');
+        
+        let queryUrl: string = `${this.localStorageService.loadSettings().endpoint}?${params}&explain=${searchModel.explain}&boost=${boostParams}`;
+        
+        
+        console.log(boostParams);
         return this.http.get(queryUrl)
             .map((response: Response) => {
                 return this.mapResponse(response);
