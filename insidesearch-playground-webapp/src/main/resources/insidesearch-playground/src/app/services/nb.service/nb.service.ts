@@ -140,7 +140,8 @@ export class NbService implements Search {
             items.push(new Item({
                 id: id,
                 title: title,
-                creator: 'creator',
+                mediatype: entry.metadata.mediaTypes[0],
+                creator: '',
                 explain: explain,
                 rank: i + 1
             }))
