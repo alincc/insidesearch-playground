@@ -106,30 +106,50 @@ export class NbService implements Search {
         let params: string = [
             `q=${searchModel.query == null ? 'qwertyuiopå' : searchModel.query}`
         ].join('&');
-        let queryUrl: string = `${this.localStorageService.loadSettings().endpoint}?${params}`;
+        let queryUrl: string = `${this.localStorageService.loadSettings().endpoint}?${params}&explain=${searchModel.explain}`;
         return this.http.get(queryUrl)
             .map((response: Response) => {
-                console.log(response.json());
-                return new SearchResult();
-                /*
-                return (<any>response.json())._embedded.items.map(item => {
-                  console.log("raw item", item); // uncomment if you want to debug
-                  return new SearchResult({
-                    id: item.id,
-                    title: item.title,
-                    creator: '',
-                    thumbnail: "http://www.nb.no/services/image/resolver/URN:NBN:no-nb_digimanus_120847_0001/full/64,0/0/native.jpg",
-                    mediatype: item.mediatype,
-                  });
-                });
-                */
-            });
+                return this.mapResponse(response);
+            })
     }
-
+    
     searchByUrl(queryUrl: string): Observable<SearchResult> {
         return this.http.get(queryUrl)
             .map((response: Response) => {
                 return new SearchResult();
             })
+    }
+    
+    private mapResponse(response: Response): SearchResult {
+        var items = [];
+        var totalElements = 0;
+        var entries = response.json()._embedded.items;
+        for (let i = 0; i < entries.length; i++) {
+            var entry = entries[i];
+            var id = entry.id;
+            var title = entry.title;
+            var explain = this.getExplain(entry);
+            
+            items.push(new Item({
+                id: id,
+                title: title,
+                creator: 'creator',
+                explain: explain,
+                rank: i + 1
+            }))
+        }
+        return new SearchResult({
+            id: '',
+            items: items,
+            totalElements: totalElements
+        })
+    }
+    
+    private getExplain(entry: any): String {
+        if (entry.explain) {
+            console.log(typeof entry.explain);
+            return entry.explain;
+        }
+        return null;
     }
 }

@@ -4,7 +4,7 @@ import {CORE_DIRECTIVES} from 'angular2/common';
 
 import {SearchResultComponent} from '../search-result.component/search-result.component';
 import {SessionStorageService} from '../../services/session-storage.service/session-storage.service';
-import {NbService, SearchModel, SearchResult, Item} from '../../services/nb.service/nb.service';
+import {Search, NbService, SearchModel, SearchResult, Item} from '../../services/nb.service/nb.service';
 import {SearchmeService} from '../../services/searchme.service/searchme.service';
 import {LocalStorageService} from '../../services/local-storage.service/local-storage.service'
 import {ForDirective} from '../../directives/for.directive/for.directive';
@@ -44,7 +44,7 @@ export class SearchResultsComponent implements OnInit{
     }
 
     updateResults(): void {
-        var searchService = this._nb;
+        var searchService:Search = this._nb;
         if (this._localStorageService.loadSettings().endpoint.endsWith('search')) {
             searchService = this._searchme;
         }

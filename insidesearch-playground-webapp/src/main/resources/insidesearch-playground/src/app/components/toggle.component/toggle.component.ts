@@ -1,4 +1,4 @@
-import {Component} from 'angular2/core';
+import {Component, OnInit} from 'angular2/core';
 
 @Component({
   inputs: ['content','header'],
@@ -9,8 +9,9 @@ import {Component} from 'angular2/core';
   directives: [],
   pipes: []
 })
-export class ToggleComponent {
-    content: string;
+export class ToggleComponent implements OnInit {
+    content: any;
+    isObj: boolean;
     header: string;
     visible: boolean;
     
@@ -20,5 +21,13 @@ export class ToggleComponent {
 
     toggle() {
         this.visible = !this.visible;
+    }
+    
+    ngOnInit(): void {
+        if (typeof this.content === "string") {
+            this.isObj = false;
+        } else {
+            this.isObj = true;
+        }
     }
 }

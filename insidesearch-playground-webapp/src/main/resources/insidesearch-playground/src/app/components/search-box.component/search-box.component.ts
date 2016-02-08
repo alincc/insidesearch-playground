@@ -17,7 +17,7 @@ import { Observable } from 'rxjs/Rx';
 import {MATERIAL_DIRECTIVES, MdDialog} from 'ng2-material/all';
 import {DOM} from "angular2/src/platform/dom/dom_adapter";
 import {MdDialogConfig, MdDialogBasic, MdDialogRef} from "ng2-material/components/dialog/dialog";
-import {NbService, SearchResult, SearchModel} from '../../services/nb.service/nb.service';
+import {Search, NbService, SearchResult, SearchModel} from '../../services/nb.service/nb.service';
 import {SearchmeService} from '../../services/searchme.service/searchme.service';
 import {LocalStorageService} from '../../services/local-storage.service/local-storage.service'
 
@@ -54,7 +54,7 @@ export class SearchBoxComponent implements OnInit{
 
   search(): void {
       //this.query = this.routeParams.get('query');
-      var searchService = this.nb;
+      var searchService:Search = this.nb;
       if (this.localStorageService.loadSettings().endpoint.endsWith('search')) {
           searchService = this.searchme;
       }

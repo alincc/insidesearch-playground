@@ -1,8 +1,10 @@
-<div class="toggle-header" (click)="toggle()">
+<div class="toggle-header" (click)="toggle()" layout="row" layout-align="start start">
     <i *ngIf="visible" class="material-icons">expand_less</i>
     <i *ngIf="!visible" class="material-icons">expand_more</i>
     {{ header }}
 </div>
 <div [hidden]="!visible">
-    <pre>{{ content }}</pre>
+
+    <pre *ngIf="isObj">{{ content | json}}</pre>
+    <pre *ngIf="!isObj">{{ content }}</pre>
 </div>
