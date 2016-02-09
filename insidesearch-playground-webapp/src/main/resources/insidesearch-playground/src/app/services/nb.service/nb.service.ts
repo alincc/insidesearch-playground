@@ -104,7 +104,8 @@ export class NbService implements Search {
 
     search(searchModel: SearchModel): Observable<SearchResult> {
         let params: string = [
-            `q=${searchModel.query == null ? 'qwertyuiopå' : searchModel.query}`
+            `q=${searchModel.query == null ? 'qwertyuiopå' : searchModel.query}`,
+            `size=${searchModel.size}`
         ].join('&');
         let boostParams = searchModel.boostFields.map(f => {
             return f.label + ','+f.value;    
@@ -112,8 +113,6 @@ export class NbService implements Search {
         
         let queryUrl: string = `${this.localStorageService.loadSettings().endpoint}?${params}&explain=${searchModel.explain}&boost=${boostParams}`;
         
-        
-        console.log(boostParams);
         return this.http.get(queryUrl)
             .map((response: Response) => {
                 return this.mapResponse(response);
@@ -123,24 +122,27 @@ export class NbService implements Search {
     searchByUrl(queryUrl: string): Observable<SearchResult> {
         return this.http.get(queryUrl)
             .map((response: Response) => {
-                return new SearchResult();
+                return this.mapResponse(response);
             })
     }
     
     private mapResponse(response: Response): SearchResult {
         var items = [];
-        var totalElements = response.json().page.totalElements;
-        var entries = response.json()._embedded.items;
+        var json = response.json();
+        var totalElements = json.page.totalElements;
+        var entries = json._embedded.items;
+        var next = this.findNext(json);
         for (let i = 0; i < entries.length; i++) {
             var entry = entries[i];
             var id = entry.id;
             var title = entry.title;
             var explain = this.getExplain(entry);
+            var mediatype = this.getMediatype(entry);
             
             items.push(new Item({
                 id: id,
                 title: title,
-                mediatype: entry.metadata.mediaTypes[0],
+                mediatype: mediatype,
                 creator: '',
                 explain: explain,
                 rank: i + 1
@@ -149,8 +151,23 @@ export class NbService implements Search {
         return new SearchResult({
             id: '',
             items: items,
-            totalElements: totalElements
+            totalElements: totalElements,
+            next: next
         })
+    }
+    
+    private getMediatype(entry) {
+        if (entry.metadata.mediaTypes) {
+            return entry.metadata.mediaTypes[0];
+        }
+        return null;
+    }
+    
+    private findNext(json: any): String {
+        if (json._links.next) {
+            return json._links.next.href;
+        }
+        return null;
     }
     
     private getExplain(entry: any): String {
