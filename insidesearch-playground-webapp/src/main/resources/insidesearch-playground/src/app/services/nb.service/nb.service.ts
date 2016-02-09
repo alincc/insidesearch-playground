@@ -129,7 +129,7 @@ export class NbService implements Search {
     
     private mapResponse(response: Response): SearchResult {
         var items = [];
-        var totalElements = 0;
+        var totalElements = response.json().page.totalElements;
         var entries = response.json()._embedded.items;
         for (let i = 0; i < entries.length; i++) {
             var entry = entries[i];
