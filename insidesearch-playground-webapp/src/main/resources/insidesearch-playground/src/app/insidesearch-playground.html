@@ -10,7 +10,7 @@
       </a>
 
         <a class="pl-sub-navigation-link mdl-navigation__link" aria-label="Favoritt" 
-            *ngFor="#favorite of myFavorites"
+            *ngFor="#favorite of myFavorites| orderBy:'name'"
             (click)="onSelectFavorite(favorite)">
                 <i class="pl-md-icon" md-icon>receipt</i>{{favorite.name}}
         </a>

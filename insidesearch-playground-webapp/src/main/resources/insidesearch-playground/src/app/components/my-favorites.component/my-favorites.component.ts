@@ -7,6 +7,7 @@ import {MATERIAL_DIRECTIVES, MdDialog} from 'ng2-material/all';
 import {MdDialogConfig, MdDialogBasic, MdDialogRef} from "ng2-material/components/dialog/dialog";
 
 import {ForDirective} from '../../directives/for.directive/for.directive';
+import {OrderByPipe} from '../../pipes/order-by.pipe/order-by.pipe';
 
 declare var componentHandler;
 
@@ -16,7 +17,7 @@ declare var componentHandler;
   styleUrls: ['app/components/my-favorites.component/my-favorites.component.css'],
   providers: [],
   directives: [MATERIAL_DIRECTIVES, ForDirective],
-  pipes: []
+  pipes: [OrderByPipe]
 })
 export class MyFavoritesComponent implements OnInit {
     myFavorites: Favorite[] = [];

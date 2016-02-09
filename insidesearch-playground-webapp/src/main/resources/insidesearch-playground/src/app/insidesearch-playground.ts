@@ -17,7 +17,7 @@ import {SearchResultComponent} from './components/search-result.component/search
 import {SettingsComponent} from './components/settings.component/settings.component';
 import {MyFavoritesComponent} from './components/my-favorites.component/my-favorites.component';
 import {LocalStorageService, Favorite} from './services/local-storage.service/local-storage.service';
-
+import {OrderByPipe} from './pipes/order-by.pipe/order-by.pipe';
 declare var componentHandler;
 
 @Component({
@@ -26,7 +26,7 @@ declare var componentHandler;
   templateUrl: 'app/insidesearch-playground.html',
   styleUrls: ['app/styles.css'],
   directives: [RouterOutlet, SearchComponent, MATERIAL_DIRECTIVES, ROUTER_DIRECTIVES, RouterLink],
-  pipes: []
+  pipes: [OrderByPipe]
 })
 @RouteConfig([
   { path: '/', name: 'root', redirectTo: ['Search'] },
