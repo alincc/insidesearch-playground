@@ -1,35 +1,40 @@
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer">
-  <div class="mdl-layout__drawer">
-    <span class="mdl-layout-title">Lek med søk</span>
-    <nav class="mdl-navigation">
-      <a class="mdl-navigation__link" [routerLink]="['Search']" aria-label="Lek med rangering">
-          <i class="pl-md-icon" md-icon>trending_up</i>Lek med rangering
-      </a>
-      <a class="mdl-navigation__link" [routerLink]="['MyFavorites']" aria-label="Mine favoritter">
-          <i class="pl-md-icon" md-icon>favorite</i>Mine favoritter
-      </a>
+    <div class="mdl-layout__drawer">
+        <span class="mdl-layout-title">Lek med søk</span>
+        <nav class="mdl-navigation">
+            <a class="mdl-navigation__link" [routerLink]="['Search']" aria-label="Lek med rangering">
+                <i class="pl-md-icon" md-icon>trending_up</i>Lek med rangering
+            </a>
+            <a class="mdl-navigation__link" [routerLink]="['MyFavorites']" aria-label="Mine favoritter">
+                <i class="pl-md-icon" md-icon>favorite</i>Mine favoritter
+            </a>
 
         <a class="pl-sub-navigation-link mdl-navigation__link" aria-label="Favoritt" 
             *ngFor="#favorite of myFavorites| orderBy:'name'"
             (click)="onSelectFavorite(favorite)">
                 <i class="pl-md-icon" md-icon>receipt</i>{{favorite.name}}
-        </a>
+            </a>
 
-      <a class="mdl-navigation__link" [routerLink]="['Settings']" aria-label="Instillinger">
-          <i class="pl-md-icon" md-icon>settings</i>Innstillinger
-      </a>
-    </nav>
-  </div>
-  <main class="mdl-layout__content">
-    <div class="page-content">
-        <md-content  style="overflow: inherit;"gfdg>
-            <router-outlet></router-outlet>
-        </md-content>
+            <a class="mdl-navigation__link" [routerLink]="['Settings']" aria-label="Instillinger">
+                <i class="pl-md-icon" md-icon>settings</i>Innstillinger
+            </a>
+
+            <a class="mdl-navigation__link" [routerLink]="['ResultList']" aria-label="Treffliste">
+                <i class="pl-md-icon" md-icon>list</i>Treffliste
+            </a>
+        </nav>
     </div>
-    <div id="snackbar" aria-live="assertive" aria-atomic="true" aria-relevant="text" class="mdl-snackbar mdl-js-snackbar">
-        <div class="mdl-snackbar__text"></div>
-        <button type="button" class="mdl-snackbar__action"></button>
-    </div>
-  </main>
+    <main class="mdl-layout__content">
+        <div class="page-content">
+            <md-content>
+                <router-outlet></router-outlet>
+            </md-content>
+        </div>
+        <div id="snackbar" aria-live="assertive" aria-atomic="true" aria-relevant="text"
+             class="mdl-snackbar mdl-js-snackbar">
+            <div class="mdl-snackbar__text"></div>
+            <button type="button" class="mdl-snackbar__action"></button>
+        </div>
+    </main>
 </div>
             
