@@ -138,12 +138,14 @@ export class NbService implements Search {
             var title = entry.title;
             var explain = this.getExplain(entry);
             var mediatype = this.getMediatype(entry);
-            
+            var thumbnail = this.getThumbnail(entry);
+
             items.push(new Item({
                 id: id,
                 title: title,
                 mediatype: mediatype,
                 creator: '',
+                thumbnail: thumbnail,
                 explain: explain,
                 rank: i + 1
             }))
@@ -163,6 +165,13 @@ export class NbService implements Search {
         return null;
     }
     
+    private getThumbnail(entry): string {
+        if (entry._links.thumbnail_small) {
+            return entry._links.thumbnail_small.href;
+        }
+        return null;
+    }
+
     private findNext(json: any): String {
         if (json._links.next) {
             return json._links.next.href;
@@ -172,7 +181,6 @@ export class NbService implements Search {
     
     private getExplain(entry: any): String {
         if (entry.explain) {
-            console.log(typeof entry.explain);
             return entry.explain;
         }
         return null;
