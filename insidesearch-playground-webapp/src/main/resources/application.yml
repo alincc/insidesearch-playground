@@ -3,37 +3,6 @@ info:
     name: insidesearch-playground
     description: Playground for search
 
-
 server:
   port: 7070
   contextPath: /insidesearch-playground
----
-spring:
-    profiles: cloud
-
-endpoints:
-  restart:
-    enabled: true
-  refresh:
-    enabled: true
-
-eureka:
-  instance:
-    preferIpAddress: true
-  client:
-    serviceUrl:
-      defaultZone: http://localhost:8761/eureka/  
-  
----
-spring:
-    profiles: docker
-
-server:
-  port: 8080
-  
-eureka:
-  instance:
-    preferIpAddress: true
-  client:
-    serviceUrl:
-      defaultZone: http://discovery:8761/eureka/
