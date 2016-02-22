@@ -6,7 +6,7 @@ import {
     RouteParams,
 } from 'angular2/router';
 
-import {SearchModel} from '../../services/nb.service/nb.service';
+import {SearchModel, ShouldBoost} from '../../services/nb.service/nb.service';
 import {LocalStorageService, Favorite} from '../../services/local-storage.service/local-storage.service';
 
 declare var dialogPolyfill;
@@ -102,6 +102,7 @@ export class SearchSettingsComponent implements OnInit {
             this.favorite = this._localStorageService.getFavorite(id);
             this.searchModel.query = this.favorite.searchModel.query;
             this.searchModel.boostFields = this.favorite.searchModel.boostFields;
+            this.searchModel.shouldBoostFields = this.favorite.searchModel.shouldBoostFields;
             this.searchModel.size = this.favorite.searchModel.size;
             this.searchModel.mediatype = this.favorite.searchModel.mediatype;
             this.searchModel.digital = this.favorite.searchModel.digital;
@@ -119,6 +120,8 @@ export class SearchSettingsComponent implements OnInit {
         if (! dialog.showModal) {
             dialogPolyfill.registerDialog(dialog);
         }
+        
+        this.searchModel.shouldBoostFields.push(new ShouldBoost())
         
         componentHandler.upgradeAllRegistered();
     }

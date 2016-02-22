@@ -17,6 +17,10 @@ export interface Search {
     searchByUrl(queryUrl: string): Observable<SearchResult>
 }
 
+export class ShouldBoost {
+    term: string;
+    value: string;
+}
 
 export class SearchModel {
     query: string;
@@ -26,7 +30,8 @@ export class SearchModel {
     freetext: boolean;
     group: boolean;
     explain: boolean;
-    next: string
+    next: string;
+    public shouldBoostFields: any[] = [];
 
     public boostFields: any[] = [
         {label: 'title', defaultValue: 10, value: 10},
@@ -53,6 +58,7 @@ export class SearchModel {
         this.group = obj && obj.group || false;
         this.explain = obj && obj.explain || true;
         this.next = obj && obj.next || null;
+        this.shouldBoostFields = obj && obj.shouldBoostFields || [];
      }
 }
 

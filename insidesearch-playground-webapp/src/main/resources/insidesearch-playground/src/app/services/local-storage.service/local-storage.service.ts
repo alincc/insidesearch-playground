@@ -94,6 +94,12 @@ export class LocalStorageService {
             favorite.id = new UUID().randomUUID();
         }
         
+        favorite.searchModel.shouldBoostFields.forEach((f, index, array) => {
+           if (!f.term || !f.value) {
+               array.splice(index);
+           } 
+        });
+        
         var favorites = [];
         favorites = JSON.parse(localStorage.getItem(LocalStorageService.MY_FAVORTITES));
         if (favorites == null) {

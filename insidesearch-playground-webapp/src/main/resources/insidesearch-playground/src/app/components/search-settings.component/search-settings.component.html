@@ -94,5 +94,21 @@
                             </md-input-container>
                         </div>
                     </div>
+                    <div layout="column" layout-gt-md="row" layout-align="space-between center" class="pg-row" *ngFor="#shouldBoostField of searchModel.shouldBoostFields">
+                        <div layout="row" flex="25">
+                            <select
+                                [(value)]="shouldBoostField.term"
+                                [(ngModel)]="shouldBoostField.term">
+                                <option *ngFor="#boostField of searchModel.boostFields" [value]="boostField.label">
+                                    {{boostField.label}}
+                                </option>
+                            </select>
+                        </div>
+                        <div layout="row" flex="75">
+                                <input md-input 
+                                    [(value)]="shouldBoostField.value"
+                                    [(ngModel)]="shouldBoostField.value">
+                        </div>
+                    </div>
                 </md-card-content>
             </md-card>
