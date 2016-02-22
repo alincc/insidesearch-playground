@@ -1,0 +1,22 @@
+a {
+    color: black;
+}
+
+.noScroll {
+    width: 100%;
+    overflow: scroll;
+}
+
+.noScroll::-webkit-scrollbar {
+  display:none;
+}
+
+.item {
+    max-width: 150px;
+    padding-right: 10px;
+}
+
+.newspaper {
+    max-width: 400px;
+    padding: 10px 0 0 0;
+}

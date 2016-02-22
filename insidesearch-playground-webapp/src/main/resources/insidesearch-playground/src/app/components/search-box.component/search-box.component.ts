@@ -19,7 +19,7 @@ import {DOM} from "angular2/src/platform/dom/dom_adapter";
 import {MdDialogConfig, MdDialogBasic, MdDialogRef} from "ng2-material/components/dialog/dialog";
 import {Search, NbService, SearchResult, SearchModel} from '../../services/nb.service/nb.service';
 import {SearchmeService} from '../../services/searchme.service/searchme.service';
-import {LocalStorageService} from '../../services/local-storage.service/local-storage.service'
+import {LocalStorageService} from '../../services/local-storage.service/local-storage.service';
 
 @Component({
   outputs : [ 'loading' , 'results'] ,
@@ -35,7 +35,7 @@ import {LocalStorageService} from '../../services/local-storage.service/local-st
 export class SearchBoxComponent implements OnInit{
   searchModel: SearchModel;
   loading: EventEmitter<boolean> = new EventEmitter<boolean>();
-  results: EventEmitter<SearchResult[]> = new EventEmitter<SearchResult[]>();
+  results: EventEmitter<SearchResult> = new EventEmitter<SearchResult>();
 
   constructor(public router: Router,
               public routeParams : RouteParams,
@@ -62,7 +62,7 @@ export class SearchBoxComponent implements OnInit{
       this.loading.next(true)
       searchService.search(this.searchModel)
         .subscribe(
-        (results: SearchResult[]) => { // on sucesss
+        (results: SearchResult) => { // on sucesss
           this.loading.next(false);
           this.results.next(results);
         },
@@ -77,14 +77,12 @@ export class SearchBoxComponent implements OnInit{
   }
 
   showSettings(ev) {
-      console.log('settings');
       this.router.navigate(['/Settings', {}]);
   };
   
   ngOnInit(): void {
       this.searchModel.query = this.routeParams.get('query');
       this.search();
-      console.log(DOM);
   }
 
 }

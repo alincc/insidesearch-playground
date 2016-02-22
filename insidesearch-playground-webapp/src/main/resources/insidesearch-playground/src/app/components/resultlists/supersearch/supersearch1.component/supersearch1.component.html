@@ -1,0 +1,19 @@
+<md-toolbar class="pg-toolbar">
+    <form class="md-toolbar-tools" layout="row" id="searchToolbar" autocomplete="off">
+        <h3 class="pg-toolbar-label">
+            Søk
+        </h3>
+        <md-input-container class="pg-input-container" md-theme="input" flex>
+            <label for="search">Søk</label>
+            <input autofocus="true" md-input class="pg-searchbox" #newquery [value]="searchModel.query" [(ngModel)]="searchModel.query"
+            id="search" />
+        </md-input-container>
+        <button md-fab class="md-mini md-primary" aria-label="Search" (click)="search()">
+            <i md-icon>search</i>
+        </button>
+    </form>
+</md-toolbar>
+
+<md-content layout-xs="column" layout="column">
+    <supersearch1-result class="results border-top" *ngFor="#result of results; #last = last" [result]="result" [last]="last"></supersearch1-result>
+</md-content>

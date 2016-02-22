@@ -7,7 +7,6 @@
         <input autofocus="true" md-input class="pg-searchbox" #newquery
             [value]="searchModel.query"
             [(ngModel)]="searchModel.query"
-            (keydown.enter)="submit()"
             id="search"/>
     </md-input-container>
     <button md-fab class="md-mini md-primary" aria-label="Search" (click)="submit(newquery.value)">

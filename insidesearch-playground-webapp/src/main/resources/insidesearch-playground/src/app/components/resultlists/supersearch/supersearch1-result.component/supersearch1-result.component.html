@@ -1,0 +1,14 @@
+<div layout="row">
+    <div flex="66">
+        <b>{{result.totalElements}} treff i {{result.id}}</b>
+    </div>
+    <div flex="33" align="end" *ngIf="result.totalElements > 5">
+        <a href=""><b>Se alle</b></a>
+    </div>
+</div>
+<div layout="column" class="noScroll" *ngIf="result.id === 'newspapers'">
+    <item class="item newspaper" *ngFor="#item of result.items; #last = last" [item]="item" [last]="last" [contentSearch]="result.contentSearch"></item>
+</div>
+<div layout="row" class="noScroll" *ngIf="result.id != 'newspapers'">
+    <item class="item" *ngFor="#item of result.items; #last = last" [item]="item" [last]="last" [contentSearch]="result.contentSearch"></item>
+</div>

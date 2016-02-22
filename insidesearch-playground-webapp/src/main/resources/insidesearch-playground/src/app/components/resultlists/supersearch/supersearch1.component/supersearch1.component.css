@@ -1,0 +1,27 @@
+.pg-toolbar {
+    height: 68px;
+    background-color: cornflowerblue;
+}
+
+md-input-container  {
+    margin: 0px;
+}
+.pg-input-container {
+    height: 10px;
+}
+
+.pg-toolbar-label {
+    margin-left: 40px;
+    margin-right: 10px;
+}
+.border-top {
+    border-top: thin solid gray;
+}
+
+.border-top:first-child {
+    border-top: 0;
+}
+
+.results {
+    padding: 10px;
+}

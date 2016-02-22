@@ -1,0 +1,15 @@
+.item {
+    font-size: small;
+}
+.item .baText {
+    max-height: 100px;
+    overflow-y: hidden;
+}
+
+.item span.creator {
+    color: darkred;
+}
+
+.item span.title {
+    font-size: medium;
+}

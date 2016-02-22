@@ -55,6 +55,10 @@ export class SearchmeService implements Search {
             });
     }
 
+    superSearch(searchModel: SearchModel): Observable<SearchResult[]> {
+        return null;
+    }
+
     private mapResponse(response: Response): SearchResult {
         let items = [];
         var xmlDoc = <any>new DOMParser().parseFromString(response.text(), 'text/xml');

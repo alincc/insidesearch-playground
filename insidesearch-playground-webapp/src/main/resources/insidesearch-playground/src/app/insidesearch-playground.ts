@@ -16,7 +16,7 @@ import {SearchComponent} from './components/search.component/search.component';
 import {SearchResultComponent} from './components/search-result.component/search-result.component';
 import {SettingsComponent} from './components/settings.component/settings.component';
 import {MyFavoritesComponent} from './components/my-favorites.component/my-favorites.component';
-import {ResultListComponent} from './components/resultList.component/resultList.component';
+import {SuperSearch1Component} from './components/resultlists/supersearch/supersearch1.component/supersearch1.component';
 import {LocalStorageService, Favorite} from './services/local-storage.service/local-storage.service';
 import {OrderByPipe} from './pipes/order-by.pipe/order-by.pipe';
 declare var componentHandler;
@@ -34,7 +34,7 @@ declare var componentHandler;
     {path: '/search', name: 'Search', component: SearchComponent},
     {path: '/favorites', name: 'MyFavorites', component: MyFavoritesComponent},
     {path: '/settings', name: 'Settings', component: SettingsComponent},
-    {path: '/resultList', name: 'ResultList', component: ResultListComponent},
+    {path: '/resultLists/supersearch1', name: 'Supersearch1', component: SuperSearch1Component}
 ])
 export class InsidesearchPlaygroundApp implements OnInit {
     myFavorites:Favorite[] = [];

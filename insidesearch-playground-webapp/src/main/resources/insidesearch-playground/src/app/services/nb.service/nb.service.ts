@@ -1,11 +1,11 @@
 import {
-Component,
-Injectable,
-bind,
-OnInit,
-ElementRef,
-EventEmitter,
-Inject
+    Component,
+    Injectable,
+    bind,
+    OnInit,
+    ElementRef,
+    EventEmitter,
+    Inject
 } from 'angular2/core';
 import { Http, Response } from 'angular2/http';
 import { Observable } from 'rxjs/Rx';
@@ -13,8 +13,9 @@ import { Observable } from 'rxjs/Rx';
 import {LocalStorageService} from '../local-storage.service/local-storage.service'
 
 export interface Search {
-    search(searchModel: SearchModel): Observable<SearchResult>;
-    searchByUrl(queryUrl: string): Observable<SearchResult>
+    search(searchModel:SearchModel): Observable<SearchResult>;
+    searchByUrl(queryUrl:string): Observable<SearchResult>
+    superSearch(searchModel:SearchModel): Observable<SearchResult[]>;
 }
 
 export class ShouldBoost {
@@ -48,7 +49,7 @@ export class SearchModel {
         {label: 'keydate', defaultValue: 1, value: 1},
         {label: 'freetext', defaultValue: 1, value: 1},
     ]
-    
+
     constructor(obj?: any) {
         this.query = obj && obj.query || '';
         this.size = obj && obj.size || 100;
@@ -63,16 +64,18 @@ export class SearchModel {
 }
 
 export class SearchResult {
-    id: string;
-    items: Item[];
-    totalElements: number;
-    next: string;
+    id:string;
+    items:Item[];
+    totalElements:number;
+    next:string;
+    contentSearch: any[];
 
-    constructor(obj?: any) {
+    constructor(obj?:any) {
         this.id = obj && obj.id || null;
         this.items = obj && obj.items || null;
         this.totalElements = obj && obj.totalElements || null;
         this.next = obj && obj.next || null;
+        this.contentSearch = obj && obj.contentSearch || null;
     }
 }
 
@@ -104,38 +107,127 @@ export class Item {
 @Injectable()
 export class NbService implements Search {
 
-    constructor(public http: Http,
-        public localStorageService: LocalStorageService) {
+    constructor(public http:Http,
+                public localStorageService:LocalStorageService) {
     }
 
-    search(searchModel: SearchModel): Observable<SearchResult> {
-        let params: string = [
+    search(searchModel:SearchModel):Observable<SearchResult> {
+        let params:string = [
             `q=${searchModel.query == null ? 'qwertyuiopå' : searchModel.query}`,
             `size=${searchModel.size}`
         ].join('&');
         let boostParams = searchModel.boostFields.map(f => {
-            return f.label + ','+f.value;    
+            return f.label + ',' + f.value;
         }).join('&boost=');
         let shouldBoostParams = searchModel.shouldBoostFields.map(f => {
-            return f.term + ','+f.value;    
+            return f.term + ','+f.value;
         }).join('&should=');
-        
+
         let queryUrl: string = `${this.localStorageService.loadSettings().endpoint}?${params}&explain=${searchModel.explain}&boost=${boostParams}&should=${shouldBoostParams}`;
-        
         return this.http.get(queryUrl)
-            .map((response: Response) => {
+            .map((response:Response) => {
                 return this.mapResponse(response);
             })
     }
-    
-    searchByUrl(queryUrl: string): Observable<SearchResult> {
+
+    searchByUrl(queryUrl:string):Observable<SearchResult> {
         return this.http.get(queryUrl)
-            .map((response: Response) => {
+            .map((response:Response) => {
                 return this.mapResponse(response);
             })
     }
-    
-    private mapResponse(response: Response): SearchResult {
+
+    superSearch(searchModel:SearchModel):Observable<SearchResult[]> {
+        let params:string = [
+            `q=${searchModel.query == null ? 'qwertyuiopå' : searchModel.query}`,
+            `size=${searchModel.size}`
+        ].join('&');
+        let expand = "metadata";
+        let boostParams = searchModel.boostFields.map(f => {
+            return f.label + ',' + f.value;
+        }).join('&boost=');
+
+        let queryUrl:string = `${this.localStorageService.loadSettings().endpoint}/superSearch?${params}&expand=${expand}&explain=${searchModel.explain}&boost=${boostParams}`;
+        return this.http.get(queryUrl)
+            .map((response:Response) => {
+                return this.mapSuperSearchResponse(response);
+            })
+    }
+
+    private mapSuperSearchResponse(response:Response):SearchResult[] {
+        var searchResults = [];
+        var books = null, images = null, movies = null, music = null, musicManuscripts = null, newspapers = null, radio = null;
+        var json = response.json();
+        var mediatypes = Object.keys(json._embedded);
+        for (var i = 0; i < mediatypes.length; i++) {
+            switch (mediatypes[i]) {
+                case "books":
+                    var books = json._embedded.books;
+                    searchResults.push(this.EntryToSearchResult(books._embedded.items, mediatypes[i], books.page.totalElements, books._embedded.contentSearch));
+                    break;
+                case "images":
+                    var images = json._embedded.images;
+                    searchResults.push(this.EntryToSearchResult(images._embedded.items, mediatypes[i], images.page.totalElements, images._embedded.contentSearch));
+                    break;
+                case "movies":
+                    var movies = json._embedded.movies;
+                    searchResults.push(this.EntryToSearchResult(movies._embedded.items, mediatypes[i], movies.page.totalElements, movies._embedded.contentSearch));
+                    break;
+                case "music":
+                    var music = json._embedded.music;
+                    searchResults.push(this.EntryToSearchResult(music._embedded.items, mediatypes[i], music.page.totalElements, music._embedded.contentSearch));
+                    break;
+                case "musicManuscripts":
+                    var musicManuscripts = json._embedded.musicManuscripts;
+                    searchResults.push(this.EntryToSearchResult(musicManuscripts._embedded.items, mediatypes[i], musicManuscripts.page.totalElements, musicManuscripts._embedded.contentSearch));
+                    break;
+                case "newspapers":
+                    var newspapers = json._embedded.newspapers;
+                    searchResults.push(this.EntryToSearchResult(newspapers._embedded.items, mediatypes[i], newspapers.page.totalElements, newspapers._embedded.contentSearch));
+                    break;
+                case "radio":
+                    var radio = json._embedded.radio;
+                    searchResults.push(this.EntryToSearchResult(radio._embedded.items, mediatypes[i], radio.page.totalElements, radio._embedded.contentSearch));
+                    break;
+            }
+        }
+
+        return searchResults;
+    }
+
+    private EntryToSearchResult(entries, objectId, totalElements, contentSearch) {
+        var items = [];
+        for (let i = 0; i < entries.length; i++) {
+            var entry = entries[i];
+            var id = entry.id;
+            var title = entry.title;
+            var explain = this.getExplain(entry);
+            var mediatype = this.getMediatype(entry);
+            var creator = this.getCreator(entry);
+            var thumbnail = this.getThumbnail(entry);
+            if (thumbnail == null) {
+                thumbnail = "http://www.nb.no/services/image/resolver/URN:NBN:no-nb_digimanus_230572_0001/full/128,0/0/native.jpg";
+            }
+            items.push(new Item({
+                id: id,
+                title: title,
+                mediatype: mediatype,
+                creator: creator,
+                thumbnail: thumbnail,
+                explain: explain,
+                rank: null
+            }))
+        }
+        return new SearchResult({
+            id: objectId,
+            items: items,
+            totalElements: totalElements,
+            next: null,
+            contentSearch: contentSearch
+        });
+    }
+
+    private mapResponse(response:Response):SearchResult {
         var items = [];
         var json = response.json();
         var totalElements = json.page.totalElements;
@@ -147,13 +239,14 @@ export class NbService implements Search {
             var title = entry.title;
             var explain = this.getExplain(entry);
             var mediatype = this.getMediatype(entry);
+            var creator = this.getCreator(entry);
             var thumbnail = this.getThumbnail(entry);
 
             items.push(new Item({
                 id: id,
                 title: title,
                 mediatype: mediatype,
-                creator: '',
+                creator: creator,
                 thumbnail: thumbnail,
                 explain: explain,
                 rank: i + 1
@@ -173,10 +266,10 @@ export class NbService implements Search {
         }
         return [];
     }
-    
+
     private getMediatype(entry) {
-        if (entry.mediaTypes) {
-            return entry.mediaTypes[0];
+        if (entry.mediatypes) {
+            return entry.mediatypes[0];
         }
         return null;
     }
@@ -198,6 +291,13 @@ export class NbService implements Search {
     private getExplain(entry: any): String {
         if (entry.explain) {
             return entry.explain;
+        }
+        return null;
+    }
+
+    private getCreator(entry: any): String {
+        if (entry.creators) {
+            return entry.creators[0];
         }
         return null;
     }

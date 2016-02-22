@@ -1,0 +1,28 @@
+<div layout="row" *ngIf="item.mediatype === 'Aviser'">
+    <div class="item" style="display: inline-flex;">
+        <img [src]="item.thumbnail">
+        <div layout="column" style="padding: 5px;">
+            <span class="title">{{item.title}}</span>
+            <div class="baText">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                Duis aute irure dolor in reprehenderit in voluptate
+            </div>
+            <span class="creator">{{item.creator}}</span>
+        </div>
+    </div>
+</div>
+
+<div layout="column" *ngIf="item.mediatype != 'Aviser'">
+    <div class="item">
+        <img [src]="item.thumbnail">
+        <div class="baText" *ngFor="#cs of contentSearch;">
+            <div *ngIf="cs != undefined && item != undefined && cs.id === item.id">
+                {{cs.text}}
+            </div>
+        </div>
+        <span *ngIf="contentSearch === null">{{item.title}}</span>
+        <br />
+        <span class="creator">{{item.creator}}</span>
+    </div>
+</div>
