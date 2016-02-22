@@ -116,8 +116,11 @@ export class NbService implements Search {
         let boostParams = searchModel.boostFields.map(f => {
             return f.label + ','+f.value;    
         }).join('&boost=');
+        let shouldBoostParams = searchModel.shouldBoostFields.map(f => {
+            return f.term + ','+f.value;    
+        }).join('&should=');
         
-        let queryUrl: string = `${this.localStorageService.loadSettings().endpoint}?${params}&explain=${searchModel.explain}&boost=${boostParams}`;
+        let queryUrl: string = `${this.localStorageService.loadSettings().endpoint}?${params}&explain=${searchModel.explain}&boost=${boostParams}&should=${shouldBoostParams}`;
         
         return this.http.get(queryUrl)
             .map((response: Response) => {
