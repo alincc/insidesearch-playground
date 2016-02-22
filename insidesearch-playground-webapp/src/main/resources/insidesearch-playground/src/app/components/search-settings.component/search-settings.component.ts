@@ -108,6 +108,19 @@ export class SearchSettingsComponent implements OnInit {
             this.searchModel.digital = this.favorite.searchModel.digital;
             this.searchModel.freetext = this.favorite.searchModel.freetext;
             this.searchModel.group = this.favorite.searchModel.group;
+
+            if (this.searchModel.shouldBoostFields == undefined) {
+                this.searchModel.shouldBoostFields = [];
+            }
+    }
+
+    public addShouldBoostField(index: number): void {
+        this.searchModel.shouldBoostFields.splice(index+1, 0, new ShouldBoost());
+    }
+
+    public removeShouldBoostField(index: number): void {
+        this.searchModel.shouldBoostFields.splice(index, 1);
+        this._addEmptyShouldBoosField();
     }
 
     ngOnInit(): void {
@@ -121,9 +134,15 @@ export class SearchSettingsComponent implements OnInit {
             dialogPolyfill.registerDialog(dialog);
         }
         
-        this.searchModel.shouldBoostFields.push(new ShouldBoost())
+        this._addEmptyShouldBoosField();
         
         componentHandler.upgradeAllRegistered();
+    }
+
+    private _addEmptyShouldBoosField() {
+        if (this.searchModel.shouldBoostFields.length == 0) {
+            this.searchModel.shouldBoostFields.push(new ShouldBoost());
+        }
     }
 
     private _showToast(message:string): void {

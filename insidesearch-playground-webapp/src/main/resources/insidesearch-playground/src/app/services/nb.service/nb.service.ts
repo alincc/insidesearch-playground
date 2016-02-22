@@ -32,7 +32,7 @@ export class SearchModel {
     group: boolean;
     explain: boolean;
     next: string;
-    public shouldBoostFields: any[] = [];
+    public shouldBoostFields: ShouldBoost[] = [];
 
     public boostFields: any[] = [
         {label: 'title', defaultValue: 10, value: 10},

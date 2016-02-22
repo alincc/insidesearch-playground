@@ -94,20 +94,33 @@
                             </md-input-container>
                         </div>
                     </div>
-                    <div layout="column" layout-gt-md="row" layout-align="space-between center" class="pg-row" *ngFor="#shouldBoostField of searchModel.shouldBoostFields">
+                    <div layout="column" layout-gt-md="row" layout-align="space-between center" class="pg-row" *ngFor="#shouldBoostField of searchModel.shouldBoostFields; #i = index">
                         <div layout="row" flex="25">
-                            <select
-                                [(value)]="shouldBoostField.term"
-                                [(ngModel)]="shouldBoostField.term">
-                                <option *ngFor="#boostField of searchModel.boostFields" [value]="boostField.label">
-                                    {{boostField.label}}
-                                </option>
-                            </select>
+                            <md-input-container md-theme="md-block" flex="auto">
+                                <select
+                                    [(value)]="shouldBoostField.term"
+                                    [(ngModel)]="shouldBoostField.term">
+                                    <option></option>
+                                    <option *ngFor="#boostField of searchModel.boostFields" [value]="boostField.label">
+                                        {{boostField.label}}
+                                    </option>
+                                </select>
+                            </md-input-container>
                         </div>
                         <div layout="row" flex="75">
+                            <md-input-container md-theme="md-block" flex="auto">
                                 <input md-input 
                                     [(value)]="shouldBoostField.value"
                                     [(ngModel)]="shouldBoostField.value">
+                            </md-input-container>
+                            <md-input-container md-theme="md-block" flex="20">
+                                <button class="mdl-button mdl-js-button mdl-button--icon" (click)="removeShouldBoostField(i)">
+                                    <i class="material-icons">remove</i>
+                                </button>
+                                <button class="mdl-button mdl-js-button mdl-button--icon" (click)="addShouldBoostField(i)">
+                                    <i class="material-icons">add</i>
+                                </button>
+                            </md-input-container>
                         </div>
                     </div>
                 </md-card-content>

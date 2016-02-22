@@ -94,10 +94,8 @@ export class LocalStorageService {
             favorite.id = new UUID().randomUUID();
         }
         
-        favorite.searchModel.shouldBoostFields.forEach((f, index, array) => {
-           if (!f.term || !f.value) {
-               array.splice(index);
-           } 
+        favorite.searchModel.shouldBoostFields = favorite.searchModel.shouldBoostFields.filter(function(f) {
+            return f.term != undefined && f.value != undefined;
         });
         
         var favorites = [];
