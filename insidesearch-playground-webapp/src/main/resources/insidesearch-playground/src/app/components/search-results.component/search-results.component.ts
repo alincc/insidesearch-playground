@@ -45,7 +45,7 @@ export class SearchResultsComponent implements OnInit{
 
     updateResults(): void {
         var searchService:Search = this._nb;
-        if (this._localStorageService.loadSettings().endpoint.endsWith('search')) {
+        if (this._localStorageService.loadSettings().endpoint.endsWith('v2/search')) {
             searchService = this._searchme;
         }
 

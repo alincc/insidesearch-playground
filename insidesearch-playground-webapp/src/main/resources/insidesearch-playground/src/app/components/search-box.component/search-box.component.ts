@@ -55,7 +55,7 @@ export class SearchBoxComponent implements OnInit{
   search(): void {
       //this.query = this.routeParams.get('query');
       var searchService:Search = this.nb;
-      if (this.localStorageService.loadSettings().endpoint.endsWith('search')) {
+      if (this.localStorageService.loadSettings().endpoint.endsWith('v2/search')) {
           searchService = this.searchme;
       }
       

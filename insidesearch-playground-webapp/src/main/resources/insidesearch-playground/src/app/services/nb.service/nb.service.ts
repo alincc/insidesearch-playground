@@ -130,7 +130,7 @@ export class NbService implements Search {
         var items = [];
         var json = response.json();
         var totalElements = json.page.totalElements;
-        var entries = json._embedded.items;
+        var entries = this.getEntries(json);
         var next = this.findNext(json);
         for (let i = 0; i < entries.length; i++) {
             var entry = entries[i];
@@ -158,9 +158,16 @@ export class NbService implements Search {
         })
     }
     
+    private getEntries(json) {
+        if (json._embedded.items) {
+            return json._embedded.items;
+        }
+        return [];
+    }
+    
     private getMediatype(entry) {
-        if (entry.metadata.mediaTypes) {
-            return entry.metadata.mediaTypes[0];
+        if (entry.mediaTypes) {
+            return entry.mediaTypes[0];
         }
         return null;
     }
