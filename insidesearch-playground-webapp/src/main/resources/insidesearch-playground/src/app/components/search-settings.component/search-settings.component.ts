@@ -46,7 +46,8 @@ export class SearchSettingsComponent implements OnInit {
         {label: 'Punktskrift', value:'Punktskrift'},
         {label: 'Annet', value:'Annet'},
         {label: 'Ukjent', value:'Ukjent'},
-    ];    
+    ];
+    showShould: boolean = false;
     favorite: Favorite = new Favorite();
     
     constructor(
@@ -128,6 +129,11 @@ export class SearchSettingsComponent implements OnInit {
         if (myFavorite != null) {
             this.loadFavorite(myFavorite)
         }
+        
+        if (this._localStorageService.loadSettings().endpoint.endsWith('v1/search')) {
+            this.showShould = true;
+        }     
+
 
         var dialog:any = document.querySelector('dialog');
         if (! dialog.showModal) {
