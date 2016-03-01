@@ -1,0 +1,9 @@
+.pg-toolbar-label {
+    margin-left: 40px;
+    margin-right: 10px;
+}
+
+.pg-toolbar {
+    height: 68px;
+    background-color: cornflowerblue;
+}

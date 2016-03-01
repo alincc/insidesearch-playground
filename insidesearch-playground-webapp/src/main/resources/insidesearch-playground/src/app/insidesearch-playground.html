@@ -14,12 +14,14 @@
                 <i class="pl-md-icon" md-icon>receipt</i>{{favorite.name}}
             </a>
 
-            <div class="mdl-navigation__link" aria-label="Trefflister">
+            <a class="mdl-navigation__link" [routerLink]="['Resultlists']" aria-label="Trefflister">
                 <i class="pl-md-icon" md-icon>list</i>Trefflister
-                <a class="mdl-navigation__link" [routerLink]="['Supersearch1']" aria-label="Supersøk 1" style="padding-left: 10px;">
-                    <i class="pl-md-icon" md-icon>keyboard_arrow_right</i>Supersøk 1
-                </a>
-            </div>
+            </a>
+
+            <a [hidden]="!isRouteActive(['/Resultlists']) && !isRouteActive(['/Supersearch1'])" class="pl-sub-navigation-link mdl-navigation__link" [routerLink]="['Supersearch1']" aria-label="Supersøk 1" style="padding-left: 50px;">
+                <i class="pl-md-icon" md-icon>keyboard_arrow_right</i>Supersøk 1
+            </a>
+
             <a class="mdl-navigation__link" [routerLink]="['Settings']" aria-label="Instillinger">
                 <i class="pl-md-icon" md-icon>settings</i>Innstillinger
             </a>

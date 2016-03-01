@@ -19,6 +19,7 @@ import {MyFavoritesComponent} from './components/my-favorites.component/my-favor
 import {SuperSearch1Component} from './components/resultlists/supersearch/supersearch1.component/supersearch1.component';
 import {LocalStorageService, Favorite} from './services/local-storage.service/local-storage.service';
 import {OrderByPipe} from './pipes/order-by.pipe/order-by.pipe';
+import {ResultlistsComponent} from "./components/resultlists/supersearch/resultlists.component";
 declare var componentHandler;
 
 @Component({
@@ -34,7 +35,8 @@ declare var componentHandler;
     {path: '/search', name: 'Search', component: SearchComponent},
     {path: '/favorites', name: 'MyFavorites', component: MyFavoritesComponent},
     {path: '/settings', name: 'Settings', component: SettingsComponent},
-    {path: '/resultLists/supersearch1', name: 'Supersearch1', component: SuperSearch1Component}
+    {path: '/resultLists', name: 'Resultlists', component: ResultlistsComponent},
+    {path: '/resultLists/superSearch1', name: 'Supersearch1', component: SuperSearch1Component}
 ])
 export class InsidesearchPlaygroundApp implements OnInit {
     myFavorites:Favorite[] = [];
@@ -58,5 +60,9 @@ export class InsidesearchPlaygroundApp implements OnInit {
     ngOnInit():void {
         this.loadFavorites();
         componentHandler.upgradeAllRegistered();
+    }
+
+    public isRouteActive(route) {
+        return this.router.isRouteActive(this.router.generate(route))
     }
 }
