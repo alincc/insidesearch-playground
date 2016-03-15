@@ -1,9 +1,9 @@
+import {bootstrap} from 'angular2/platform/browser';
 import {
   bind,
   Component,
   provide
 } from 'angular2/core';
-import {bootstrap} from 'angular2/platform/browser';
 import {
   APP_BASE_HREF,
   ROUTER_DIRECTIVES,
