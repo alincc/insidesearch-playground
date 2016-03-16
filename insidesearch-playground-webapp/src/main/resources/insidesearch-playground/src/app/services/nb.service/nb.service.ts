@@ -123,7 +123,7 @@ export class NbService implements Search {
             return f.term + ','+f.value;
         }).join('&should=');
 
-        let queryUrl: string = `${this.localStorageService.loadSettings().endpoint}?${params}&explain=${searchModel.explain}&boost=${boostParams}&should=${shouldBoostParams}`;
+        let queryUrl: string = `${this.localStorageService.loadSettings().endpoint}/items?${params}&explain=${searchModel.explain}&boost=${boostParams}&should=${shouldBoostParams}`;
         return this.http.get(queryUrl)
             .map((response:Response) => {
                 return this.mapResponse(response);
@@ -147,13 +147,32 @@ export class NbService implements Search {
             return f.label + ',' + f.value;
         }).join('&boost=');
 
-        let queryUrl:string = `${this.localStorageService.loadSettings().endpoint}/superSearch?${params}&expand=${expand}&explain=${searchModel.explain}&boost=${boostParams}`;
+        let queryUrl:string = `${this.localStorageService.loadSettings().endpoint}/search?${params}&expand=${expand}&explain=${searchModel.explain}&boost=${boostParams}`;
         return this.http.get(queryUrl)
             .map((response:Response) => {
                 return this.mapSuperSearchResponse(response);
             })
     }
 
+    private mapResponse(response:Response):SearchResult {
+        var items = [];
+        var json = response.json();
+        var totalElements = json.page.totalElements;
+        var entries = this.getEntries(json);
+        var next = this.findNext(json);
+        for (let i = 0; i < entries.length; i++) {
+            var entry = entries[i];
+            var item:Item = this.mapEntryToItem(entry, i);
+            items.push(item)
+        }
+        return new SearchResult({
+            id: '',
+            items: items,
+            totalElements: totalElements,
+            next: next
+        })
+    }
+    
     private mapSuperSearchResponse(response:Response):SearchResult[] {
         var searchResults = [];
         var books = null, images = null, movies = null, music = null, musicManuscripts = null, newspapers = null, radio = null;
@@ -194,29 +213,36 @@ export class NbService implements Search {
 
         return searchResults;
     }
+    private mapEntryToItem(entry, rowNumber): Item {
+        var id = entry.id;
+        var metadata = this.getMetadata(entry);
+        var title = metadata.title;
+        var explain = this.getExplain(entry);
+        var mediatype = this.getMediaType(metadata);
+        var creator = this.getCreator(metadata);
+        var thumbnail = this.getThumbnail(entry);
 
-    private EntryToSearchResult(entries, objectId, totalElements, contentSearch) {
-        var items = [];
-        for (let i = 0; i < entries.length; i++) {
-            var entry = entries[i];
-            var id = entry.id;
-            var title = entry.title;
-            var explain = this.getExplain(entry);
-            var mediatype = this.getMediatype(entry);
-            var creator = this.getCreator(entry);
-            var thumbnail = this.getThumbnail(entry);
-            if (thumbnail == null) {
-                thumbnail = "http://www.nb.no/services/image/resolver/URN:NBN:no-nb_digimanus_230572_0001/full/128,0/0/native.jpg";
-            }
-            items.push(new Item({
+        return new Item({
                 id: id,
                 title: title,
                 mediatype: mediatype,
                 creator: creator,
                 thumbnail: thumbnail,
                 explain: explain,
-                rank: null
-            }))
+                rank: rowNumber + 1
+            })
+    } 
+    
+
+    private EntryToSearchResult(entries, objectId, totalElements, contentSearch) {
+        var items = [];
+        for (let i = 0; i < entries.length; i++) {
+            var entry = entries[i];
+            var item:Item = this.mapEntryToItem(entry, i);
+            if (item.thumbnail == null) {
+                item.thumbnail = "http://www.nb.no/services/image/resolver/URN:NBN:no-nb_digimanus_230572_0001/full/128,0/0/native.jpg";
+            }
+            items.push(item)
         }
         return new SearchResult({
             id: objectId,
@@ -227,39 +253,6 @@ export class NbService implements Search {
         });
     }
 
-    private mapResponse(response:Response):SearchResult {
-        var items = [];
-        var json = response.json();
-        var totalElements = json.page.totalElements;
-        var entries = this.getEntries(json);
-        var next = this.findNext(json);
-        for (let i = 0; i < entries.length; i++) {
-            var entry = entries[i];
-            var id = entry.id;
-            var title = entry.title;
-            var explain = this.getExplain(entry);
-            var mediatype = this.getMediatype(entry);
-            var creator = this.getCreator(entry);
-            var thumbnail = this.getThumbnail(entry);
-
-            items.push(new Item({
-                id: id,
-                title: title,
-                mediatype: mediatype,
-                creator: creator,
-                thumbnail: thumbnail,
-                explain: explain,
-                rank: i + 1
-            }))
-        }
-        return new SearchResult({
-            id: '',
-            items: items,
-            totalElements: totalElements,
-            next: next
-        })
-    }
-    
     private getEntries(json) {
         if (json._embedded.items) {
             return json._embedded.items;
@@ -267,9 +260,23 @@ export class NbService implements Search {
         return [];
     }
 
-    private getMediatype(entry) {
-        if (entry.mediatypes) {
-            return entry.mediatypes[0];
+    private getMetadata(entry) {
+        if (entry.metadata) {
+            return entry.metadata;
+        }
+        return null;
+    }
+
+    private getMediaType(metadata) {
+        if (metadata.mediaTypes) {
+            return metadata.mediaTypes[0];
+        }
+        return null;
+    }
+    
+    private getCreator(metadata: any): String {
+        if (metadata.creators) {
+            return metadata.creators[0];
         }
         return null;
     }
@@ -295,10 +302,4 @@ export class NbService implements Search {
         return null;
     }
 
-    private getCreator(entry: any): String {
-        if (entry.creators) {
-            return entry.creators[0];
-        }
-        return null;
-    }
 }
