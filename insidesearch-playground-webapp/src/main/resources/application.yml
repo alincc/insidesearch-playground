@@ -1,8 +1,19 @@
 info:
-  app:
-    name: insidesearch-playground
-    description: Playground for search
+    app:
+        name: insidesearch-playground
+        description: Playground for search
+    build:
+        artifact: ${project.artifactId}
+        name: ${project.name}
+        description: ${project.description}
+        version: ${project.version}
 
 server:
-  port: 7070
-  contextPath: /insidesearch-playground
+    port: 7070
+    contextPath: /insidesearch-playground
+  
+monitoring:
+    hostname: localhost
+    port: 2003
+    period: 1
+
