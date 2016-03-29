@@ -69,6 +69,8 @@ export class SearchBoxComponent implements OnInit{
         (err: any) => { // on error
           console.log(err);
           this.loading.next(false);
+          this.results.next(new SearchResult());
+          this._showToast('Lekekassen er midlertidig utilgjengelig. Prøv igjen senere');
         },
         () => { // on completion
           this.loading.next(false);
@@ -79,6 +81,14 @@ export class SearchBoxComponent implements OnInit{
   showSettings(ev) {
       this.router.navigate(['/Settings', {}]);
   };
+
+  private _showToast(message:string): void {
+      var notification:any = document.querySelector('#alert-danger');
+      notification.MaterialSnackbar.showSnackbar({
+          message: message,
+          timeout: 5000
+      });
+  }
   
   ngOnInit(): void {
       this.searchModel.query = this.routeParams.get('query');

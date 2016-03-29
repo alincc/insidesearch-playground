@@ -33,8 +33,13 @@
                 <router-outlet></router-outlet>
             </md-content>
         </div>
-        <div id="snackbar" aria-live="assertive" aria-atomic="true" aria-relevant="text" class="mdl-snackbar mdl-js-snackbar">
+        <div id="alert" aria-live="assertive" aria-atomic="true" aria-relevant="text" class="mdl-snackbar mdl-js-snackbar">
             <div class="mdl-snackbar__text"></div>
+            <button type="button" class="mdl-snackbar__action"></button>
+        </div>
+        <div id="alert-danger" aria-live="assertive" aria-atomic="true" aria-relevant="text" class="alert-danger mdl-snackbar mdl-js-snackbar">
+            <i class="alert-danger-icon" md-icon>error</i>
+            <span class="alert-danger mdl-snackbar__text"></span>
             <button type="button" class="mdl-snackbar__action"></button>
         </div>
     </main>
