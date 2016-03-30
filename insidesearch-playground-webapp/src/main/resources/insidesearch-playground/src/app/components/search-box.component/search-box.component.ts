@@ -67,10 +67,10 @@ export class SearchBoxComponent implements OnInit{
           this.results.next(results);
         },
         (err: any) => { // on error
-          console.log(err);
+          console.log(err.stack);
           this.loading.next(false);
           this.results.next(new SearchResult());
-          this._showToast('Lekekassen er midlertidig utilgjengelig. Prøv igjen senere');
+          this._showToast('Oops... Noe gikk galt');
         },
         () => { // on completion
           this.loading.next(false);
