@@ -5,8 +5,9 @@ import {SearchModel} from '../nb.service/nb.service'
 export class Settings {
     endpoints = [
         '',
+        'http://www.nb.no/services/search/v2/search',
         'http://escastest1.nb.no:8090/searchv2/search',
-        'http://tctest.nb.no/catalog/v1',
+        'http://tctest.nb.no/catalog/v1'
         ];
 
   constructor(
